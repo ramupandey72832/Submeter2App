@@ -1,0 +1,48 @@
+plugins {
+    id 'com.android.library' // Remove version '9.4.1' here if it's managed by the root project
+    // ... other plugins
+}
+
+android {
+    namespace 'com.application.android_ui_templete1'
+    compileSdk {
+        version = release(36)
+    }
+
+    defaultConfig {
+
+        minSdk 24
+        targetSdk 36
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    buildFeatures {
+        viewBinding = true // or dataBinding = true
+    }
+}
+
+dependencies {
+    // dependency for slider view
+    implementation 'com.github.smarteist:Android-Image-Slider:1.4.0'
+    // dependency for loading image from url
+    implementation "com.github.bumptech.glide:glide:4.11.0"
+
+    implementation libs.appcompat
+    implementation libs.material
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+}

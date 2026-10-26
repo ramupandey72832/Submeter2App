@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurfaceVariant"
+    android:padding="@dimen/card_padding_normal">
+
+    <com.google.android.material.card.MaterialCardView
+        style="?attr/materialCardViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/card_padding_large"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/section_margin_bottom">
+
+                <TextView
+                    android:id="@+id/tvHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.App.LabelTitle"
+                    android:textSize="@dimen/text_size_header"
+                    android:text="Submeter &amp; Tenancy" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/status_icon_size"
+                        android:layout_height="@dimen/status_icon_size"
+                        android:src="@android:drawable/ic_menu_info_details"
+                        app:tint="?attr/colorOnSurfaceVariant" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/status_text_margin"
+                        android:textAppearance="@style/TextAppearance.App.LabelBody"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:textSize="@dimen/text_size_caption"
+                        android:text="Active Overview" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:rowCount="3"
+                android:alignmentMode="alignBounds"
+                android:rowOrderPreserved="false"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/grid_item_padding"
+                    android:paddingBottom="@dimen/grid_item_padding"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+                    <FrameLayout
+                        android:id="@+id/addRoom"
+                        android:layout_width="@dimen/icon_container_size"
+                        android:layout_height="@dimen/icon_container_size"
+                        android:background="@drawable/bg_circle_icon"
+                        android:layout_gravity="center_horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/action_icon_size"
+                            android:layout_height="@dimen/action_icon_size"
+                            android:layout_gravity="center"
+                            android:src="@android:drawable/ic_menu_add"
+                            app:tint="?attr/colorPrimary" />
+                    </FrameLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/label_margin_top"
+                        android:gravity="center"
+                        android:textAppearance="@style/TextAppearance.App.LabelBody"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="@dimen/text_size_label"
+                        android:text="Add / Update Room" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/grid_item_padding"
+                    android:paddingBottom="@dimen/grid_item_padding"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+                    <FrameLayout
+                        android:id="@+id/addTenant"
+                        android:layout_width="@dimen/icon_container_size"
+                        android:layout_height="@dimen/icon_container_size"
+                        android:background="@drawable/bg_circle_icon"
+                        android:layout_gravity="center_horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/action_icon_size"
+                            android:layout_height="@dimen/action_icon_size"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_menu_btn_add"
+                            app:tint="?attr/colorPrimary" />
+                    </FrameLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/label_margin_top"
+                        android:gravity="center"
+                        android:textAppearance="@style/TextAppearance.App.LabelBody"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="@dimen/text_size_label"
+                        android:text="Add / Update Tenant" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/grid_item_padding"
+                    android:paddingBottom="@dimen/grid_item_padding"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+                    <FrameLayout
+                        android:id="@+id/addUpdateSubmeter"
+                        android:layout_width="@dimen/icon_container_size"
+                        android:layout_height="@dimen/icon_container_size"
+                        android:background="@drawable/bg_circle_icon"
+                        android:layout_gravity="center_horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/action_icon_size"
+                            android:layout_height="@dimen/action_icon_size"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_menu_btn_add"
+                            app:tint="?attr/colorPrimary" />
+                    </FrameLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/label_margin_top"
+                        android:gravity="center"
+                        android:textAppearance="@style/TextAppearance.App.LabelBody"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="@dimen/text_size_label"
+                        android:text="Add / Update Submeter" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/grid_item_padding"
+                    android:paddingBottom="@dimen/grid_item_padding"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+                    <FrameLayout
+                        android:id="@+id/replaceSubmeter"
+                        android:layout_width="@dimen/icon_container_size"
+                        android:layout_height="@dimen/icon_container_size"
+                        android:background="@drawable/bg_circle_icon"
+                        android:layout_gravity="center_horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/action_icon_size"
+                            android:layout_height="@dimen/action_icon_size"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_refresh"
+                            app:tint="?attr/colorPrimary" />
+                    </FrameLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/label_margin_top"
+                        android:gravity="center"
+                        android:textAppearance="@style/TextAppearance.App.LabelBody"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="@dimen/text_size_label"
+                        android:text="Submeter Alocation" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/grid_item_padding"
+                    android:paddingBottom="@dimen/grid_item_padding"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+                    <FrameLayout
+                        android:id="@+id/endTenancy"
+                        android:layout_width="@dimen/icon_container_size"
+                        android:layout_height="@dimen/icon_container_size"
+                        android:background="@drawable/bg_circle_icon"
+                        android:layout_gravity="center_horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/action_icon_size"
+                            android:layout_height="@dimen/action_icon_size"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_delete"
+                            app:tint="?attr/colorError" />
+                    </FrameLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/label_margin_top"
+                        android:gravity="center"
+                        android:textAppearance="@style/TextAppearance.App.LabelBody"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="@dimen/text_size_label"
+                        android:text="ADD / UPDATE Tenancy" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/grid_item_padding"
+                    android:paddingBottom="@dimen/grid_item_padding"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+                    <FrameLayout
+                        android:id="@+id/mpin"
+                        android:layout_width="@dimen/icon_container_size"
+                        android:layout_height="@dimen/icon_container_size"
+                        android:background="@drawable/bg_circle_icon"
+                        android:layout_gravity="center_horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/action_icon_size"
+                            android:layout_height="@dimen/action_icon_size"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_lock_idle_lock"
+                            app:tint="?attr/colorPrimary" />
+                    </FrameLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/label_margin_top"
+                        android:gravity="center"
+                        android:textAppearance="@style/TextAppearance.App.LabelBody"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="@dimen/text_size_label"
+                        android:text="CHANGE MPIN" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/grid_item_padding"
+                    android:paddingBottom="@dimen/grid_item_padding"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+                    <FrameLayout
+                        android:id="@+id/dbTables"
+                        android:layout_width="@dimen/icon_container_size"
+                        android:layout_height="@dimen/icon_container_size"
+                        android:background="@drawable/bg_circle_icon"
+                        android:layout_gravity="center_horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/action_icon_size"
+                            android:layout_height="@dimen/action_icon_size"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_database"
+                            app:tint="?attr/colorPrimary" />
+                    </FrameLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/label_margin_top"
+                        android:gravity="center"
+                        android:textAppearance="@style/TextAppearance.App.LabelBody"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="@dimen/text_size_label"
+                        android:text="Database Tables" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/grid_item_padding"
+                    android:paddingBottom="@dimen/grid_item_padding"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+                    <FrameLayout
+                        android:id="@+id/databaseConfiguration"
+                        android:layout_width="@dimen/icon_container_size"
+                        android:layout_height="@dimen/icon_container_size"
+                        android:background="@drawable/bg_circle_icon"
+                        android:layout_gravity="center_horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/action_icon_size"
+                            android:layout_height="@dimen/action_icon_size"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_database"
+                            app:tint="?attr/colorPrimary" />
+                    </FrameLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/label_margin_top"
+                        android:gravity="center"
+                        android:textAppearance="@style/TextAppearance.App.LabelBody"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="@dimen/text_size_label"
+                        android:text="Configuration" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/grid_item_padding"
+                    android:paddingBottom="@dimen/grid_item_padding"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+                    <FrameLayout
+                        android:id="@+id/databaseMigration"
+                        android:layout_width="@dimen/icon_container_size"
+                        android:layout_height="@dimen/icon_container_size"
+                        android:background="@drawable/bg_circle_icon"
+                        android:layout_gravity="center_horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/action_icon_size"
+                            android:layout_height="@dimen/action_icon_size"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_database"
+                            app:tint="?attr/colorPrimary" />
+                    </FrameLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/label_margin_top"
+                        android:gravity="center"
+                        android:textAppearance="@style/TextAppearance.App.LabelBody"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="@dimen/text_size_label"
+                        android:text="Database Migration" />
+                </LinearLayout>
+
+            </GridLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

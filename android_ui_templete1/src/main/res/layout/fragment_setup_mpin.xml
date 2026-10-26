@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="?attr/colorSurfaceVariant">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <!-- Title using your custom text appearance -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:textAppearance="@style/TextAppearance.App.LabelTitle"
+            android:textSize="24sp"
+            android:text="Set Security MPIN" />
+
+        <!-- Subtitle using your custom text appearance -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="32dp"
+            android:textAppearance="@style/TextAppearance.App.LabelBody"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:text="Create a 4-digit secure MPIN to authorize critical management actions." />
+
+        <!-- Enter New MPIN Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:text="Enter New MPIN" />
+
+        <!-- New MPIN Input Boxes -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="24dp"
+            android:gravity="center">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="?attr/textInputStyle"
+                android:layout_width="56dp"
+                android:layout_height="64dp"
+                android:layout_margin="4dp"
+                app:hintEnabled="false">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSetupPin1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:autofillHints="password"
+                    android:inputType="numberPassword"
+                    android:maxLength="1"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="?attr/textInputStyle"
+                android:layout_width="56dp"
+                android:layout_height="64dp"
+                android:layout_margin="4dp"
+                app:hintEnabled="false">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSetupPin2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:autofillHints="password"
+                    android:inputType="numberPassword"
+                    android:maxLength="1"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="?attr/textInputStyle"
+                android:layout_width="56dp"
+                android:layout_height="64dp"
+                android:layout_margin="4dp"
+                app:hintEnabled="false">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSetupPin3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:autofillHints="password"
+                    android:inputType="numberPassword"
+                    android:maxLength="1"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="?attr/textInputStyle"
+                android:layout_width="56dp"
+                android:layout_height="64dp"
+                android:layout_margin="4dp"
+                app:hintEnabled="false">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSetupPin4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:autofillHints="password"
+                    android:inputType="numberPassword"
+                    android:maxLength="1"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <!-- Confirm New MPIN Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:text="Confirm New MPIN" />
+
+        <!-- Confirm MPIN Input Boxes -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="48dp"
+            android:gravity="center">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="?attr/textInputStyle"
+                android:layout_width="56dp"
+                android:layout_height="64dp"
+                android:layout_margin="4dp"
+                app:hintEnabled="false">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etConfirmPin1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:autofillHints="password"
+                    android:inputType="numberPassword"
+                    android:maxLength="1"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="?attr/textInputStyle"
+                android:layout_width="56dp"
+                android:layout_height="64dp"
+                android:layout_margin="4dp"
+                app:hintEnabled="false">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etConfirmPin2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:autofillHints="password"
+                    android:inputType="numberPassword"
+                    android:maxLength="1"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="?attr/textInputStyle"
+                android:layout_width="56dp"
+                android:layout_height="64dp"
+                android:layout_margin="4dp"
+                app:hintEnabled="false">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etConfirmPin3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:autofillHints="password"
+                    android:inputType="numberPassword"
+                    android:maxLength="1"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="?attr/textInputStyle"
+                android:layout_width="56dp"
+                android:layout_height="64dp"
+                android:layout_margin="4dp"
+                app:hintEnabled="false">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etConfirmPin4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:autofillHints="password"
+                    android:inputType="numberPassword"
+                    android:maxLength="1"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <!-- Save Button (automatically uses materialButtonStyle theme attribute) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSaveMpin"
+            style="?attr/materialButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Save &amp; Activate MPIN"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,23 @@
+plugins {
+    id("java-library")
+}
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+// REMOVE THIS ENTIRE BLOCK:
+// repositories {
+//     mavenCentral()
+// }
+
+dependencies {
+    // Lombok for main code
+    compileOnly("org.projectlombok:lombok:1.18.48")
+    annotationProcessor("org.projectlombok:lombok:1.18.48")
+
+    testCompileOnly("org.projectlombok:lombok:1.18.48")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.48")
+
+
+}
