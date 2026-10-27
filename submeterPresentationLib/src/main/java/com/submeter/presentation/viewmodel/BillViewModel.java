@@ -1,6 +1,8 @@
 package com.submeter.presentation.viewmodel;
 
 import com.submeter.commonlib.dto.BillDTO;
+import com.submeter.service.BillService;
+import com.submeter.service.MeterReadingService;
 import com.submeter.service.impl.core.BillServiceImpl;
 import com.submeter.service.impl.core.MeterReadingServiceImpl;
 
@@ -13,17 +15,17 @@ import java.util.List;
 /**
  * This class will be in bill fragment to show the bills and also work with edit bills
  */
-public class BillingViewModel extends BaseViewModel{
+public class BillViewModel extends BaseViewModel{
 
-    private final BillServiceImpl billService;
-    private final MeterReadingServiceImpl meterReadingService;
+    private final BillService billService;
+    private final MeterReadingService meterReadingService;
 
     private List<BillDTO> fullBillList = new ArrayList<>();
     private List<BillDTO> filteredBillList = new ArrayList<>();
 
-    public BillingViewModel(BillServiceImpl meterBillingService, MeterReadingServiceImpl meterReadingService) {
+    public BillViewModel(BillService billService, MeterReadingService meterReadingService) {
         this.meterReadingService = meterReadingService;
-        this.billService = meterBillingService;
+        this.billService = billService;
     }
 
     public List<BillDTO> getFilteredBillList() { return filteredBillList; }

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurfaceVariant">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Unified Material 3 App Bar Navigation -->
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorSurface"
+            android:elevation="0dp"
+            app:title="Edit Bill Adjustments"
+            app:titleCentered="true"
+            app:titleTextAppearance="@style/TextAppearance.App.LabelTitle"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:navigationIconTint="?attr/colorOnSurface" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <!-- CARD 1: Core Bill Identity Details (Read-Only) -->
+                <com.google.android.material.card.MaterialCardView
+                    style="?attr/materialCardViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.App.LabelTitle"
+                            android:textSize="14sp"
+                            android:textColor="?attr/colorPrimary"
+                            android:text="Reference Metadata"
+                            android:layout_marginBottom="12dp"/>
+
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:stretchColumns="1">
+
+                            <TableRow android:paddingVertical="4dp">
+                                <TextView android:text="Bill Identity: " android:textStyle="bold" android:textAppearance="@style/TextAppearance.App.LabelBody"/>
+                                <TextView android:id="@+id/tvReadOnlyBillId" android:textAppearance="@style/TextAppearance.App.LabelBody" android:paddingStart="8dp"/>
+                            </TableRow>
+
+                            <TableRow android:paddingVertical="4dp">
+                                <TextView android:text="Tenant Name: " android:textStyle="bold" android:textAppearance="@style/TextAppearance.App.LabelBody"/>
+                                <TextView android:id="@+id/tvReadOnlyTenant" android:textAppearance="@style/TextAppearance.App.LabelBody" android:paddingStart="8dp"/>
+                            </TableRow>
+
+                            <TableRow android:paddingVertical="4dp">
+                                <TextView android:text="Meter Serial: " android:textStyle="bold" android:textAppearance="@style/TextAppearance.App.LabelBody"/>
+                                <TextView android:id="@+id/tvReadOnlyMeter" android:textAppearance="@style/TextAppearance.App.LabelBody" android:paddingStart="8dp"/>
+                            </TableRow>
+
+                            <TableRow android:paddingVertical="4dp">
+                                <TextView android:text="Prev Reading: " android:textStyle="bold" android:textAppearance="@style/TextAppearance.App.LabelBody"/>
+                                <TextView android:id="@+id/tvReadOnlyPrevReading" android:textAppearance="@style/TextAppearance.App.LabelBody" android:paddingStart="8dp"/>
+                            </TableRow>
+                        </TableLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- CARD 2: Interactive Financial Adjustments (Mutable) -->
+                <com.google.android.material.card.MaterialCardView
+                    style="?attr/materialCardViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.App.LabelTitle"
+                            android:textSize="14sp"
+                            android:textColor="?attr/colorPrimary"
+                            android:text="Mutable Computation Fields"
+                            android:layout_marginBottom="16dp"/>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="?attr/textInputStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp"
+                            android:hint="Current Unit Reading (kWh)">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etEditCurrentReading"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="numberDecimal" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="?attr/textInputStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp"
+                            android:hint="Rate Per Unit (₹)">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etEditRatePerUnit"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="numberDecimal" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="?attr/textInputStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:hint="Fixed Base Charges (₹)">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etEditFixedCharges"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="numberDecimal" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="?attr/textInputStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:hint="Extra Charges (₹)">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etEditExtraCharges"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="numberDecimal" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="?attr/textInputStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:hint="Any Note?">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etEditNote"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textCapWords" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="?attr/colorSurfaceVariant"
+                            android:layout_marginBottom="16dp"/>
+
+                        <!-- Total Computed Amount Output Display Box -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="?attr/textInputStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Calculated Grand Total Amount (₹)"
+                            app:endIconMode="clear_text">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etEditTotalAmount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="numberDecimal"
+                                android:textStyle="bold"
+                                android:textColor="?attr/colorPrimary" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Submission Control Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSaveBillChanges"
+                    style="?attr/materialButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="Update Bill Details" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

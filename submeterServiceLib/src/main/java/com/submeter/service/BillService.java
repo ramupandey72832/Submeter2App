@@ -7,4 +7,5 @@ import java.util.List;
 public interface BillService {
     public List<BillDTO> getAll();
     public List<BillDTO> getAllPending();
+    public void updateById(int billId,BillDTO billDTO);
 }
