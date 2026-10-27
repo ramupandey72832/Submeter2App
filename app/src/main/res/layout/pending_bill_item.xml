@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://tools.android.com/tools"
+    style="?attr/materialCardViewStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iconRoom"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_building"
+            android:background="?attr/colorSurfaceVariant"
+            app:tint="?attr/colorOnSurfaceVariant"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+
+        <TextView
+            android:id="@+id/tvRoomNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
+            android:textAppearance="@style/TextAppearance.App.LabelTitle"
+            android:textSize="16sp"
+            tools:text="Room 302"
+            app:layout_constraintEnd_toStartOf="@id/tvBillAmount"
+            app:layout_constraintStart_toEndOf="@id/iconRoom"
+            app:layout_constraintTop_toTopOf="@id/iconRoom" />
+
+        <TextView
+            android:id="@+id/tvTenantName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:textAppearance="@style/TextAppearance.App.LabelBody"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="13sp"
+            tools:text="John Doe"
+            app:layout_constraintEnd_toStartOf="@id/tvBillAmount"
+            app:layout_constraintStart_toStartOf="@id/tvRoomNumber"
+            app:layout_constraintTop_toBottomOf="@id/tvRoomNumber" />
+
+        <TextView
+            android:id="@+id/tvBillMeta"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:textAppearance="@style/TextAppearance.App.LabelBody"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="11sp"
+            tools:text="Bill: #98421  •  12 Jun 2026"
+            app:layout_constraintBottom_toBottomOf="@id/iconRoom"
+            app:layout_constraintEnd_toStartOf="@id/btnStatusBadge"
+            app:layout_constraintStart_toStartOf="@id/tvRoomNumber"
+            app:layout_constraintTop_toBottomOf="@id/tvTenantName" />
+
+        <TextView
+            android:id="@+id/tvBillAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.App.LabelTitle"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="16sp"
+            tools:text="₹1,250"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvRoomNumber" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnStatusBadge"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginTop="2dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingHorizontal="12dp"
+            android:text="PENDING"
+            android:textAllCaps="true"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:cornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvBillAmount" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

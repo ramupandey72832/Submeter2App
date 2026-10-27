@@ -40,28 +40,32 @@ public final class SchemaInitializer {
 
         execute("schema.enable_foreign_keys");
 
-        execute("schema.create_rooms_table");
-        execute("schema.create_submeters_table");
-        execute("schema.create_tenants_table");
-        execute("schema.create_tenancies_table");
-        execute("schema.create_meter_readings_table");
+        execute("schema.create_room_table");
+        execute("schema.create_submeter_table");
+        execute("schema.create_tenant_table");
+        execute("schema.create_tenancy_table");
+        execute("schema.create_meter_reading_table");
         execute("schema.create_bills_table");
+        execute("schema.create_submeter_allocation_table");
+        execute("schema.create_payments_table");
 
-        execute("schema.create_bill_summaries_view");
+//        execute("schema.create_bill_summaries_view");
     }
 
     private static void executeSchemaDeletion() throws Exception {
 
         execute("schema.disable_foreign_keys");
 
-        execute("schema.drop_bill_summaries_view");
+//        execute("schema.drop_bill_summaries_view");
 
-        execute("schema.drop_bills_table");
-        execute("schema.drop_meter_readings_table");
-        execute("schema.drop_tenancies_table");
-        execute("schema.drop_submeters_table");
         execute("schema.drop_rooms_table");
+        execute("schema.drop_submeters_table");
         execute("schema.drop_tenants_table");
+        execute("schema.drop_meter_readings_table");
+        execute("schema.drop_tenancy_table");
+        execute("schema.drop_submeter_allocation_table");
+        execute("schema.drop_bills_table");
+        execute("schema.drop_payment_table");
     }
 
     private static void execute(String sqlKey) throws Exception {

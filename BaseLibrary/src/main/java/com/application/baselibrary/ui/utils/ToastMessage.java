@@ -41,31 +41,37 @@ public class ToastMessage {
         return toast;
     }
 
-    public void showWarningAlert(String message, Exception e){
+    public void showWarning(String message, Exception e){
         // #FF9800 is Orange
-        String fullMsg = "Warning: " + message + " "+e.getMessage();
-        createSafeToast(fullMsg, "#FF9800", Toast.LENGTH_LONG).show();
-        System.err.println(fullMsg);
+//        String fullMsg = "Warning: " + message + " "+e.getMessage();
+        createSafeToast(message, "#FF9800", Toast.LENGTH_LONG).show();
+        System.err.println(message);
         e.printStackTrace();
     }
 
-    public void showWarningAlert(String message){
+    public void showWarning(String message){
         // #FF9800 is Orange
-        String fullMsg = "" + message;
-        createSafeToast(fullMsg, "#FF9800", Toast.LENGTH_LONG).show();
-        System.err.println(fullMsg);
+//        String fullMsg = "" + message;
+        createSafeToast(message, "#FF9800", Toast.LENGTH_LONG).show();
+        System.err.println(message);
     }
 
-    public void showErrorAlert(String message, Exception e){
+    public void showError(String message, Exception e){
         // #F44336 is Red
-        String fullMsg = "Error: " + message + " "+e.getMessage();
-        createSafeToast(fullMsg, "#F44336", Toast.LENGTH_LONG).show();
-        System.err.println(fullMsg);
+//        String fullMsg = "Error: " + message + " "+e.getMessage();
+        createSafeToast(message, "#F44336", Toast.LENGTH_LONG).show();
+        System.err.println(message);
         e.printStackTrace();
-
     }
 
-    public void showSuccessAlert(String message, Exception e){
+    public void showError(String message){
+        // #F44336 is Red
+//        String fullMsg = "Error: " + message + " "+e.getMessage();
+        createSafeToast(message, "#F44336", Toast.LENGTH_LONG).show();
+        System.err.println(message);
+    }
+
+    public void showSuccess(String message, Exception e){
         // #4CAF50 is Green
         String fulMsg = "Success: " + message + " "+e.getMessage();
         createSafeToast(fulMsg, "#4CAF50", Toast.LENGTH_SHORT).show();
@@ -73,10 +79,10 @@ public class ToastMessage {
         e.printStackTrace();
     }
 
-    public void showSuccessAlert(String message){
+    public void showSuccess(String message){
         // #4CAF50 is Green
-        String fulMsg = "" + message ;
-        createSafeToast(fulMsg, "#4CAF50", Toast.LENGTH_SHORT).show();
-        System.out.println(fulMsg);
+//        String fulMsg = "" + message ;
+        createSafeToast(message, "#4CAF50", Toast.LENGTH_SHORT).show();
+        System.out.println(message);
     }
 }

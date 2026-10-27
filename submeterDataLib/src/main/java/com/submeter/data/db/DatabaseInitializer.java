@@ -10,9 +10,8 @@ public class DatabaseInitializer {
     private static String dbUsername = null;
     private static String dbPassword = null;
     private static String driverClassName = "org.sqldroid.SQLDroidDriver";
-    public static void initializeDb(
-            String androidOrDesktop,
-            String dbPath) throws Exception {
+    public static void initializeDefaultDb(
+            String androidOrDesktop) throws Exception {
 
         if (androidOrDesktop == null || androidOrDesktop.trim().isEmpty()) {
             throw new IllegalArgumentException(
@@ -37,14 +36,8 @@ public class DatabaseInitializer {
 
         } else if ("Android".equalsIgnoreCase(androidOrDesktop)) {
 
-            if (dbPath == null || dbPath.trim().isEmpty()) {
-                throw new IllegalArgumentException(
-                        "Database path must be provided for Android."
-                );
-            }
-
             dbConfig = new DatabaseConfig(
-                    "jdbc:sqldroid:" + dbPath,
+                    "jdbc:sqldroid:submeter_bill.db",
                     null,
                     null,
                     "org.sqldroid.SQLDroidDriver"

@@ -27,7 +27,7 @@ public final class ServiceManager {
 
     public static synchronized void initialize() {
 
-        if (roomService != null) {
+        if (databaseSetup != null) {
             return;
         }
 
