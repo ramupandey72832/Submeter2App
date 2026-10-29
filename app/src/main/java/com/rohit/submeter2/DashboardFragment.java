@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.application.baselibrary.ui.utils.NavigationUtils;
 import com.rohit.submeter2.adapters.PendingBillsAdapter;
 import com.rohit.submeter2.databinding.FragmentDashboardBinding;
+import com.rohit.submeter2.fragments.AllTablesDataFragment;
 import com.rohit.submeter2.fragments.ConfigurationFragment;
 import com.rohit.submeter2.fragments.mpin.MpinVerificationDialogFragment;
 import com.rohit.submeter2.fragments.mpin.SetupMpinFragment;
@@ -210,9 +211,9 @@ public class DashboardFragment extends Fragment implements MpinVerificationDialo
                 NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new SetupMpinFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));
 
 
-//        binding.dashboardSection.dbTables.setOnClickListener(v->{
-//            NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new DatabaseInspectorFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout);
-//        });
+        binding.dashboardSection.dbTables.setOnClickListener(v->{
+            NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new AllTablesDataFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout);
+        });
 //
 //        binding.dashboardSection.databaseMigration.setOnClickListener(v->{
 //            NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new DatabaseMigrationFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout);
