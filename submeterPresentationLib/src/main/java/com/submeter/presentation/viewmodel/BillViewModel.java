@@ -40,7 +40,7 @@ public class BillViewModel extends BaseViewModel{
 
         new Thread(() -> {
             try {
-                List<BillDTO> bills = billService.getAll();
+                List<BillDTO> bills = billService.getAll().getData();
 
                 if (bills != null) {
                     this.fullBillList = new ArrayList<>(bills);

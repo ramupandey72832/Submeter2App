@@ -14,6 +14,7 @@ import com.application.baselibrary.ui.utils.ToastMessage;
 import com.application.baselibrary.utils.GenericPermissionHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.rohit.submeter2.fragments.BillFragment;
 import com.rohit.submeter2.utils.ConfigManager;
 import com.rohit.submeter2.fragments.mpin.SetupMpinFragment;
 import com.submeter.service.ServiceManager;
@@ -128,10 +129,10 @@ public class MainActivity extends AppCompatActivity {
                 // NavigationUtils.replaceFragment(this, new RoomsFragment(), containerId);
                 return true;
             } else if (itemId == R.id.report) {
-                // NavigationUtils.replaceFragment(this, new ReportsFragment(), containerId);
+                 NavigationUtils.replaceFragment(this, new ExportImportBillFragment(), containerId);
                 return true;
             } else if (itemId == R.id.billing) {
-                // NavigationUtils.replaceFragment(this, new BillsFragment(), containerId);
+                 NavigationUtils.replaceFragment(this, new BillFragment(), containerId);
                 return true;
             }
             return false;

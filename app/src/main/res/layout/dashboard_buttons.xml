@@ -260,7 +260,7 @@
                     android:focusable="true"
                     android:background="?attr/selectableItemBackground">
                     <FrameLayout
-                        android:id="@+id/mpin"
+                        android:id="@+id/changeMPin"
                         android:layout_width="@dimen/icon_container_size"
                         android:layout_height="@dimen/icon_container_size"
                         android:background="@drawable/bg_circle_icon"

@@ -52,7 +52,7 @@ public class DashboardViewModel extends BaseViewModel {
 
         new Thread(() -> {
             try {
-                List<BillDTO> allBills = billService.getAll();
+                List<BillDTO> allBills = billService.getAll().getData();
 
                 double units = 0.0;
                 double billedAmount = 0.0;
@@ -68,7 +68,7 @@ public class DashboardViewModel extends BaseViewModel {
                     }
                 }
 
-                List<BillDTO> pendingBills = billService.getAllPending();
+                List<BillDTO> pendingBills = billService.getAllPending().getData();
 
                 totalUnits = units;
                 totalBilledAmount = billedAmount;

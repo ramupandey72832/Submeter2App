@@ -1,6 +1,7 @@
 package com.submeter.service.impl.core;
 
 import com.submeter.commonlib.dto.BillDTO;
+import com.submeter.commonlib.response.OperationResult;
 import com.submeter.commonlib.response.ResourceNotFoundException;
 import com.submeter.data.dao.BillDao;
 import com.submeter.data.entities.Bill;
@@ -18,9 +19,10 @@ public class BillServiceImpl implements BillService {
     }
 
     public void add(){}
-    public void updateById(int billId,BillDTO billDTO){
+    public OperationResult<Void> updateById(int billId, BillDTO billDTO){
         // update meterReading , update bill ( Never include payment in here )
         // since this is bill Only , we will do UPDATE BILL and meter reading will be in meterReadingSErvice
+        return null;
     }
     public BillDTO getById(int billId) throws SQLException {
         Bill bill = billDao.getById(billId)
@@ -49,8 +51,8 @@ public class BillServiceImpl implements BillService {
     }
 
 
-    public List<BillDTO> getAll(){ return null;}
-    public List<BillDTO> getAllPending(){
+    public OperationResult<List<BillDTO>> getAll(){ return null;}
+    public OperationResult<List<BillDTO>> getAllPending(){
 
         return null;
     }

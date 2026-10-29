@@ -11,4 +11,6 @@ dependencies {
     implementation(project(":rrAllUtilityLib"))
     implementation(project(":submeterCommonLib"))
     implementation(project(":submeterDataLib"))
+
+    implementation("net.sourceforge.jexcelapi:jxl:2.6.12")
 }

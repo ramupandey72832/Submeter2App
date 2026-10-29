@@ -19,6 +19,7 @@ import com.rohit.submeter2.adapters.PendingBillsAdapter;
 import com.rohit.submeter2.databinding.FragmentDashboardBinding;
 import com.rohit.submeter2.fragments.ConfigurationFragment;
 import com.rohit.submeter2.fragments.mpin.MpinVerificationDialogFragment;
+import com.rohit.submeter2.fragments.mpin.SetupMpinFragment;
 import com.rohit.submeter2.utils.ConfigManager;
 import com.submeter.commonlib.dto.BillDTO;
 import com.submeter.presentation.viewmodel.BaseViewModel;
@@ -205,8 +206,8 @@ public class DashboardFragment extends Fragment implements MpinVerificationDialo
 //        binding.btnScanMeter.setOnClickListener(v ->
 //                NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new QrScanFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));
 //
-//        binding.dashboardSection.mpin.setOnClickListener(v ->
-//                NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new SetupMpinFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));
+        binding.dashboardSection.changeMPin.setOnClickListener(v ->
+                NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new SetupMpinFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));
 
 
 //        binding.dashboardSection.dbTables.setOnClickListener(v->{

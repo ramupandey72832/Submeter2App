@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:fillViewport="true"
+android:background="?attr/colorSurfaceVariant"
+tools:context=".ExportImportBillFragment">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Section 1 Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.App.LabelTitle"
+        android:textSize="22sp"
+        android:text="Export Data"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Date Range Picker Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="20dp">
+
+        <LinearLayout
+            android:id="@+id/btnStartDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_date_picker"
+            android:backgroundTint="?attr/colorSurface"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_calendar"
+                app:tint="?attr/colorOnSurfaceVariant" />
+
+            <TextView
+                android:id="@+id/tvStartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textAppearance="@style/TextAppearance.App.LabelBody"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="14sp"
+                tools:text="01-01-2026" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.App.LabelBody"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="14sp"
+            android:layout_marginHorizontal="12dp"
+            android:text="to" />
+
+        <LinearLayout
+            android:id="@+id/btnEndDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_date_picker"
+            android:backgroundTint="?attr/colorSurface"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_calendar"
+                app:tint="?attr/colorOnSurfaceVariant" />
+
+            <TextView
+                android:id="@+id/tvEndDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textAppearance="@style/TextAppearance.App.LabelBody"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="14sp"
+                tools:text="03-02-2026" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Generate Report Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnExportSelectedRangeBill"
+        style="?attr/materialButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Export Selected Range Bill in Excel File"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:layout_marginBottom="28dp" />
+
+    <!-- Section 2 Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.App.LabelTitle"
+        android:textSize="22sp"
+        android:text="Previous Reports"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Previous Reports List Container -->
+    <com.google.android.material.card.MaterialCardView
+        style="?attr/materialCardViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPreviousReports"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <!-- Generate Latest Bills Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnGetLatestReadableBillDocument"
+        style="?attr/materialButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Get Latest Bills in Readable Document"
+        android:textAllCaps="false"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.App.LabelTitle"
+        android:textSize="22sp"
+        android:text="Excel Data Backup &amp; Restore"
+        android:layout_marginBottom="12dp" />
+
+    <com.google.android.material.card.MaterialCardView
+        style="?attr/materialCardViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnExportAllTableToExcel"
+                style="?attr/materialButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:text="Export All Tables to Excel"
+                android:textAllCaps="false"
+                android:layout_marginBottom="12dp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="database Path"
+                android:id="@+id/tvDatabasePath"
+                android:layout_marginBottom="12dp" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnImportAllTableFromExcel"
+                style="?attr/materialButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:text="Import Data from Excel"
+                android:textAllCaps="false" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        ></View>
+
+</LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

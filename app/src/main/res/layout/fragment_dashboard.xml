@@ -234,7 +234,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
-                tools:listitem="@layout/dashboard_pending_bill_item" />
+                tools:listitem="@layout/pending_bill_item" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
