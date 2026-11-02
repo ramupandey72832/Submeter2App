@@ -2,8 +2,10 @@ package com.submeter.service;
 
 import com.submeter.data.dao.DaoManager;
 import com.submeter.data.dao.impl.SqlLiteBillDao;
+import com.submeter.data.entities.SubmeterAllocation;
 import com.submeter.service.impl.ExportImportServiceImpl;
 import com.submeter.service.impl.core.RoomServiceImpl;
+import com.submeter.service.impl.core.SubmeterAllocationServiceImpl;
 import com.submeter.service.impl.core.SubmeterServiceImpl;
 import com.submeter.service.impl.core.TenantServiceImpl;
 import com.submeter.service.impl.core.TenancyServiceImpl;
@@ -21,6 +23,12 @@ public final class ServiceManager {
     private static BillService billingService;
     private static PaymentService paymentService;
     private static DatabaseSetup databaseSetup;
+
+    public static SubmeterAllocationService getSubmeterAllocationService() {
+        return submeterAllocationService;
+    }
+
+    private static SubmeterAllocationService submeterAllocationService;
 
 
 
@@ -45,6 +53,7 @@ public final class ServiceManager {
         paymentService = new PaymentServiceImpl();
         databaseSetup = new DatabaseSetup();
         exportImportService =new ExportImportServiceImpl();
+        submeterAllocationService = new SubmeterAllocationServiceImpl();
     }
 
     public static RoomService getRoomService() {
@@ -72,7 +81,7 @@ public final class ServiceManager {
         return meterReadingService;
     }
 
-    public static BillService getBillingService() {
+    public static BillService getBillService() {
         ensureInitialized();
         return billingService;
     }

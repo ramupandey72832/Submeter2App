@@ -11,4 +11,11 @@ dependencies {
     implementation(project(":rrAllUtilityLib"))
     implementation(project(":submeterCommonLib"))
     implementation(project(":submeterServiceLib"))
+
+    // Lombok for main code
+    compileOnly("org.projectlombok:lombok:1.18.48")
+    annotationProcessor("org.projectlombok:lombok:1.18.48")
+
+    testCompileOnly("org.projectlombok:lombok:1.18.48")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.48")
 }

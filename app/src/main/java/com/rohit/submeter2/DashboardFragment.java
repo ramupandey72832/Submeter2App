@@ -19,6 +19,7 @@ import com.rohit.submeter2.adapters.PendingBillsAdapter;
 import com.rohit.submeter2.databinding.FragmentDashboardBinding;
 import com.rohit.submeter2.fragments.AllTablesDataFragment;
 import com.rohit.submeter2.fragments.ConfigurationFragment;
+import com.rohit.submeter2.fragments.QrScanRoomFragment;
 import com.rohit.submeter2.fragments.mpin.MpinVerificationDialogFragment;
 import com.rohit.submeter2.fragments.mpin.SetupMpinFragment;
 import com.rohit.submeter2.utils.ConfigManager;
@@ -72,7 +73,7 @@ public class DashboardFragment extends Fragment implements MpinVerificationDialo
 
         // Instantiate isolated ViewModel with operational dependencies explicitly injected
         viewModel = new DashboardViewModel(
-                ServiceManager.getBillingService(),
+                ServiceManager.getBillService(),
                 ServiceManager.getPaymentService()
         );
 
@@ -204,8 +205,8 @@ public class DashboardFragment extends Fragment implements MpinVerificationDialo
 //        binding.dashboardSection.endTenancy.setOnClickListener(v ->
 //                NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new EndRoomTenancyFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));
 //
-//        binding.btnScanMeter.setOnClickListener(v ->
-//                NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new QrScanFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));
+        binding.btnScanMeter.setOnClickListener(v ->
+                NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new QrScanRoomFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));
 //
         binding.dashboardSection.changeMPin.setOnClickListener(v ->
                 NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new SetupMpinFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));

@@ -32,7 +32,7 @@ public class BillViewModel extends BaseViewModel{
 
     // --- UI Actions ---
 
-    public void fetchBills() {
+    public void getBills() {
         setLoading(true);
         setErrorMessage(null);
         setOperationSuccess(false);
@@ -64,7 +64,7 @@ public class BillViewModel extends BaseViewModel{
         }).start();
     }
 
-    public void filterBills(String text) {
+    public void getFilteredBills(String text) {
         if (text == null || text.trim().isEmpty()) {
             this.filteredBillList = new ArrayList<>(this.fullBillList);
             notifyStateChanged();
@@ -111,5 +111,12 @@ public class BillViewModel extends BaseViewModel{
                     notifyStateChanged();
                 }
             }).start();
+    }
+
+    public void addMeterReadingAndGenerateBill(String roomNumber,long readingValue,
+                                               double rate,double fixed,double extra,String note){
+
+        // add first in meter reading then bill table
+
     }
 }

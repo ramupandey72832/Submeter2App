@@ -143,7 +143,7 @@ public class BillFragment extends Fragment {
 
         binding.rvBills.setAdapter(adapter);
 
-        viewModel = new BillViewModel(ServiceManager.getBillingService(),
+        viewModel = new BillViewModel(ServiceManager.getBillService(),
                 ServiceManager.getMeterReadingService());
 
         // Attach listener handles driving runtime state updates securely
@@ -164,12 +164,12 @@ public class BillFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {
                 // Pass filtration actions straight to the business layer logic holder
-                viewModel.filterBills(editable.toString());
+                viewModel.getFilteredBills(editable.toString());
             }
         });
 
         // Trigger asynchronous retrieval loading sweep
-        viewModel.fetchBills();
+        viewModel.getBills();
     }
 
     private void renderUiState() {

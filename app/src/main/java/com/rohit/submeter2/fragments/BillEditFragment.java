@@ -79,7 +79,7 @@ public class BillEditFragment extends Fragment {
 
     private void initializeViewModel() {
         viewModel = new BillViewModel(
-                ServiceManager.getBillingService(),
+                ServiceManager.getBillService(),
                 ServiceManager.getMeterReadingService()
         );
         viewModel.addStateListener(stateListener);

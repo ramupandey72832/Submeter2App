@@ -4,6 +4,12 @@ import com.submeter.commonlib.dto.SubmeterDTO;
 import com.submeter.commonlib.dto.TenancyDTO;
 import com.submeter.commonlib.dto.TenantDTO;
 import com.submeter.commonlib.response.OperationResult;
+import com.submeter.service.MeterReadingService;
+import com.submeter.service.RoomService;
+import com.submeter.service.SubmeterAllocationService;
+import com.submeter.service.SubmeterService;
+import com.submeter.service.TenancyService;
+import com.submeter.service.TenantService;
 import com.submeter.service.impl.core.MeterReadingServiceImpl;
 import com.submeter.service.impl.core.RoomServiceImpl;
 import com.submeter.service.impl.core.TenancyServiceImpl;
@@ -19,67 +25,91 @@ import java.util.Optional;
  * HAVE METER ID)
  */
 
-public class MeterReadingViewModel {
+public class MeterReadingViewModel extends BaseViewModel{
 
-    private final RoomServiceImpl roomService;
-    private final MeterReadingServiceImpl meterReadingService;
-    private final TenancyServiceImpl tenancyService;
+        private final RoomService roomService;
+        private final MeterReadingService meterReadingService;
+        private final TenancyService tenancyService;
+        private final SubmeterAllocationService submeterAllocationService;
+        private final TenantService tenantService;
+        private final SubmeterService submeterService;
 
-    public MeterReadingViewModel(RoomServiceImpl roomService,
-                                 MeterReadingServiceImpl meterReadingService,
-                                 TenancyServiceImpl tenancyService) {
-        this.roomService = roomService;
-        this.meterReadingService = meterReadingService;
-        this.tenancyService = tenancyService;
-    }
+        private MeterReadingUiState uiState;
+
+        public MeterReadingViewModel(RoomService roomService,
+                                     MeterReadingService meterReadingService,
+                                     TenancyService tenancyService,
+                                     SubmeterAllocationService submeterAllocationService,
+                                     TenantService tenantService,
+                                     SubmeterService submeterService) {
+            this.roomService = roomService;
+            this.meterReadingService = meterReadingService;
+            this.tenancyService = tenancyService;
+            this.submeterAllocationService = submeterAllocationService;
+            this.tenantService = tenantService;
+            this.submeterService = submeterService;
+        }
+
+        public MeterReadingUiState getUiState() {
+            return uiState;
+        }
+
+        public void getLatestMeterReadingByRoomNumber(String roomNumber) {
+            if (roomNumber == null || roomNumber.trim().isEmpty()) {
+                setErrorMessage("Room number cannot be empty.");
+                return;
+            }
+
+            setLoading(true);
+
+            new Thread(() -> {
+                try {
+                    //1 . get Room id from Room Table then get the latest Submeter allocation
+                    var roomDTO = roomService.findByRoomNumber(roomNumber);
+                    if(roomDTO.getData() == null){return;}
+
+                    int roomId = roomDTO.getData().getId();
+                    var submeterAllocationDTO = submeterAllocationService.getActiveMeterByRoomId(roomId);
+                    if(submeterAllocationDTO.getData() == null){return;}
+
+                    int meterId = submeterAllocationDTO.getData().getMeterId();
+                    var meterReadingDTO = meterReadingService.getLatestByMeterId(meterId);
+                    if(meterReadingDTO.getData() == null){return;}
+
+                    var tenancyDTO = tenancyService.getByRoomId(roomId);
+                    if(tenancyDTO.getData() == null){return;}
+                    int tenantId = tenancyDTO.getData().getTenantId();
+
+                    var tenantDTO = tenantService.getByTenantId(tenantId);
+                    if(tenantDTO.getData() == null){return;}
+
+                    var SubmeterDTO = submeterService.getById(meterId);
+                    if(SubmeterDTO.getData() == null){return;}
+                    String meterSerialNumber = SubmeterDTO.getData().getMeterSerialNumber();
 
 
-    // --- Clean Action Flow ---
+                    this.uiState = new MeterReadingUiState(
+                            true,
+                            roomNumber,
+                            tenantDTO.getData().getName(),
+                            tenantId,
+                            meterSerialNumber,
+                            meterReadingDTO.getData().getId(),
+                            meterReadingDTO.getData().getReadingValue(),
+                            0,
+                            0
+                    );
 
-//    public void checkRoomDetails(String roomNumber) {
-//        if (roomNumber == null || roomNumber.trim().isEmpty()) {
-//            updateState(new UiState(false, "Validation Error: Room number cannot be blank.", false, "", 0.0, "", ""));
-//            return;
-//        }
-//
-//        roomNumber = roomNumber.trim();
-//
-//        // Show Loading State
-//
-//
-//        // Execute background check (Consider using an ExecutorService or Android Architecture Components)
-//        new Thread(() -> {
-//            try {
-//                // Step 1: Verify Submeter
-//                OperationResult<SubmeterDTO> submeterOpt = roomService.getSubmeterByRoomNumber(roomNumber);
-//                if (!submeterOpt.isSuccess()) {
-//                    emitError("Asset Error: No deployed submeter found for room " + roomNumber);
-//                    return;
-//                }
-//                SubmeterDTO submeter = submeterOpt.getData();
-//
-//                // Step 2: Verify Active Tenancy
-//                TenancyDTO tenancy = tenancyService.findActiveTenancyByRoomNumber(roomNumber);
-//                if (tenancy == null) {
-//                    emitError("Lease Error: There is no active tenant assigned to room " + roomNumber);
-//                    return;
-//                }
-//
-//                // Step 3: Verify Tenant Demographics
-//                Optional<TenantDTO> tenantOpt = tenancyService.findTenantByAadhar(tenancy.getTenantAaddhar());
-//                if (tenantOpt.isEmpty()) {
-//                    emitError("Data Inconsistency: Active occupant records are missing.");
-//                    return;
-//                }
-//
-//                // Step 4: Fetch Historical Data & Publish Success State
-//                double prevReading = meterReadingService.getLatestReading(submeter.getMeterSerialNumber());
-//                TenantDTO tenant = tenantOpt.get();
-//
-//
-//            } catch (Exception e) {
-//                emitError("Critical Verification Failure: " + e.getMessage());
-//            }
-//        }).start();
-//    }
+                    setOperationSuccess(true);
+                    setErrorMessage(null);
+
+                } catch (Exception e) {
+                    this.uiState = null;
+                    setOperationSuccess(false);
+                    setErrorMessage(e.getMessage());
+                } finally {
+                    setLoading(false);
+                }
+            }).start();
+        }
 }

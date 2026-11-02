@@ -7,12 +7,14 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.48/6858f13541bab505384f07053c5a7b539bbfd3e3/lombok-1.18.48.jar" />
         </processorPath>
-        <module name="Submeter2App.submeterDataLib.main" />
         <module name="Submeter2App.rrAllUtilityLib.main" />
         <module name="Submeter2App.submeterCommonLib.main" />
         <module name="Submeter2App.rrAllUtilityLib.test" />
-        <module name="Submeter2App.submeterCommonLib.test" />
         <module name="Submeter2App.submeterDataLib.test" />
+        <module name="Submeter2App.submeterPresentationLib.main" />
+        <module name="Submeter2App.submeterDataLib.main" />
+        <module name="Submeter2App.submeterPresentationLib.test" />
+        <module name="Submeter2App.submeterCommonLib.test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11" />
