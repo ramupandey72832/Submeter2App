@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- ================= ADD ROOM SECTION ================= -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add New Room"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etAddRoomNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Room Number (e.g., 101)"
+            android:inputType="text"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etAddRoomType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Room Type (e.g., Deluxe, Suite)"
+            android:inputType="text"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnSaveRoom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Room"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Divider Line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CCCCCC"
+            android:layout_marginBottom="24dp" />
+
+        <!-- ================= EDIT ROOM SECTION ================= -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Existing Room"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Search by ID -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/etSearchById"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Search by Room ID (e.g., 1)"
+                android:inputType="number" />
+
+            <Button
+                android:id="@+id/btnSearchById"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search ID"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Search by Room Number -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <EditText
+                android:id="@+id/etSearchByRoomNumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Search by Room Number (e.g., 101)"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/btnSearchByRoomNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search No."
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Edit Form Fields (ID, Room Number, and Room Type) -->
+        <EditText
+            android:id="@+id/etEditRoomId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Room ID"
+            android:inputType="number"
+            android:enabled="false"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etEditRoomNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Updated Room Number"
+            android:inputType="text"
+            android:enabled="false"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etEditRoomType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Updated Room Type"
+            android:inputType="text"
+            android:enabled="false"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnUpdateRoom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Update Room"
+            android:enabled="false" />
+
+    </LinearLayout>
+</ScrollView>

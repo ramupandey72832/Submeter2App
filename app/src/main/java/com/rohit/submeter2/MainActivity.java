@@ -1,12 +1,13 @@
 package com.rohit.submeter2;
 
 import android.os.Bundle;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.FragmentActivity;
 
 import com.application.android_ui_templete1.templates.nav_activity.bottom_nav_activity.BottomNavActivityConstant;
 import com.application.baselibrary.ui.utils.NavigationUtils;
@@ -15,13 +16,15 @@ import com.application.baselibrary.utils.GenericPermissionHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rohit.submeter2.fragments.BillFragment;
-import com.rohit.submeter2.utils.ConfigManager;
 import com.rohit.submeter2.fragments.mpin.SetupMpinFragment;
+import com.rohit.submeter2.utils.ConfigManager;
 import com.submeter.service.ServiceManager;
 
 import java.util.Arrays;
 import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+    public static final String TAG = "MainActivity";
 
     private ToastMessage toastMessage;
     public GenericPermissionHelper permissionHelper;
@@ -41,8 +44,7 @@ public class MainActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         initCoreComponents();
-        ServiceManager.initialize();
-        setupDatabase();
+        setupDatabase(); // Handles database & service configuration via ConfigManager
         setupUI();
         handleInitialNavigation();
     }
@@ -51,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         toastMessage = new ToastMessage(this);
         containerId = BottomNavActivityConstant.MAIN_CONTAINER;
 
-        // Permissions Handling
         permissionHelper = new GenericPermissionHelper(this, requiredPermissions, new GenericPermissionHelper.OnPermissionsListener() {
             @Override
             public void onAllPermissionsGranted() {
@@ -70,16 +71,23 @@ public class MainActivity extends AppCompatActivity {
         try {
             String dbUrl = ConfigManager.getDbUrl(this);
             String driver = ConfigManager.getDbDriver(this);
-            if(dbUrl.isEmpty()){
-                ServiceManager.getDatabaseSetup().initializeWithDefault("Android");
-            }else{
-                if(dbUrl == null) {
-                    System.out.println("NULLLLLLLLLLLLLL");
-                }else {
-                    ServiceManager.getDatabaseSetup().initializeDb(dbUrl, null, null, driver);
-                }
+
+            if (dbUrl == null || dbUrl.isEmpty()) {
+                // Build absolute path for Android internal storage
+                java.io.File dbFile = new java.io.File(getFilesDir(), "submeter_bill.db");
+                String absoluteDbUrl = "jdbc:sqldroid:" + dbFile.getAbsolutePath();
+
+                ServiceManager.getDatabaseSetup().initializeDb(absoluteDbUrl, null, null, "org.sqldroid.SQLDroidDriver");
+            } else {
+                ServiceManager.getDatabaseSetup().initializeDb(dbUrl, null, null, driver);
             }
+
+            // Now initialize DAOs and Services after the absolute path connection is active
+//            DaoManager.initialize();
+            ServiceManager.initialize();
+
         } catch (Exception e) {
+            Log.e(TAG, "Error initializing database: " + e.getMessage(), e);
             toastMessage.showError("MainActivity$Error While initializing database", e);
         }
     }
@@ -90,22 +98,19 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(com.application.android_ui_templete1.R.id.bottom_nav_activity_main_bottomNavigationView);
         scanMeterFab = findViewById(com.application.android_ui_templete1.R.id.bottom_nav_activity_main_btn_fab);
 
-        // Edge-to-Edge Window Insets setup
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(com.application.android_ui_templete1.R.id.bottom_nav_activity_main_main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0);
             return insets;
         });
 
-        // FAB Action
         scanMeterFab.setOnClickListener(view -> {
-            // NavigationUtils.replaceFragment(this, new QrScanFragment(), containerId);
+            // TODO: Add scan action here
         });
     }
 
     private void handleInitialNavigation() {
         if (!ConfigManager.isMPinConfigured(this)) {
-            // Fix: Use the same instance where the listener is registered
             SetupMpinFragment setupMpinFragment = new SetupMpinFragment();
             setupMpinFragment.addStateListener(activity ->
                     NavigationUtils.replaceFragment(activity, new DashboardFragment(), containerId)
@@ -129,14 +134,13 @@ public class MainActivity extends AppCompatActivity {
                 // NavigationUtils.replaceFragment(this, new RoomsFragment(), containerId);
                 return true;
             } else if (itemId == R.id.report) {
-                 NavigationUtils.replaceFragment(this, new ExportImportBillFragment(), containerId);
+                NavigationUtils.replaceFragment(this, new ExportImportBillFragment(), containerId);
                 return true;
             } else if (itemId == R.id.billing) {
-                 NavigationUtils.replaceFragment(this, new BillFragment(), containerId);
+                NavigationUtils.replaceFragment(this, new BillFragment(), containerId);
                 return true;
             }
             return false;
         });
     }
 }
-//TODO MAKE THIS CLASS MORE SIMPLE AND SPLIT IF NEEDED

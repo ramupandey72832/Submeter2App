@@ -68,6 +68,10 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.11.0")
     implementation("com.github.smarteist:Android-Image-Slider:1.4.0")
 
+    // ViewModel and LiveData
+    implementation("androidx.lifecycle:lifecycle-viewmodel:2.8.0")
+    implementation("androidx.lifecycle:lifecycle-livedata:2.8.0")
+
 
     implementation(project(":rrAllUtilityLib"))
     implementation(project(":BaseLibrary"))

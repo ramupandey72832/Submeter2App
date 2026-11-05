@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- ================= ADD TENANT SECTION ================= -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add New Tenant"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etAddName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Full Name"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etAddPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Phone Number"
+            android:inputType="phone"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etAddAadhaarNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Aadhaar Number"
+            android:inputType="number"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etAddAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Address"
+            android:inputType="textPostalAddress"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnSaveTenant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Tenant"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Divider Line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CCCCCC"
+            android:layout_marginBottom="24dp" />
+
+        <!-- ================= EDIT TENANT SECTION ================= -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Existing Tenant"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Search by ID -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/etSearchById"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Search by Tenant ID (e.g., 1)"
+                android:inputType="number" />
+
+            <Button
+                android:id="@+id/btnSearchById"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search ID"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Search by Phone Number -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <EditText
+                android:id="@+id/etSearchByAadhaar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Search by Aadhar Number"
+                android:inputType="phone" />
+
+            <Button
+                android:id="@+id/btnSearchByAadhaar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search Aadhaar"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Edit Form Fields -->
+        <EditText
+            android:id="@+id/etEditId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tenant ID"
+            android:inputType="number"
+            android:enabled="false"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etEditName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Updated Name"
+            android:inputType="textPersonName"
+            android:enabled="false"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etEditPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Updated Phone Number"
+            android:inputType="phone"
+            android:enabled="false"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etEditAadhaarNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Updated Aadhaar Number"
+            android:inputType="number"
+            android:enabled="false"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etEditAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Updated Address"
+            android:inputType="textPostalAddress"
+            android:enabled="false"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnUpdateTenant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Update Tenant"
+            android:enabled="false" />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,26 +1,21 @@
 package com.rohit.submeter2.fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.application.android_ui_templete1.templates.nav_activity.bottom_nav_activity.BottomNavActivityConstant;
-
 import com.application.baselibrary.ui.utils.NavigationUtils;
 import com.rohit.submeter2.databinding.FragmentMeterRecordingBinding;
 import com.submeter.commonlib.dto.BillDTO;
-import com.submeter.presentation.viewmodel.MeterReadingViewModel;
-import com.submeter.service.ServiceManager;
 import com.submeter.presentation.viewmodel.MeterReadingUiState;
+import com.submeter.presentation.viewmodel.MeterReadingViewModel;
 import com.submeter.service.ServiceManager;
 
 public class MeterRecordingFragment extends Fragment {
@@ -29,9 +24,7 @@ public class MeterRecordingFragment extends Fragment {
     private MeterReadingViewModel viewModel;
     private MeterReadingUiState currentLoadedState;
 
-    public MeterRecordingFragment() {
-        // Required empty public constructor
-    }
+    public MeterRecordingFragment() {}
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,24 +62,24 @@ public class MeterRecordingFragment extends Fragment {
     }
 
     private void renderUiState() {
-        // Ensure UI manipulations are posted back onto the Main Thread safely
-        requireActivity().runOnUiThread(() -> {
-            // A. Manage Loading Indicator Overlay
-            if (viewModel.isLoading()) {
-                binding.btnSearch.setEnabled(false);
-                // If you have a ProgressBar widget: binding.progressBar.setVisibility(View.VISIBLE);
-                return;
-            }
-            binding.btnSearch.setEnabled(true);
+        if (getActivity() == null || binding == null) return;
 
-            // B. Manage Operational Errors
-            if (viewModel.getErrorMessage() != null) {
-                Toast.makeText(getContext(), viewModel.getErrorMessage(), Toast.LENGTH_LONG).show();
+        requireActivity().runOnUiThread(() -> {
+            // 1. Loading State
+            boolean isLoading = viewModel.isLoading();
+            binding.btnSearch.setEnabled(!isLoading);
+            if (isLoading) return;
+
+            // 2. Error State
+            String errorMsg = viewModel.getErrorMessage();
+            if (errorMsg != null) {
+                Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+                viewModel.clearError(); // <-- CLEAR IT SO IT ONLY SHOWS ONCE
                 setInitialInputLockdown();
                 return;
             }
 
-            // C. Populated Loaded Metrics
+            // 3. Success State
             if (viewModel.isOperationSuccess() && viewModel.getUiState() != null) {
                 this.currentLoadedState = viewModel.getUiState();
 
@@ -102,48 +95,36 @@ public class MeterRecordingFragment extends Fragment {
 
     private void validateAndNavigate() {
         if (currentLoadedState == null) {
-            Toast.makeText(getContext(), "Please scan or look up a room record first.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Please search a room first.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String roomNumber = binding.etRoomNumber.getText().toString().trim();
-        String submeterSerialNumber = binding.etMeterSerialNumber.getText().toString().trim();
         String currentStr = binding.etCurrentMeterReading.getText().toString().trim();
-        String fixedStr = binding.etFixCharge.getText().toString().trim();
-        String rateStr = binding.etRatePerUnit.getText().toString().trim();
-        String extraStr = binding.etExtraCharge.getText().toString().trim();
-        String note = binding.etNote.getText().toString().trim();
 
-        if (roomNumber.isEmpty() || submeterSerialNumber.isEmpty() || currentStr.isEmpty() || fixedStr.isEmpty() || rateStr.isEmpty()) {
-            Toast.makeText(getContext(), "Please populate all fields completely.", Toast.LENGTH_SHORT).show();
+        if (currentStr.isEmpty()) {
+            binding.etCurrentMeterReading.setError("Enter current reading");
             return;
         }
 
-        long currentMeterReading = Long.parseLong(currentStr);
-        long previousMeterReading = currentLoadedState.getPreviousReadingValue();
-        double fixedCharge = Double.parseDouble(fixedStr);
-        double ratePerUnit = Double.parseDouble(rateStr);
-        double extraCharge = extraStr.isEmpty() ? 0.0 : Double.parseDouble(extraStr);
+        long currentReading = Long.parseLong(currentStr);
+        long previousReading = currentLoadedState.getPreviousReadingValue();
 
-        if (currentMeterReading < previousMeterReading) {
-            binding.etCurrentMeterReading.setError("Current reading cannot be lower than the previous reading (" + previousMeterReading + ")!");
+        if (currentReading < previousReading) {
+            binding.etCurrentMeterReading.setError("Cannot be lower than previous (" + previousReading + ")");
             return;
         }
 
-        // DTO Instantiation via the clean Lombok interface patterns
         BillDTO billDTO = BillDTO.builder()
                 .roomNumber(roomNumber)
                 .tenantId(currentLoadedState.getTenantId())
                 .tenantName(currentLoadedState.getTenantName())
-                .meterSerialNumber(submeterSerialNumber)
+                .meterSerialNumber(binding.etMeterSerialNumber.getText().toString().trim())
                 .previousReadingId(currentLoadedState.getPreviousReadingId())
-                .previousReading(previousMeterReading)
-                .currentReadingId(0) // Will be generated post insert query execution
-                .currentReading(currentMeterReading)
-                .ratePerUnit(ratePerUnit)
-                .fixedCharge(fixedCharge)
-                .extraCharge(extraCharge)
-                .note(note)
+                .previousReading(previousReading)
+                .currentReading(currentReading)
+                .ratePerUnit(Double.parseDouble(binding.etRatePerUnit.getText().toString()))
+                .fixedCharge(Double.parseDouble(binding.etFixCharge.getText().toString()))
                 .build();
 
         Fragment targetFragment = BillCreateFragment.newInstance(billDTO);
@@ -165,10 +146,6 @@ public class MeterRecordingFragment extends Fragment {
         binding.etNote.setEnabled(isEnabled);
         binding.btnNext.setEnabled(isEnabled);
         binding.etCurrentMeterReading.setEnabled(isEnabled);
-
-        // Form Fields that are strictly Read-Only for user reference display
-        binding.etMeterSerialNumber.setEnabled(false);
-        binding.etLastMeterReading.setEnabled(false);
     }
 
     @Override

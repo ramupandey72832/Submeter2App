@@ -83,7 +83,7 @@
                     android:focusable="true"
                     android:background="?attr/selectableItemBackground">
                     <FrameLayout
-                        android:id="@+id/addRoom"
+                        android:id="@+id/roomManagement"
                         android:layout_width="@dimen/icon_container_size"
                         android:layout_height="@dimen/icon_container_size"
                         android:background="@drawable/bg_circle_icon"
@@ -119,7 +119,7 @@
                     android:focusable="true"
                     android:background="?attr/selectableItemBackground">
                     <FrameLayout
-                        android:id="@+id/addTenant"
+                        android:id="@+id/addEditTenant"
                         android:layout_width="@dimen/icon_container_size"
                         android:layout_height="@dimen/icon_container_size"
                         android:background="@drawable/bg_circle_icon"
@@ -190,7 +190,7 @@
                     android:focusable="true"
                     android:background="?attr/selectableItemBackground">
                     <FrameLayout
-                        android:id="@+id/replaceSubmeter"
+                        android:id="@+id/submeterAllocation"
                         android:layout_width="@dimen/icon_container_size"
                         android:layout_height="@dimen/icon_container_size"
                         android:background="@drawable/bg_circle_icon"
@@ -225,7 +225,7 @@
                     android:focusable="true"
                     android:background="?attr/selectableItemBackground">
                     <FrameLayout
-                        android:id="@+id/endTenancy"
+                        android:id="@+id/addEditTenancy"
                         android:layout_width="@dimen/icon_container_size"
                         android:layout_height="@dimen/icon_container_size"
                         android:background="@drawable/bg_circle_icon"

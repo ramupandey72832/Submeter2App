@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- ================= ALLOCATE (ADD) SUBMETER SECTION ================= -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Allocate Submeter to Room"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etAddMeterSerialNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Meter Serial Number"
+            android:inputType="number"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etAddRoomNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Room Number"
+            android:inputType="number"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etAddStartingDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Starting Date (YYYY-MM-DD)"
+            android:inputType="date"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etAddEndingDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ending Date (YYYY-MM-DD, Optional)"
+            android:inputType="date"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnSaveAllocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Allocation"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Divider Line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CCCCCC"
+            android:layout_marginBottom="24dp" />
+
+        <!-- ================= UPDATE EXISTING ALLOCATION SECTION ================= -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update Submeter Allocation"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Search Input -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <EditText
+                android:id="@+id/etSearchById"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Search by Allocation ID (e.g., 1)"
+                android:inputType="number" />
+
+            <Button
+                android:id="@+id/btnSearchById"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Edit Form Fields -->
+        <EditText
+            android:id="@+id/etEditId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Allocation ID"
+            android:inputType="number"
+            android:enabled="false"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etEditMeterId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Meter ID"
+            android:inputType="number"
+            android:enabled="false"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etEditRoomId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Room ID"
+            android:inputType="number"
+            android:enabled="false"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etEditStartingDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Starting Date (YYYY-MM-DD)"
+            android:inputType="date"
+            android:enabled="false"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etEditEndingDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ending Date (YYYY-MM-DD)"
+            android:inputType="date"
+            android:enabled="false"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnUpdateAllocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Update Allocation"
+            android:enabled="false" />
+
+    </LinearLayout>
+</ScrollView>

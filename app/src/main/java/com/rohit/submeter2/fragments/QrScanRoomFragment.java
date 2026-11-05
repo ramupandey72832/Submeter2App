@@ -70,7 +70,11 @@ public class QrScanRoomFragment extends Fragment {
             if (roomNumber.isEmpty()) {
                 toastMessage.showError("Please enter a room number");
             } else if (viewModel.isRoomNumberExist(roomNumber) && temporaryImageUri != null) {
-                sendToResultFragment(roomNumber, temporaryImageUri);
+                sendToResultFragment(roomNumber);
+            } else if ( viewModel.isRoomNumberExist(roomNumber)){
+                sendToResultFragment(roomNumber);
+            } else{
+                toastMessage.showError("Room Number is invalid : "+roomNumber);
             }
         });
     }
@@ -142,8 +146,8 @@ public class QrScanRoomFragment extends Fragment {
         v.animate().rotationBy(360).setDuration(500).start();
     }
 
-    public void sendToResultFragment(String result, Uri uri) {
-        if (result == null || uri == null || getActivity() == null) return;
+    public void sendToResultFragment(String result) {
+        if (result == null || getActivity() == null) return;
         Bundle bundle = new Bundle();
         bundle.putString("ARG_QR_DATA", result);
         MeterRecordingFragment resultFragment = new MeterRecordingFragment();

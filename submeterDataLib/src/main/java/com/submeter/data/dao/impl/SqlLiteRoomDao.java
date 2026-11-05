@@ -21,16 +21,7 @@ public class SqlLiteRoomDao implements RoomDao {
         );
     }
 
-    @Override
-    public Optional<Room> findByRoomNumber(String roomNumber)
-            throws SQLException {
 
-        String sql = "SELECT room_id, room_number, room_type\n" +
-                     "FROM rooms\n" +
-                     "WHERE room_number = ?\n";
-
-        return JdbcHelper.executeQuerySingle(sql, this::mapResultSetToRoom, roomNumber);
-    }
 
     @Override
     public Optional<Room> getRoomById(int roomId) throws SQLException {
@@ -50,11 +41,6 @@ public class SqlLiteRoomDao implements RoomDao {
         return JdbcHelper.executeQueryList(sql, this::mapResultSetToRoom);
     }
 
-
-    public List<Room> getVacantRooms()  throws SQLException{
-        String sql = PropertiesLoader.getProperty("queries.properties", "room.get_vacant");
-        return JdbcHelper.executeQueryList(sql, this::mapResultSetToRoom);
-    }
 
     @Override
     public boolean updateRoom(Room room) throws SQLException{
@@ -77,7 +63,7 @@ public class SqlLiteRoomDao implements RoomDao {
      */
     private Room mapResultSetToRoom(ResultSet rs) throws SQLException {
         Room room = new Room();
-        room.setId(rs.getInt("room_id"));
+        room.setId(rs.getInt("id"));
         room.setRoomNumber(rs.getString("room_number"));
         room.setRoomType(rs.getString("room_type"));
         return room;

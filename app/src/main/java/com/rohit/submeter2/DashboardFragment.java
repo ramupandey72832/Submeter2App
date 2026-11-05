@@ -20,6 +20,11 @@ import com.rohit.submeter2.databinding.FragmentDashboardBinding;
 import com.rohit.submeter2.fragments.AllTablesDataFragment;
 import com.rohit.submeter2.fragments.ConfigurationFragment;
 import com.rohit.submeter2.fragments.QrScanRoomFragment;
+import com.rohit.submeter2.fragments.RoomManagementFragment;
+import com.rohit.submeter2.fragments.SubmeterAllocationFragment;
+import com.rohit.submeter2.fragments.SubmeterManagementFragment;
+import com.rohit.submeter2.fragments.TenancyFragment;
+import com.rohit.submeter2.fragments.TenantManagementFragment;
 import com.rohit.submeter2.fragments.mpin.MpinVerificationDialogFragment;
 import com.rohit.submeter2.fragments.mpin.SetupMpinFragment;
 import com.rohit.submeter2.utils.ConfigManager;
@@ -187,23 +192,21 @@ public class DashboardFragment extends Fragment implements MpinVerificationDialo
 
     void dashboardButtons() {
         // Click listeners driving routing destinations
-//        binding.dashboardSection.addRoom.setOnClickListener(v ->
-//                NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new AddRoomFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));
+        binding.dashboardSection.roomManagement.setOnClickListener(v ->
+                NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new RoomManagementFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));
 //
-//        binding.dashboardSection.deleteRoom.setOnClickListener(v ->
-//                NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new DeleteRoomFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));
+        binding.dashboardSection.addEditTenant.setOnClickListener(v ->
+                NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new TenantManagementFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));
 //
-//        binding.dashboardSection.addTenant.setOnClickListener(v ->
-//                NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new AddTenantFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));
+        binding.dashboardSection.addUpdateSubmeter.setOnClickListener(v ->
+                NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new SubmeterManagementFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));
 //
-//        binding.dashboardSection.deleteTenant.setOnClickListener(v ->
-//                NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new DeleteTenantFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));
 //
-//        binding.dashboardSection.replaceSubmeter.setOnClickListener(v ->
-//                NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new ReplaceSubmeterFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));
+        binding.dashboardSection.submeterAllocation.setOnClickListener(v ->
+                NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new SubmeterAllocationFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));
 //
-//        binding.dashboardSection.endTenancy.setOnClickListener(v ->
-//                NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new EndRoomTenancyFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));
+        binding.dashboardSection.addEditTenancy.setOnClickListener(v ->
+                NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new TenancyFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));
 //
         binding.btnScanMeter.setOnClickListener(v ->
                 NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new QrScanRoomFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout));
@@ -215,7 +218,7 @@ public class DashboardFragment extends Fragment implements MpinVerificationDialo
         binding.dashboardSection.dbTables.setOnClickListener(v->{
             NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new AllTablesDataFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout);
         });
-//
+
 //        binding.dashboardSection.databaseMigration.setOnClickListener(v->{
 //            NavigationUtils.replaceFragmentWithBackStack(requireActivity(), new DatabaseMigrationFragment(), com.application.android_ui_templete1.R.id.bottom_nav_activity_main_frame_layout);
 //        });

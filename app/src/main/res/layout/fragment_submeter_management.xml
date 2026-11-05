@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- ================= ADD SUBMETER SECTION ================= -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add New Submeter"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etAddMeterSerialNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Meter Serial Number (e.g., SN-1001)"
+            android:inputType="text"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etAddInitialReading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Initial Reading (e.g., 0)"
+            android:inputType="number"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etAddNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Note (Optional)"
+            android:inputType="text"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnSaveSubmeter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Submeter"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Divider Line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CCCCCC"
+            android:layout_marginBottom="24dp" />
+
+        <!-- ================= EDIT SUBMETER SECTION ================= -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Existing Submeter"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Search by ID -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/etSearchById"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Search by Submeter ID (e.g., 1)"
+                android:inputType="number" />
+
+            <Button
+                android:id="@+id/btnSearchById"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search ID"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Search by Meter Serial Number -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <EditText
+                android:id="@+id/etSearchBySerial"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Search by Serial No. (e.g., SN-1001)"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/btnSearchBySerial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search Serial"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Edit Form Fields -->
+        <EditText
+            android:id="@+id/etEditId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Submeter ID"
+            android:inputType="number"
+            android:enabled="false"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etEditMeterSerialNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Updated Serial Number"
+            android:inputType="text"
+            android:enabled="false"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etEditInitialReading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Updated Initial Reading"
+            android:inputType="number"
+            android:enabled="false"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etEditNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Updated Note"
+            android:inputType="text"
+            android:enabled="false"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnUpdateSubmeter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Update Submeter"
+            android:enabled="false" />
+
+    </LinearLayout>
+</ScrollView>

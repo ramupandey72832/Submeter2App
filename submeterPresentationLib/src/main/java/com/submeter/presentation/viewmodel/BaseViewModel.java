@@ -59,4 +59,9 @@ public abstract class BaseViewModel {
     public boolean isOperationSuccess() {
         return isOperationSuccess;
     }
+
+    public void clearError() {
+        this.errorMessage = null;
+        // No need to call notifyStateChanged() here to avoid extra loops
+    }
 }
