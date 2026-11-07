@@ -3,7 +3,15 @@ package com.submeter.service;
 import com.submeter.commonlib.dto.MeterReadingDTO;
 import com.submeter.commonlib.response.OperationResult;
 
+import java.util.List;
+
 public interface MeterReadingService {
     OperationResult<MeterReadingDTO> getLatestByMeterId(int meterId);
-    public void update(int currentReadingId,long readingValue,String note );
+    OperationResult<MeterReadingDTO> getById(int Id);
+    OperationResult<MeterReadingDTO> getBySubmeterId(int meterId);
+    public OperationResult<Void> update(MeterReadingDTO meterReadingDTO);
+    public OperationResult<Void> add(MeterReadingDTO meterReadingDTO);
+    public OperationResult<Void> delete(int meterReadingId);
+    public OperationResult<List<MeterReadingDTO>> getAll();
+
 }

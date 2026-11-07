@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TenancyDao {
-    boolean insertTenancy(Tenancy tenancy) throws SQLException;
+    boolean add(Tenancy tenancy) throws SQLException;
     Optional<Tenancy> getActiveTenancyByRoomId(int roomId) throws SQLException;
-
-    List<Tenancy> getTenancyHistoryByRoomId(int roomId) throws SQLException;
-    boolean endContract(int roomId, int tenantId, String endDate) throws SQLException;
-    List<Tenancy> getAllTenancies() throws SQLException;
+    Optional<Tenancy> getActiveTenancyByRoomNumber(String roomNumber) throws SQLException;
+    boolean update(Tenancy tenancy) throws SQLException;
+    List<Tenancy> getByRoomId(int roomId) throws SQLException;
+    List<Tenancy> getByRoomNumber(String roomNumber) throws SQLException;
+    boolean endTenancy(Tenancy tenancy) throws SQLException;
+    List<Tenancy> getAll() throws SQLException;
 }

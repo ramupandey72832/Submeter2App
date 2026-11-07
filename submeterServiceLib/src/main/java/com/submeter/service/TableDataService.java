@@ -36,7 +36,7 @@ public class TableDataService {
                 break;
 
             case "TENANTS":
-                for (Tenant t : DaoManager.getTenantDao().getAllTenants()) {
+                for (Tenant t : DaoManager.getTenantDao().getAll()) {
                     rows.add(Arrays.asList(String.valueOf(t.getId()), t.getName(), t.getAadhaarNumber(), t.getPhoneNumber(), t.getAddress()));
                 }
                 break;

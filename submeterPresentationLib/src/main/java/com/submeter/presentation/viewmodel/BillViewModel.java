@@ -1,6 +1,7 @@
 package com.submeter.presentation.viewmodel;
 
 import com.submeter.commonlib.dto.BillDTO;
+import com.submeter.commonlib.dto.MeterReadingDTO;
 import com.submeter.service.BillService;
 import com.submeter.service.MeterReadingService;
 import com.submeter.service.impl.core.BillServiceImpl;
@@ -97,8 +98,15 @@ public class BillViewModel extends BaseViewModel{
             new Thread(() -> {
                 try {
                     BillDTO billDTO = new BillDTO();
+                    billDTO.setId(billId);
+                    // TODO add more
                     billService.updateById(billId,billDTO);
-                    meterReadingService.update(billDTO.getCurrentReadingId(),billDTO.getCurrentReading(),"" );
+                    MeterReadingDTO meterReadingDTO = new MeterReadingDTO();
+                    meterReadingDTO.setMeterId(billDTO.getMeterId());
+                    meterReadingDTO.setReadingValue(billDTO.getCurrentReading());
+                    meterReadingDTO.setId(billDTO.getCurrentReadingId());
+                    meterReadingDTO.setDate("ToDay Date");
+                    meterReadingService.update(meterReadingDTO);
 
                     // Never Include Payment here , we have to use payment id to edit them
                 } catch (Exception e) {

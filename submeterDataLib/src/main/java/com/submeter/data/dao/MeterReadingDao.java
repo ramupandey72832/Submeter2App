@@ -7,18 +7,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MeterReadingDao {
-    int insertReading(MeterReading reading) throws SQLException;
-
-    // Read
-    Optional<MeterReading> getReadingById(Integer readingId) throws SQLException;
-    List<MeterReading> getReadingsByMeterId(int meterId) throws SQLException;
+    int insert(MeterReading reading) throws SQLException;
+    Optional<MeterReading> getById(int readingId) throws SQLException;
+    Optional<List<MeterReading>> getReadingsByMeterId(int meterId) throws SQLException;
     Optional<MeterReading> getLatestReadingByMeterId(int meterId) throws SQLException;
     Optional<MeterReading> getLatestMeterReadingBySerialNumber(String serialNumber) throws SQLException;
     List<MeterReading> getAllReadings() throws SQLException;
 
-    // Update
     boolean updateReading(MeterReading reading) throws SQLException;
-
-    // Delete
     boolean deleteReading(int readingId) throws SQLException;
 }

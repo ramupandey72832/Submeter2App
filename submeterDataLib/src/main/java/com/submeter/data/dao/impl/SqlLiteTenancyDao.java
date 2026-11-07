@@ -13,54 +13,79 @@ import java.util.Optional;
 public class SqlLiteTenancyDao implements TenancyDao {
 
     @Override
-    public boolean insertTenancy(Tenancy tenancy) throws SQLException {
+    public boolean add(Tenancy tenancy) throws SQLException {
         String sql = PropertiesLoader.getProperty("queries.properties", "tenancy.insert");
-        return JdbcHelper.executeUpdate(sql,
+        int generatedId = JdbcHelper.executeInsert(sql,
                 tenancy.getRoomId(),
                 tenancy.getTenantId(),
                 tenancy.getStartDate(),
-                tenancy.getEndDate() // Will accept null for an active check-in
+                tenancy.getEndDate() != null ? tenancy.getEndDate() : ""
         );
+        if (generatedId > 0) {
+            tenancy.setId(generatedId);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public Optional<Tenancy> getActiveTenancyByRoomId(int roomId) throws SQLException {
-        String sql = PropertiesLoader.getProperty("queries.properties","tenancy.get_active_by_room");
+        String sql = PropertiesLoader.getProperty("queries.properties", "tenancy.get_active_by_room_id");
         return JdbcHelper.executeQuerySingle(sql, this::mapResultSetToTenancy, roomId);
     }
 
     @Override
-    public List<Tenancy> getTenancyHistoryByRoomId(int roomId) throws SQLException{
-        String sql = PropertiesLoader.getProperty("queries.properties","tenancy.get_history_by_room");
+    public Optional<Tenancy> getActiveTenancyByRoomNumber(String roomNumber) throws SQLException {
+        String sql = PropertiesLoader.getProperty("queries.properties", "tenancy.get_active_by_room_number");
+        return JdbcHelper.executeQuerySingle(sql, this::mapResultSetToTenancy, roomNumber);
+    }
+
+    @Override
+    public boolean update(Tenancy tenancy) throws SQLException {
+        String sql = PropertiesLoader.getProperty("queries.properties", "tenancy.update");
+        return JdbcHelper.executeUpdate(sql,
+                tenancy.getRoomId(),
+                tenancy.getTenantId(),
+                tenancy.getStartDate(),
+                tenancy.getEndDate() != null ? tenancy.getEndDate() : "",
+                tenancy.getId()
+        );
+    }
+
+    @Override
+    public List<Tenancy> getByRoomId(int roomId) throws SQLException {
+        String sql = PropertiesLoader.getProperty("queries.properties", "tenancy.get_by_room_id");
         return JdbcHelper.executeQueryList(sql, this::mapResultSetToTenancy, roomId);
     }
 
     @Override
-    public boolean endContract(int roomId, int tenantId, String endDate) throws SQLException {
-        String sql = PropertiesLoader.getProperty("queries.properties","tenancy.end_contract");
-        return JdbcHelper.executeUpdate(sql, endDate, roomId, tenantId);
+    public List<Tenancy> getByRoomNumber(String roomNumber) throws SQLException {
+        String sql = PropertiesLoader.getProperty("queries.properties", "tenancy.get_by_room_number");
+        return JdbcHelper.executeQueryList(sql, this::mapResultSetToTenancy, roomNumber);
     }
 
     @Override
-    public List<Tenancy> getAllTenancies()  throws SQLException{
-        String sql = PropertiesLoader.getProperty("queries.properties","tenancy.get_all");
+    public boolean endTenancy(Tenancy tenancy) throws SQLException {
+        String sql = PropertiesLoader.getProperty("queries.properties", "tenancy.end_tenancy");
+        return JdbcHelper.executeUpdate(sql,
+                tenancy.getEndDate(),
+                tenancy.getId()
+        );
+    }
+
+    @Override
+    public List<Tenancy> getAll() throws SQLException {
+        String sql = PropertiesLoader.getProperty("queries.properties", "tenancy.get_all");
         return JdbcHelper.executeQueryList(sql, this::mapResultSetToTenancy);
     }
 
-    /**
-     * Maps a single row from the ResultSet to a Tenancy entity object.
-     */
     private Tenancy mapResultSetToTenancy(ResultSet rs) throws SQLException {
         Tenancy tenancy = new Tenancy();
-        tenancy.setId(rs.getInt("tenancy_id"));
+        tenancy.setId(rs.getInt("id"));
         tenancy.setRoomId(rs.getInt("room_id"));
         tenancy.setTenantId(rs.getInt("tenant_id"));
         tenancy.setStartDate(rs.getString("start_date"));
-
-        // Handle potential NULL value safely for the active end date string
-        String endDate = rs.getString("end_date");
-        tenancy.setEndDate(rs.wasNull() ? null : endDate);
-
+        tenancy.setEndDate(rs.getString("end_date"));
         return tenancy;
     }
 }
