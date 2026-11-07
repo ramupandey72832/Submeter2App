@@ -13,6 +13,7 @@ public class ConfigManager {
     private static  final String KEY_DB_URL = "db_url";
     private static  final String KEY_DB_DRIVER = "db_driver";
     private static  final String KEY_CRYPTO_SECRET_KEY = "crypto_secret_key";
+    private static  final String KEY_DEFAULT_USER= "KEY_DEFAULT_USER";
 
 
     //TODO Make KEYS FOR DBURL , DRIVER , SECRET KEY
@@ -42,6 +43,18 @@ public class ConfigManager {
                 .edit()
                 .putString(KEY_MPIN, mpin)
                 .apply();
+    }
+
+    public static void saveDefaultUser(Context context, String userName) {
+        context.getSharedPreferences(PUBLIC_PREFS, Context.MODE_PRIVATE)
+                .edit()
+                .putString(KEY_DEFAULT_USER, userName)
+                .apply();
+    }
+
+    public static String getDefaultUser(Context context) {
+        return context.getSharedPreferences(PUBLIC_PREFS, Context.MODE_PRIVATE)
+                .getString(KEY_DEFAULT_USER, "admin");
     }
 
     public static String getDbUrl(Context context) {

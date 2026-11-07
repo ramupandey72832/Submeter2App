@@ -110,19 +110,19 @@
             android:layout_marginBottom="8dp" />
 
         <EditText
-            android:id="@+id/etEditMeterId"
+            android:id="@+id/etEditMeterSerialNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Meter ID"
+            android:hint="Meter Number"
             android:inputType="number"
             android:enabled="false"
             android:layout_marginBottom="8dp" />
 
         <EditText
-            android:id="@+id/etEditRoomId"
+            android:id="@+id/etEditRoomNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Room ID"
+            android:hint="Room Number"
             android:inputType="number"
             android:enabled="false"
             android:layout_marginBottom="8dp" />

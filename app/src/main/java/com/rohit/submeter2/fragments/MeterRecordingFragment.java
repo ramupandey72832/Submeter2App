@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.application.android_ui_templete1.templates.nav_activity.bottom_nav_activity.BottomNavActivityConstant;
 import com.application.baselibrary.ui.utils.NavigationUtils;
 import com.rohit.submeter2.databinding.FragmentMeterRecordingBinding;
+import com.rohit.submeter2.utils.ConfigManager;
 import com.submeter.commonlib.dto.BillDTO;
 import com.submeter.presentation.viewmodel.MeterReadingUiState;
 import com.submeter.presentation.viewmodel.MeterReadingViewModel;
@@ -55,7 +56,8 @@ public class MeterRecordingFragment extends Fragment {
 
         binding.btnSearch.setOnClickListener(v -> {
             String roomNumber = binding.etRoomNumber.getText().toString().trim();
-            viewModel.getLatestMeterReadingByRoomNumber(roomNumber);
+            String defaultUser = ConfigManager.getDefaultUser(requireContext());
+            viewModel.getLatestMeterReadingByRoomNumber(roomNumber, defaultUser);
         });
 
         binding.btnNext.setOnClickListener(v -> validateAndNavigate());

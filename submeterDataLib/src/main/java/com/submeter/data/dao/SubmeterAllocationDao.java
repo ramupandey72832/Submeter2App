@@ -9,8 +9,8 @@ import java.util.Optional;
 public interface SubmeterAllocationDao {
     int insertAllocation(SubmeterAllocation allocation) throws SQLException;
     Optional<SubmeterAllocation> getAllocationById(int allocationId) throws SQLException;
-    List<SubmeterAllocation> getActiveAllocationsByMeter(int meterId) throws SQLException;
-    List<SubmeterAllocation> getActiveAllocationsByRoom(int roomId) throws SQLException;
+    List<SubmeterAllocation> getActiveAllocationsByMeterId(int meterId) throws SQLException;
+    List<SubmeterAllocation> getActiveAllocationsByRoomId(int roomId) throws SQLException;
     List<SubmeterAllocation> getAllAllocations() throws SQLException;
     boolean endAllocation(int allocationId, String endDate) throws SQLException;
     boolean updateAllocation(SubmeterAllocation allocation) throws SQLException;

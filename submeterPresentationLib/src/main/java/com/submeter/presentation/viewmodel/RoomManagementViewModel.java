@@ -11,7 +11,6 @@ import com.submeter.commonlib.dto.RoomDTO;
 import com.submeter.commonlib.response.OperationResult;
 import com.submeter.service.RoomService;
 import com.submeter.service.ServiceManager;
-import com.submeter.service.impl.core.RoomServiceImpl;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

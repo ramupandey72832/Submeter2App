@@ -2,6 +2,7 @@ package com.submeter.service;
 
 import com.submeter.data.dao.DaoManager;
 import com.submeter.data.dao.impl.SqlLiteBillDao;
+import com.submeter.data.dao.impl.SqlLiteSubmeterAllocationDao;
 import com.submeter.data.db.DatabaseInitializer;
 import com.submeter.service.impl.ExportImportServiceImpl;
 import com.submeter.service.impl.core.RoomServiceImpl;
@@ -43,7 +44,7 @@ public final class ServiceManager {
 
         // 3. Initialize all services with their respective DAOs safely
         roomService = new RoomServiceImpl(DaoManager.getRoomDao());
-        submeterService = new SubmeterServiceImpl();
+        submeterService = new SubmeterServiceImpl(DaoManager.getSubmeterDao());
         tenantService = new TenantServiceImpl();
         tenancyService = new TenancyServiceImpl();
         meterReadingService = new MeterReadingServiceImpl();
@@ -51,7 +52,8 @@ public final class ServiceManager {
         paymentService = new PaymentServiceImpl();
         databaseSetup = new DatabaseSetup();
         exportImportService = new ExportImportServiceImpl();
-        submeterAllocationService = new SubmeterAllocationServiceImpl();
+        submeterAllocationService = new SubmeterAllocationServiceImpl(DaoManager.getSubmeterAllocationDao() != null
+                ? DaoManager.getSubmeterAllocationDao() : new SqlLiteSubmeterAllocationDao());
     }
 
     private static void ensureInitialized() {

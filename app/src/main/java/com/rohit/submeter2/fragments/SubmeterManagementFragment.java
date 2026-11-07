@@ -1,6 +1,7 @@
 package com.rohit.submeter2.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.submeter.commonlib.dto.SubmeterDTO;
 import com.submeter.presentation.viewmodel.SubmeterManagementViewModel;
 
 public class SubmeterManagementFragment extends Fragment {
+    public static String TAG = "SubmeterManagementFragment";
 
     private SubmeterManagementViewModel viewModel;
     private FragmentSubmeterManagementBinding binding;
@@ -89,6 +91,7 @@ public class SubmeterManagementFragment extends Fragment {
 
         viewModel.getToastMessageLiveData().observe(getViewLifecycleOwner(), message -> {
             if (message != null && !message.isEmpty()) {
+                Log.e(TAG, " " + message);
                 Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
 
                 // Clear fields on successful actions

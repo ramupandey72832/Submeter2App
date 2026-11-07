@@ -1,17 +1,27 @@
 package com.submeter.presentation.viewmodel;
 
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.submeter.commonlib.dto.SubmeterDTO;
+import com.submeter.commonlib.response.OperationResult;
+import com.submeter.service.ServiceManager;
+import com.submeter.service.SubmeterService;
+
+import java.util.List;
 
 public class SubmeterManagementViewModel extends ViewModel {
+
+    private final SubmeterService submeterService;
 
     // LiveData channels for UI state observation
     private final MutableLiveData<SubmeterDTO> submeterLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> toastMessageLiveData = new MutableLiveData<>();
+
+    public SubmeterManagementViewModel(){
+        submeterService = ServiceManager.getSubmeterService();
+    }
 
     public LiveData<SubmeterDTO> getSubmeterLiveData() {
         return submeterLiveData;
@@ -36,10 +46,12 @@ public class SubmeterManagementViewModel extends ViewModel {
             newSubmeter.setInitialReading(initialReading);
             newSubmeter.setNote(note != null ? note.trim() : "");
 
-            // TODO: Call your Repository/DAO to insert into database (e.g., Room DB async)
-            // submeterRepository.insert(newSubmeter);
-
-            toastMessageLiveData.setValue("Submeter added successfully!");
+            OperationResult<Void> result = submeterService.add(newSubmeter);
+            if (result.isSuccess()) {
+                toastMessageLiveData.setValue(result.getMessage());
+            } else {
+                toastMessageLiveData.setValue(result.getMessage());
+            }
         } catch (NumberFormatException e) {
             toastMessageLiveData.setValue("Invalid Initial Reading format");
         }
@@ -54,12 +66,10 @@ public class SubmeterManagementViewModel extends ViewModel {
 
         try {
             int id = Integer.parseInt(idStr.trim());
+            OperationResult<SubmeterDTO> result = submeterService.getById(id);
 
-            // TODO: Replace with actual async/repository call
-            SubmeterDTO found = fetchByIdFromDbOrApi(id);
-
-            if (found != null) {
-                submeterLiveData.setValue(found);
+            if (result.isSuccess() && result.getData() != null) {
+                submeterLiveData.setValue(result.getData());
                 toastMessageLiveData.setValue("Submeter found by ID!");
             } else {
                 submeterLiveData.setValue(null);
@@ -77,12 +87,12 @@ public class SubmeterManagementViewModel extends ViewModel {
             return;
         }
 
-        // TODO: Replace with actual async/repository call
-        SubmeterDTO found = fetchBySerialFromDbOrApi(serial.trim());
 
-        if (found != null) {
-            submeterLiveData.setValue(found);
-            toastMessageLiveData.setValue("Submeter found by Serial Number!");
+        OperationResult<SubmeterDTO> result = submeterService.getBySerialNumber(serial);
+
+        if (result.isSuccess() && result.getData() != null) {
+            submeterLiveData.setValue(result.getData());
+            toastMessageLiveData.setValue("Submeter found by Serial!");
         } else {
             submeterLiveData.setValue(null);
             toastMessageLiveData.setValue("No submeter found with Serial: " + serial);
@@ -108,38 +118,15 @@ public class SubmeterManagementViewModel extends ViewModel {
             currentSubmeter.setInitialReading(reading);
             currentSubmeter.setNote(updatedNote != null ? updatedNote.trim() : "");
 
-            // TODO: Call your Repository/DAO to update database
-            // submeterRepository.update(currentSubmeter);
-
-            toastMessageLiveData.setValue("Submeter updated successfully!");
-            submeterLiveData.setValue(null); // Clear selection after update
+            OperationResult<Void> result = submeterService.updateById(currentSubmeter);
+            if (result.isSuccess()) {
+                toastMessageLiveData.setValue(result.getMessage());
+                submeterLiveData.setValue(null); // Clear selection after update
+            } else {
+                toastMessageLiveData.setValue(result.getMessage());
+            }
         } catch (NumberFormatException e) {
             toastMessageLiveData.setValue("Invalid Initial Reading format");
         }
-    }
-
-    // --- Mock Fetch Methods (Replace with your DAO/Repository) ---
-    private SubmeterDTO fetchByIdFromDbOrApi(int id) {
-        if (id == 1) {
-            SubmeterDTO submeter = new SubmeterDTO();
-            submeter.setId(1);
-            submeter.setMeterSerialNumber("SN-1001");
-            submeter.setInitialReading(150L);
-            submeter.setNote("Main Hall Meter");
-            return submeter;
-        }
-        return null;
-    }
-
-    private SubmeterDTO fetchBySerialFromDbOrApi(String serial) {
-        if (serial.equalsIgnoreCase("SN-1001")) {
-            SubmeterDTO submeter = new SubmeterDTO();
-            submeter.setId(1);
-            submeter.setMeterSerialNumber("SN-1001");
-            submeter.setInitialReading(150L);
-            submeter.setNote("Main Hall Meter");
-            return submeter;
-        }
-        return null;
     }
 }

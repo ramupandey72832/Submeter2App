@@ -15,4 +15,7 @@ public class SubmeterAllocationDTO {
     private int roomId;
     private String startingDate;
     private String endingDate;
+    // Extra display fields
+    private String meterSerialNumber;
+    private String roomNumber;
 }

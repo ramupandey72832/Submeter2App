@@ -57,14 +57,15 @@ public final class JdbcHelper {
 
     public static int executeInsert(String sql, Object... params) throws SQLException {
         Connection conn = getConnection();
-        try (PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             bindParameters(pstmt, params);
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
-                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        return generatedKeys.getInt(1);
+                try (Statement stmt = conn.createStatement();
+                     ResultSet rs = stmt.executeQuery("SELECT last_insert_rowid();")) {
+                    if (rs.next()) {
+                        return rs.getInt(1);
                     }
                 }
             }

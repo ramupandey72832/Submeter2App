@@ -65,7 +65,7 @@ public class RoomManagementFragment extends Fragment {
 
         viewModel.getToastMessageLiveData().observe(getViewLifecycleOwner(), message -> {
             if (message != null && !message.isEmpty()) {
-                Log.e(TAG, "Unable to save room: " + message);
+                Log.e(TAG, " " + message);
 
                 Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
 

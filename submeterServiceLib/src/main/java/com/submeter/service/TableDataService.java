@@ -16,7 +16,7 @@ public class TableDataService {
             case "ROOMS": return Arrays.asList("Room ID", "Room Number", "Room Type");
             case "TENANTS": return Arrays.asList("Tenant ID", "Name", "Aadhaar", "Mobile", "Address");
             case "TENANCIES": return Arrays.asList("Tenancy ID", "Room ID", "Tenant ID", "Start Date", "End Date", "Is Active");
-            case "SUBMETERS": return Arrays.asList("Meter ID", "Room ID", "Serial Number", "Initial Reading");
+            case "SUBMETERS": return Arrays.asList("Meter ID", "Serial Number", "Initial Reading", "Note");
             case "SUBMETERS_ALLOCATION": return Arrays.asList("Allocation ID", "Meter ID", "Room ID", "Start Date", "End Date");
             case "METER_READINGS": return Arrays.asList("Reading ID", "Meter ID", "Reading Value", "Reading Date");
             case "BILLS": return Arrays.asList("Bill ID", "Prev Reading ID", "Curr Reading ID", "Meter ID", "Serial Num",
@@ -53,7 +53,7 @@ public class TableDataService {
             case "SUBMETERS":
                 for (Submeter s : DaoManager.getSubmeterDao().getAllSubmeters()) {
                     rows.add(Arrays.asList(String.valueOf(s.getId()),
-                            s.getMeterSerialNumber(), s.getInitialReading() + " kWh"));
+                            s.getMeterSerialNumber(), s.getInitialReading() + " kWh", s.getNote()));
                 }
                 break;
 

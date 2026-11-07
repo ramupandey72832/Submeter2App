@@ -36,7 +36,7 @@ public class MeterReadingViewModel extends BaseViewModel {
         return uiState;
     }
 
-    public void getLatestMeterReadingByRoomNumber(String roomNumber) {
+    public void getLatestMeterReadingByRoomNumber(String roomNumber, String defaultFallbackTenantName) {
         if (roomNumber == null || roomNumber.trim().isEmpty()) {
             setErrorMessage("Room number cannot be empty.");
             return;
@@ -61,21 +61,32 @@ public class MeterReadingViewModel extends BaseViewModel {
                 int meterId = allocation.getData().getMeterId();
 
                 var tenancy = tenancyService.getByRoomId(roomId);
-                if (tenancy == null || tenancy.getData() == null) {
-                    setErrorMessage("No active tenancy found for this room.");
-                    return;
+                int tenantId = 0;
+                String tenantName = null;
+
+                if (tenancy != null && tenancy.getData() != null) {
+                    tenantId = tenancy.getData().getTenantId();
+                    var tenant = tenantService.getByTenantId(tenantId);
+                    if (tenant != null && tenant.getData() != null) {
+                        tenantName = tenant.getData().getName();
+                    }
                 }
-                int tenantId = tenancy.getData().getTenantId();
+
+                // Fallback to the passed string if tenant name couldn't be resolved
+                if (tenantName == null || tenantName.trim().isEmpty()) {
+                    tenantName = (defaultFallbackTenantName != null && !defaultFallbackTenantName.trim().isEmpty())
+                            ? defaultFallbackTenantName
+                            : "admin";
+                }
 
                 var reading = meterReadingService.getLatestByMeterId(meterId);
-                var tenant = tenantService.getByTenantId(tenantId);
                 var submeter = submeterService.getById(meterId);
 
                 // Success: Set UI State
                 this.uiState = new MeterReadingUiState(
                         true,
                         roomNumber,
-                        tenant != null && tenant.getData() != null ? tenant.getData().getName() : "Unknown",
+                        tenantName,
                         tenantId,
                         submeter != null && submeter.getData() != null ? submeter.getData().getMeterSerialNumber() : "",
                         reading != null && reading.getData() != null ? reading.getData().getId() : 0,

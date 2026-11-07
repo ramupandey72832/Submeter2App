@@ -11,8 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-// Import your auto-generated binding class based on your XML file name:
-// fragment_submeter_allocation.xml -> FragmentSubmeterAllocationBinding
 import com.rohit.submeter2.databinding.FragmentSubmeterAllocationBinding;
 import com.submeter.commonlib.dto.SubmeterAllocationDTO;
 import com.submeter.presentation.viewmodel.SubmeterAllocationViewModel;
@@ -62,8 +60,8 @@ public class SubmeterAllocationFragment extends Fragment {
         binding.btnUpdateAllocation.setOnClickListener(v ->
                 viewModel.updateAllocation(
                         currentSelectedAllocation,
-                        binding.etEditMeterId.getText().toString(),
-                        binding.etEditRoomId.getText().toString(),
+                        binding.etEditMeterSerialNumber.getText().toString(),
+                        binding.etEditRoomNumber.getText().toString(),
                         binding.etEditStartingDate.getText().toString(),
                         binding.etEditEndingDate.getText().toString()
                 )
@@ -75,14 +73,14 @@ public class SubmeterAllocationFragment extends Fragment {
             currentSelectedAllocation = allocation;
             if (allocation != null) {
                 binding.etEditId.setText(String.valueOf(allocation.getId()));
-                binding.etEditMeterId.setText(String.valueOf(allocation.getMeterId()));
-                binding.etEditRoomId.setText(String.valueOf(allocation.getRoomId()));
+                binding.etEditMeterSerialNumber.setText(String.valueOf(allocation.getMeterSerialNumber()));
+                binding.etEditRoomNumber.setText(String.valueOf(allocation.getRoomNumber()));
                 binding.etEditStartingDate.setText(allocation.getStartingDate());
                 binding.etEditEndingDate.setText(allocation.getEndingDate());
 
                 binding.etEditId.setEnabled(false); // ID remains uneditable
-                binding.etEditMeterId.setEnabled(true);
-                binding.etEditRoomId.setEnabled(true);
+                binding.etEditMeterSerialNumber.setEnabled(true);
+                binding.etEditRoomNumber.setEnabled(true);
                 binding.etEditStartingDate.setEnabled(true);
                 binding.etEditEndingDate.setEnabled(true);
                 binding.btnUpdateAllocation.setEnabled(true);
@@ -110,13 +108,13 @@ public class SubmeterAllocationFragment extends Fragment {
 
     private void disableEditForm() {
         binding.etEditId.setText("");
-        binding.etEditMeterId.setText("");
-        binding.etEditRoomId.setText("");
+        binding.etEditMeterSerialNumber.setText("");
+        binding.etEditRoomNumber.setText("");
         binding.etEditStartingDate.setText("");
         binding.etEditEndingDate.setText("");
         binding.etEditId.setEnabled(false);
-        binding.etEditMeterId.setEnabled(false);
-        binding.etEditRoomId.setEnabled(false);
+        binding.etEditMeterSerialNumber.setEnabled(false);
+        binding.etEditRoomNumber.setEnabled(false);
         binding.etEditStartingDate.setEnabled(false);
         binding.etEditEndingDate.setEnabled(false);
         binding.btnUpdateAllocation.setEnabled(false);
