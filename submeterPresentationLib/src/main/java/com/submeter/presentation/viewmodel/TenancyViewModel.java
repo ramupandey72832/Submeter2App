@@ -53,7 +53,7 @@ public class TenancyViewModel extends ViewModel {
             }
             int roomId = roomResult.getData().getId();
 
-            // 2. Resolve Tenant Aadhaar to ID via TenantService (scanning all or using a direct lookup if available)
+            // 2. Resolve Tenant Aadhaar to ID via TenantService
             OperationResult<List<TenantDTO>> tenantsResult = tenantService.getAll();
             if (!tenantsResult.isSuccess() || tenantsResult.getData() == null) {
                 toastMessageLiveData.setValue("Failed to retrieve tenants for validation.");
@@ -66,7 +66,7 @@ public class TenancyViewModel extends ViewModel {
                     .orElse(null);
 
             if (matchedTenant == null) {
-                toastMessageLiveData.setValue("Tenant with Aadhaar '" + targetAadhaar + "' does not exist.");
+                toastMessageLiveData.setValue("Tenant with Aadhaar does not exist.");
                 return;
             }
             int tenantId = matchedTenant.getId();
@@ -91,24 +91,40 @@ public class TenancyViewModel extends ViewModel {
         }
     }
 
-    // --- 2. SEARCH BY ID ---
-    public void searchTenancyById(String idStr) {
-        if (idStr == null || idStr.trim().isEmpty()) {
+    // --- 2. SEARCH BY ID (Resolves IDs to Room Number & Tenant Aadhaar for UI) ---
+    public void searchTenancyById(String tenancyId) {
+        if (tenancyId == null || tenancyId.trim().isEmpty()) {
             toastMessageLiveData.setValue("Enter Tenancy ID to search");
             return;
         }
 
         try {
-            int id = Integer.parseInt(idStr.trim());
-            OperationResult<TenancyDTO> result = tenancyService.getActiveTenancyByRoomId(id); // Alternatively use a getById if exposed
+            int id = Integer.parseInt(tenancyId.trim());
+            OperationResult<TenancyDTO> result = tenancyService.getById(id);
 
-            if (result.isSuccess() && result.getData() != null) {
-                tenancyLiveData.setValue(result.getData());
-                toastMessageLiveData.setValue("Tenancy allocation found!");
-            } else {
+            if (!result.isSuccess() || result.getData() == null) {
                 tenancyLiveData.setValue(null);
-                toastMessageLiveData.setValue("No allocation found with ID: " + id);
+                toastMessageLiveData.setValue("No active allocation found with ID: " + id);
+                return;
             }
+
+            TenancyDTO tenancy = result.getData();
+
+            // Resolve Room ID -> Room Number
+            OperationResult<RoomDTO> roomResult = roomService.getRoomById(tenancy.getRoomId());
+            if (roomResult.isSuccess() && roomResult.getData() != null) {
+                tenancy.setRoomNumber(roomResult.getData().getRoomNumber());
+            }
+
+            // Resolve Tenant ID -> Tenant Aadhaar Number
+            OperationResult<TenantDTO> tenantResult = tenantService.getByTenantId(tenancy.getTenantId());
+            if (tenantResult.isSuccess() && tenantResult.getData() != null) {
+                tenancy.setAadhaarNumber(tenantResult.getData().getAadhaarNumber());
+            }
+
+            tenancyLiveData.setValue(tenancy);
+            toastMessageLiveData.setValue("Tenancy allocation found!");
+
         } catch (NumberFormatException e) {
             toastMessageLiveData.setValue("Invalid Tenancy ID format");
         } catch (Exception e) {
@@ -155,7 +171,7 @@ public class TenancyViewModel extends ViewModel {
                     .orElse(null);
 
             if (matchedTenant == null) {
-                toastMessageLiveData.setValue("Tenant with Aadhaar '" + targetAadhaar + "' does not exist.");
+                toastMessageLiveData.setValue("Tenant with specified Aadhaar does not exist.");
                 return;
             }
             int tenantId = matchedTenant.getId();

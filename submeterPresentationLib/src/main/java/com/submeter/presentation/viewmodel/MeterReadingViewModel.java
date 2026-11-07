@@ -60,7 +60,7 @@ public class MeterReadingViewModel extends BaseViewModel {
                 }
                 int meterId = allocation.getData().getMeterId();
 
-                var tenancy = tenancyService.getByRoomId(roomId);
+                var tenancy = tenancyService.getActiveTenancyByRoomId(roomId);
                 int tenantId = 0;
                 String tenantName = null;
 

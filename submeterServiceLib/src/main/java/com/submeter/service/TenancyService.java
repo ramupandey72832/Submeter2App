@@ -6,6 +6,7 @@ import com.submeter.commonlib.response.OperationResult;
 import java.util.List;
 
 public interface TenancyService {
+    public OperationResult<TenancyDTO> getById(int tenancyId);
     public OperationResult<List<TenancyDTO>> getByRoomId(int roomId);
     public OperationResult<List<TenancyDTO>> getByRoomNumber(String roomNumber);
     public OperationResult<TenancyDTO> getActiveTenancyByRoomNumber(String roomNumber);

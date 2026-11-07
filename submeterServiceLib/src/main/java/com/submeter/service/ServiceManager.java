@@ -4,8 +4,10 @@ import com.submeter.data.dao.DaoManager;
 import com.submeter.data.dao.impl.SqlLiteBillDao;
 import com.submeter.data.dao.impl.SqlLiteMeterReadingDao;
 import com.submeter.data.dao.impl.SqlLiteSubmeterAllocationDao;
+import com.submeter.data.dao.impl.SqlLiteTenancyDao;
 import com.submeter.data.dao.impl.SqlLiteTenantDao;
 import com.submeter.data.db.DatabaseInitializer;
+import com.submeter.service.impl.DatabaseMigrationServiceImpl;
 import com.submeter.service.impl.ExportImportServiceImpl;
 import com.submeter.service.impl.core.RoomServiceImpl;
 import com.submeter.service.impl.core.SubmeterAllocationServiceImpl;
@@ -27,6 +29,16 @@ public final class ServiceManager {
     private static PaymentService paymentService;
     private static DatabaseSetup databaseSetup;
 
+    public static DatabaseMigrationService getDatabaseMigrationService() {
+        ensureInitialized();
+        if (databaseMigrationService == null) {
+            databaseMigrationService = new DatabaseMigrationServiceImpl();
+        }
+        return databaseMigrationService;
+    }
+
+    private static DatabaseMigrationService databaseMigrationService;
+
 
 
     private static SubmeterAllocationService submeterAllocationService;
@@ -40,6 +52,7 @@ public final class ServiceManager {
         if (roomService != null) {
             return; // Already initialized
         }
+        databaseMigrationService = new DatabaseMigrationServiceImpl();
 
         // 2. Ensure DAOs are initialized
         DaoManager.initialize();
@@ -49,7 +62,8 @@ public final class ServiceManager {
         submeterService = new SubmeterServiceImpl(DaoManager.getSubmeterDao());
         tenantService = new TenantServiceImpl(DaoManager.getTenantDao() != null
                 ? DaoManager.getTenantDao() : new SqlLiteTenantDao());
-        tenancyService = new TenancyServiceImpl();
+        tenancyService = new TenancyServiceImpl(DaoManager.getTenancyDao() != null
+                ? DaoManager.getTenancyDao() : new SqlLiteTenancyDao());
         meterReadingService = new MeterReadingServiceImpl(DaoManager.getMeterReadingDao() != null
                 ? DaoManager.getMeterReadingDao() : new SqlLiteMeterReadingDao());
         billingService = new BillServiceImpl(DaoManager.getBillDao() != null ? DaoManager.getBillDao() : new SqlLiteBillDao());

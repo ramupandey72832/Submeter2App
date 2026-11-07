@@ -4,6 +4,8 @@ import com.example.rrallutilitylib.db.DatabaseConnection;
 import com.submeter.data.dao.DbMigrationDao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -51,6 +53,38 @@ public class SqlLiteDbMigrationDao implements DbMigrationDao {
             );
 
             return true;
+        }
+    }
+    @Override
+    public boolean checkMetadataKeyExists(String key) throws SQLException {
+        String sql = "SELECT 1 FROM app_metadata WHERE key = ?;";
+        Connection conn = DatabaseConnection.getConnection();
+
+        if (conn == null) {
+            throw new SQLException("Database connection could not be retrieved.");
+        }
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, key);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next(); // Returns true if the key exists in the table
+            }
+        }
+    }
+
+    @Override
+    public void setMetadataKey(String key, String value) throws SQLException {
+        String sql = "INSERT OR REPLACE INTO app_metadata (key, value) VALUES (?, ?);";
+        Connection conn = DatabaseConnection.getConnection();
+
+        if (conn == null) {
+            throw new SQLException("Database connection could not be retrieved.");
+        }
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, key);
+            pstmt.setString(2, value);
+            pstmt.executeUpdate();
         }
     }
 }

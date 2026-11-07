@@ -48,6 +48,7 @@ public final class SchemaInitializer {
         execute("schema.create_bills_table");
         execute("schema.create_submeter_allocation_table");
         execute("schema.create_payments_table");
+        execute("schema.create_app_metadata");
 
 //        execute("schema.create_bill_summaries_view");
     }

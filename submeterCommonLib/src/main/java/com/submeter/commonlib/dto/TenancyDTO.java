@@ -15,4 +15,7 @@ public class TenancyDTO {
     private int tenantId;
     private String StartDate;
     private String endDate;
+    // Extra display fields
+    private String aadhaarNumber;
+    private String roomNumber;
 }

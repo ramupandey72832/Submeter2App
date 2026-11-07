@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface TenancyDao {
     boolean add(Tenancy tenancy) throws SQLException;
+    Optional<Tenancy> getById(int tenancyId) throws SQLException;
     Optional<Tenancy> getActiveTenancyByRoomId(int roomId) throws SQLException;
     Optional<Tenancy> getActiveTenancyByRoomNumber(String roomNumber) throws SQLException;
     boolean update(Tenancy tenancy) throws SQLException;

@@ -27,6 +27,11 @@ public class SqlLiteTenantDao implements TenantDao {
         }
         return false;
     }
+    @Override
+    public void insertDefaultTenantIfNotExists() throws SQLException {
+        String sql = PropertiesLoader.getProperty("queries.properties", "tenant.insert_default");
+        JdbcHelper.executeUpdate(sql);
+    }
 
     @Override
     public Optional<Tenant> getById(int tenantId) throws SQLException {

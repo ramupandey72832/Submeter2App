@@ -114,6 +114,25 @@ public class TenancyServiceImpl implements TenancyService {
     }
 
     @Override
+    public OperationResult<TenancyDTO> getById(int tenancyId) {
+        if (tenancyId <= 0) {
+            return OperationResult.failure("Invalid Tenancy ID.");
+        }
+
+        try {
+            Optional<Tenancy> optional = tenancyDao.getById(tenancyId);
+            if (optional.isEmpty()) {
+                return OperationResult.failure("Tenancy not found with ID: " + tenancyId);
+            }
+
+            TenancyDTO dto = mapEntityToDto(optional.get());
+            return OperationResult.success(dto, "Tenancy retrieved successfully.");
+        } catch (Exception e) {
+            return OperationResult.failure("Error retrieving tenancy: " + e.getMessage());
+        }
+    }
+
+    @Override
     public OperationResult<List<TenancyDTO>> getByRoomId(int roomId) {
         if (roomId <= 0) {
             return OperationResult.failure("Invalid Room ID.");

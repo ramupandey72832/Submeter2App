@@ -15,4 +15,5 @@ public interface TenantDao {
     boolean update(Tenant tenant) throws SQLException;
 
     boolean delete(int tenantId) throws SQLException;
+    void insertDefaultTenantIfNotExists() throws SQLException;
 }

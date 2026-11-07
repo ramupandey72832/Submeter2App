@@ -82,8 +82,8 @@ public class TenancyFragment extends Fragment {
             currentSelectedTenancy = tenancy;
             if (tenancy != null) {
                 binding.etEditId.setText(String.valueOf(tenancy.getId()));
-                binding.etEditRoomNumber.setText(String.valueOf(tenancy.getRoomId()));
-                binding.etEditTenantAadhaar.setText(String.valueOf(tenancy.getTenantId()));
+                binding.etEditRoomNumber.setText(String.valueOf(tenancy.getRoomNumber()));
+                binding.etEditTenantAadhaar.setText(String.valueOf(tenancy.getAadhaarNumber()));
                 binding.etEditStartDate.setText(tenancy.getStartDate());
                 binding.etEditEndDate.setText(tenancy.getEndDate());
 

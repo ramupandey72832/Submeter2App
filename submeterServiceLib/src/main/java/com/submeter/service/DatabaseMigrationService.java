@@ -4,4 +4,6 @@ import com.submeter.commonlib.response.OperationResult;
 
 public interface DatabaseMigrationService {
     OperationResult<Void> migrationDb();
+    OperationResult<Void> executeOneTimeInitializations();
+
 }

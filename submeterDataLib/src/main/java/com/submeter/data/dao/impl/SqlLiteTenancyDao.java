@@ -29,6 +29,12 @@ public class SqlLiteTenancyDao implements TenancyDao {
     }
 
     @Override
+    public Optional<Tenancy> getById(int tenancyId) throws SQLException {
+        String sql = PropertiesLoader.getProperty("queries.properties", "tenancy.get_by_id");
+        return JdbcHelper.executeQuerySingle(sql, this::mapResultSetToTenancy, tenancyId);
+    }
+
+    @Override
     public Optional<Tenancy> getActiveTenancyByRoomId(int roomId) throws SQLException {
         String sql = PropertiesLoader.getProperty("queries.properties", "tenancy.get_active_by_room_id");
         return JdbcHelper.executeQuerySingle(sql, this::mapResultSetToTenancy, roomId);

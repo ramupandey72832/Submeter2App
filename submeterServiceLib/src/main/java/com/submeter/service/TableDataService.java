@@ -42,7 +42,7 @@ public class TableDataService {
                 break;
 
             case "TENANCIES":
-                for (Tenancy ty : DaoManager.getTenancyDao().getAllTenancies()) {
+                for (Tenancy ty : DaoManager.getTenancyDao().getAll()) {
                     rows.add(Arrays.asList(
                             String.valueOf(ty.getId()), String.valueOf(ty.getRoomId()), String.valueOf(ty.getTenantId()), ty.getStartDate(),
                             ty.getEndDate() != null ? ty.getEndDate() : "--", ty.getEndDate() == null ? "YES" : "NO"
