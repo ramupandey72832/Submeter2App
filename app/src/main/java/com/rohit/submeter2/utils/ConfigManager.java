@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.rohit.submeter2.R;
 import com.example.rrallutilitylib.util.CryptoHelper;
+import com.submeter.service.ServiceManager;
 
 public class ConfigManager {
     public static final String PUBLIC_PREFS = "db_public_config";
@@ -13,7 +14,7 @@ public class ConfigManager {
     private static  final String KEY_DB_URL = "db_url";
     private static  final String KEY_DB_DRIVER = "db_driver";
     private static  final String KEY_CRYPTO_SECRET_KEY = "crypto_secret_key";
-    private static  final String KEY_DEFAULT_USER= "KEY_DEFAULT_USER";
+    private static  final String KEY_DEFAULT_TENANT_NAME= "KEY_DEFAULT_TENANT_NAME";
 
 
     //TODO Make KEYS FOR DBURL , DRIVER , SECRET KEY
@@ -45,16 +46,16 @@ public class ConfigManager {
                 .apply();
     }
 
-    public static void saveDefaultUser(Context context, String userName) {
+    public static void saveDefaultTenantName(Context context, String userName) {
         context.getSharedPreferences(PUBLIC_PREFS, Context.MODE_PRIVATE)
                 .edit()
-                .putString(KEY_DEFAULT_USER, userName)
+                .putString(KEY_DEFAULT_TENANT_NAME, userName)
                 .apply();
     }
 
-    public static String getDefaultUser(Context context) {
+    public static String getDefaultTenantName(Context context) {
         return context.getSharedPreferences(PUBLIC_PREFS, Context.MODE_PRIVATE)
-                .getString(KEY_DEFAULT_USER, "admin");
+                .getString(KEY_DEFAULT_TENANT_NAME, "admin");
     }
 
     public static String getDbUrl(Context context) {
@@ -76,12 +77,13 @@ public class ConfigManager {
         return prefs.getString(KEY_CRYPTO_SECRET_KEY, defaultSecretKey);
     }
 
-    public static void saveConfig(Context context, String url, String driver, String secretKey) {
+    public static void saveConfig(Context context, String url, String driver, String secretKey,String defaultTenantName) {
         context.getSharedPreferences(PUBLIC_PREFS, Context.MODE_PRIVATE)
                 .edit()
                 .putString(KEY_DB_URL, url)
                 .putString(KEY_DB_DRIVER, driver)
                 .putString(KEY_CRYPTO_SECRET_KEY, secretKey)
+                .putString(KEY_DEFAULT_TENANT_NAME, defaultTenantName)
                 .apply();
     }
 

@@ -56,7 +56,7 @@ public class MeterRecordingFragment extends Fragment {
 
         binding.btnSearch.setOnClickListener(v -> {
             String roomNumber = binding.etRoomNumber.getText().toString().trim();
-            String defaultUser = ConfigManager.getDefaultUser(requireContext());
+            String defaultUser = ConfigManager.getDefaultTenantName(requireContext());
             viewModel.getLatestMeterReadingByRoomNumber(roomNumber, defaultUser);
         });
 

@@ -12,6 +12,7 @@ import java.util.Optional;
 
 public class SqlLiteBillDao implements BillDao {
 
+
     @Override
     public boolean insert(Bill bill) throws SQLException {
         String sql = PropertiesLoader.getProperty("queries.properties", "bill.insert");
@@ -30,6 +31,7 @@ public class SqlLiteBillDao implements BillDao {
                 bill.getFixedCharge(),
                 bill.getExtraCharge(),
                 bill.getTotalAmount(),
+                bill.getBalance(), // Added balance
                 bill.getNote(),
                 bill.getBillingDate()
         );
@@ -59,10 +61,18 @@ public class SqlLiteBillDao implements BillDao {
                 bill.getFixedCharge(),
                 bill.getExtraCharge(),
                 bill.getTotalAmount(),
+                bill.getBalance(), // Added balance
                 bill.getNote(),
                 bill.getBillingDate(),
                 bill.getId()
         );
+    }
+
+    // Add this method to query pending bills instantly via balance
+    @Override
+    public List<Bill> getPendingBills() throws SQLException {
+        String sql = PropertiesLoader.getProperty("queries.properties", "bill.get_pending");
+        return JdbcHelper.executeQueryList(sql, this::mapResultSetToBill);
     }
 
     @Override

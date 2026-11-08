@@ -27,4 +27,5 @@ public class Bill {
     private double totalAmount;
     private String note;
     private String billingDate;
+    private double balance; // Added balance field
 }

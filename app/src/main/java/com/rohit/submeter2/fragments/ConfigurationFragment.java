@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.rohit.submeter2.adapters.SimpleListAdapter;
 import com.rohit.submeter2.databinding.FragmentConfigurationBinding;
 import com.rohit.submeter2.utils.ConfigManager;
+import com.submeter.commonlib.dto.TenantDTO;
 import com.submeter.service.ServiceManager;
 
 import java.io.File;
@@ -57,23 +58,27 @@ public class ConfigurationFragment extends Fragment {
         binding.etDbUrl.setText(ConfigManager.getDbUrl(context));
         binding.etDbDriver.setText(ConfigManager.getDbDriver(context));
         binding.etSecretKey.setText(ConfigManager.getSecretKey(context));
+        binding.etDefaultTenant.setText(ConfigManager.getDefaultTenantName(context));
     }
 
     private void saveConfig() {
         String url = binding.etDbUrl.getText().toString().trim();
         String driver = binding.etDbDriver.getText().toString().trim();
         String secretKey = binding.etSecretKey.getText().toString().trim();
+        String defaultTenantName = binding.etDefaultTenant.getText().toString().trim();
 
-        if (url.isEmpty() || driver.isEmpty() || secretKey.isEmpty()) {
+        if (url.isEmpty() || driver.isEmpty() || secretKey.isEmpty() || defaultTenantName.isEmpty()) {
             Toast.makeText(getContext(), "All parameters are mandatory requirements.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         Context context = requireContext();
-        ConfigManager.saveConfig(context, url, driver, secretKey);
+        ConfigManager.saveConfig(context, url, driver, secretKey,defaultTenantName);
 
         // 2. Initialize database engine with error handling
         try {
+            TenantDTO defaultTenant = new TenantDTO(1,defaultTenantName,"","123456789","");
+            ServiceManager.getTenantService().setDefaultTenant(defaultTenant);
             ServiceManager.getDatabaseSetup().initializeDb(url, null, null, driver);
             Toast.makeText(context, "Configurations saved. Connection engine re-initialized.", Toast.LENGTH_LONG).show();
         } catch (Exception e) {

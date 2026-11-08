@@ -222,6 +222,8 @@ public class BillViewModel extends ViewModel {
                 newBill.setExtraCharge(extra);
                 newBill.setBillingDate(currentDate);
                 newBill.setNote(note);
+                newBill.setTotalAmount(newBill.getTotalAmount());
+                newBill.setBalance(newBill.getTotalAmount());
 
                 System.out.printf("BillDTO_Debug "+ newBill.toString());
 

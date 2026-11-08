@@ -61,6 +61,36 @@ public class TenantServiceImpl implements TenantService {
         }
     }
 
+
+    @Override
+    public OperationResult<Void> setDefaultTenant(TenantDTO tenantDTO) {
+        if (tenantDTO == null || tenantDTO.getId() <= 0) {
+            return OperationResult.failure("Valid Tenant details are required to set as default.");
+        }
+
+        try {
+            // 1. Verify if the tenant exists in the database
+            Optional<Tenant> existingTenantOpt = tenantDao.getById(tenantDTO.getId());
+            if (!existingTenantOpt.isPresent()) {
+                return OperationResult.failure("Tenant with ID " + tenantDTO.getId() + " does not exist.");
+            }
+
+
+            // Standard update implementation using mapped entity:
+            Tenant tenant = mapDtoToEntity(tenantDTO);
+            boolean updated = tenantDao.update(tenant);
+
+            if (updated) {
+                return OperationResult.success(null, "Default tenant updated successfully.");
+            } else {
+                return OperationResult.failure("Failed to update default tenant in the database.");
+            }
+
+        } catch (Exception e) {
+            return OperationResult.failure("Database error while setting default tenant: " + e.getMessage());
+        }
+    }
+
     @Override
     public OperationResult<TenantDTO> getByTenantAadhaar(String aadhaar) {
 

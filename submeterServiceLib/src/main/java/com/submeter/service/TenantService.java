@@ -9,6 +9,7 @@ public interface TenantService {
 
     OperationResult<TenantDTO> getByTenantId(int tenantId);
     OperationResult<TenantDTO> getDefaultTenant();
+    OperationResult<Void> setDefaultTenant(TenantDTO tenantDTO);
     OperationResult<TenantDTO> getByTenantAadhaar(String aadhaar);
     OperationResult<Void> add(TenantDTO tenantDTO);
     OperationResult<List<TenantDTO>> getAll();

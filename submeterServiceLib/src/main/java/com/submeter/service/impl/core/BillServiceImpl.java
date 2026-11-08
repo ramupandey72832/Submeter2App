@@ -37,15 +37,25 @@ public class BillServiceImpl implements BillService {
     @Override
     public OperationResult<List<BillDTO>> getAllPending() {
         try {
-            // Assuming pending bills can be queried or filtered based on your business logic
-            // (e.g., matching a status or checking unpaid records). Adjust query as needed.
-            List<Bill> bills = billDao.getAll();
-            List<BillDTO> pendingDtos = bills.stream()
-                    .filter(b -> b.getNote() != null && b.getNote().contains("PENDING")) // Example filter condition
-                    .map(this::mapToDTO)
-                    .collect(Collectors.toList());
-            return OperationResult.success(pendingDtos, "Pending bills retrieved successfully.");
+            // Fetch only bills with an outstanding balance directly from the DAO
+            List<Bill> pendingBills = billDao.getPendingBills();
+
+            if (pendingBills == null || pendingBills.isEmpty()) {
+                return OperationResult.success(new ArrayList<>(), "No pending bills found.");
+            }
+
+            List<BillDTO> billDTOs = new ArrayList<>();
+            for (Bill bill : pendingBills) {
+                BillDTO dto = mapToDTO(bill); // Use your existing entity-to-DTO mapper
+                // Ensure your BillDTO also carries the balance value to display in the UI
+                dto.setBalance(bill.getBalance());
+                billDTOs.add(dto);
+            }
+
+            return OperationResult.success(billDTOs, "Pending bills retrieved successfully.");
         } catch (SQLException e) {
+            return OperationResult.failure("Database error while fetching pending bills: " + e.getMessage());
+        } catch (Exception e) {
             return OperationResult.failure("Failed to retrieve pending bills: " + e.getMessage());
         }
     }
@@ -122,6 +132,7 @@ public class BillServiceImpl implements BillService {
         dto.setTotalAmount(bill.getTotalAmount());
         dto.setNote(bill.getNote());
         dto.setBillingDate(bill.getBillingDate());
+        dto.setBalance(bill.getBalance());
         return dto;
     }
 
@@ -145,6 +156,7 @@ public class BillServiceImpl implements BillService {
         bill.setTotalAmount(dto.getTotalAmount());
         bill.setNote(dto.getNote());
         bill.setBillingDate(dto.getBillingDate());
+        bill.setBalance(dto.getBalance());
         return bill;
     }
 }

@@ -93,6 +93,6 @@ public class DashboardViewModel extends BaseViewModel {
     public void payBill(int billId,double amount,String paymentDate,String note){
         PaymentDTO paymentDTO =  PaymentDTO.builder().id(0).billId(billId).amountPaid(amount).
                 paymentDate(paymentDate).note(note).build();
-        paymentService.add(paymentDTO);
+        paymentService.addPayment(paymentDTO);
     }
 }
