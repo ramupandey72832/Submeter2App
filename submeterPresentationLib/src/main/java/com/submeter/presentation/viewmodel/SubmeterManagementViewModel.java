@@ -79,7 +79,7 @@ public class SubmeterManagementViewModel extends ViewModel {
             initialReadingDto.setDate(currentDate);
             initialReadingDto.setImageUrlOrPath(""); // Default empty or placeholder
 
-            OperationResult<Void> readingResult = meterReadingService.add(initialReadingDto);
+            OperationResult<Integer> readingResult = meterReadingService.add(initialReadingDto);
             if (readingResult.isSuccess()) {
                 toastMessageLiveData.setValue("Submeter and initial reading added successfully!");
             } else {

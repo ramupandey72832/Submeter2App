@@ -50,7 +50,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         // Check metadata or system states asynchronously in the background
         checkInitializationStatusAsync();
 
-        boolean isTutorialSeen = ConfigManager.isTutorialSeen(this);
+//        boolean isTutorialSeen = ConfigManager.isTutorialSeen(this);
+        boolean isTutorialSeen = true; // Make it true to bypass Guide / Tutorial screen
         if (isTutorialSeen) {
             Intent targetIntent = new Intent(SplashScreenActivity.this, MainActivity.class);
             startActivity(targetIntent);
@@ -88,6 +89,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     private void checkInitializationStatusAsync() {
         Executors.newSingleThreadExecutor().execute(() -> {
             try {
+                setupDatabase();
                 DatabaseMigrationService migrationService = ServiceManager.getDatabaseMigrationService();
 
                 if (migrationService == null) {
@@ -106,5 +108,29 @@ public class SplashScreenActivity extends AppCompatActivity {
                 Log.e(TAG, "Error executing one-time initializations: " + e.getMessage(), e);
             }
         });
+    }
+
+    private void setupDatabase() {
+        try {
+            String dbUrl = ConfigManager.getDbUrl(this);
+            String driver = ConfigManager.getDbDriver(this);
+
+            if (dbUrl == null || dbUrl.isEmpty()) {
+                // Build absolute path for Android internal storage
+                java.io.File dbFile = new java.io.File(getFilesDir(), "submeter_bill.db");
+                String absoluteDbUrl = "jdbc:sqldroid:" + dbFile.getAbsolutePath();
+
+                ServiceManager.getDatabaseSetup().initializeDb(absoluteDbUrl, null, null, "org.sqldroid.SQLDroidDriver");
+            } else {
+                ServiceManager.getDatabaseSetup().initializeDb(dbUrl, null, null, driver);
+            }
+
+            // Now initialize DAOs and Services after the absolute path connection is active
+//            DaoManager.initialize();
+            ServiceManager.initialize();
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error initializing database: " + e.getMessage(), e);
+        }
     }
 }

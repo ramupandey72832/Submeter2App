@@ -121,12 +121,14 @@ public class MeterRecordingFragment extends Fragment {
                 .roomNumber(roomNumber)
                 .tenantId(currentLoadedState.getTenantId())
                 .tenantName(currentLoadedState.getTenantName())
-                .meterSerialNumber(binding.etMeterSerialNumber.getText().toString().trim())
+                .meterSerialNumber(currentLoadedState.getSerialNumber())
+                .meterId(currentLoadedState.getMeterId())
                 .previousReadingId(currentLoadedState.getPreviousReadingId())
                 .previousReading(previousReading)
                 .currentReading(currentReading)
                 .ratePerUnit(Double.parseDouble(binding.etRatePerUnit.getText().toString()))
                 .fixedCharge(Double.parseDouble(binding.etFixCharge.getText().toString()))
+                .note(binding.etNote.getText().toString())
                 .build();
 
         Fragment targetFragment = BillCreateFragment.newInstance(billDTO);

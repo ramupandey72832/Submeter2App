@@ -8,5 +8,7 @@ import java.util.List;
 public interface BillService {
     public OperationResult<List<BillDTO>> getAll();
     public OperationResult<List<BillDTO>> getAllPending();
-    public OperationResult<Void> updateById(int billId,BillDTO billDTO);
+    public OperationResult<Void> update(BillDTO billDTO);
+    public OperationResult<Void> add(BillDTO billDTO);
+    public OperationResult<BillDTO> getById(int billId);
 }

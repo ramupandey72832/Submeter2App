@@ -13,6 +13,7 @@ public class TableDataService {
 
     public List<String> getTableHeaders(String tableName) {
         switch (tableName.toUpperCase()) {
+            case "APP_METADATA" : return Arrays.asList("KEY","VALUE");
             case "ROOMS": return Arrays.asList("Room ID", "Room Number", "Room Type");
             case "TENANTS": return Arrays.asList("Tenant ID", "Name", "Aadhaar", "Mobile", "Address");
             case "TENANCIES": return Arrays.asList("Tenancy ID", "Room ID", "Tenant ID", "Start Date", "End Date", "Is Active");
@@ -29,6 +30,12 @@ public class TableDataService {
         List<List<String>> rows = new ArrayList<>();
 
         switch (tableName.toUpperCase()) {
+            case "APP_METADATA":
+                for (AppMetaData a : DaoManager.getAppMetaDataDao().getAll()) {
+                    rows.add(Arrays.asList(String.valueOf(a.getKey()), a.getValue()));
+                }
+                break;
+
             case "ROOMS":
                 for (Room r : DaoManager.getRoomDao().getAllRooms()) {
                     rows.add(Arrays.asList(String.valueOf(r.getId()), r.getRoomNumber(), r.getRoomType()));
@@ -66,7 +73,7 @@ public class TableDataService {
                 break;
 
             case "BILLS":
-                for (Bill b : DaoManager.getBillDao().getAllBills()) {
+                for (Bill b : DaoManager.getBillDao().getAll()) {
                     rows.add(Arrays.asList(
                             String.valueOf(b.getId()), String.valueOf(b.getPreviousReadingId()), String.valueOf(b.getCurrentReadingId()),
                             String.valueOf(b.getMeterId()), b.getMeterSerialNumber(), String.valueOf(b.getTenantId()), b.getTenantName(),

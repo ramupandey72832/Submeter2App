@@ -25,7 +25,7 @@ public final class ServiceManager {
     private static TenantService tenantService;
     private static TenancyService tenancyService;
     private static MeterReadingService meterReadingService;
-    private static BillService billingService;
+    private static BillService billService;
     private static PaymentService paymentService;
     private static DatabaseSetup databaseSetup;
 
@@ -66,7 +66,7 @@ public final class ServiceManager {
                 ? DaoManager.getTenancyDao() : new SqlLiteTenancyDao());
         meterReadingService = new MeterReadingServiceImpl(DaoManager.getMeterReadingDao() != null
                 ? DaoManager.getMeterReadingDao() : new SqlLiteMeterReadingDao());
-        billingService = new BillServiceImpl(DaoManager.getBillDao() != null ? DaoManager.getBillDao() : new SqlLiteBillDao());
+        billService = new BillServiceImpl(DaoManager.getBillDao() != null ? DaoManager.getBillDao() : new SqlLiteBillDao());
         paymentService = new PaymentServiceImpl();
         databaseSetup = new DatabaseSetup();
         exportImportService = new ExportImportServiceImpl();
@@ -112,7 +112,7 @@ public final class ServiceManager {
 
     public static BillService getBillService() {
         ensureInitialized();
-        return billingService;
+        return billService;
     }
 
     public static PaymentService getPaymentService() {

@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MeterReadingUiState {
     private  boolean success;
+    private int meterId;
+    private int roomId;
     private  String roomNumber;
     private  String tenantName;
     private  int tenantId;

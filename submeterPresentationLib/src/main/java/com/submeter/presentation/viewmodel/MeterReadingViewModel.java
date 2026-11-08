@@ -70,9 +70,19 @@ public class MeterReadingViewModel extends BaseViewModel {
                     if (tenant != null && tenant.getData() != null) {
                         tenantName = tenant.getData().getName();
                     }
+                } else {
+                    // Fallback: Query a default or primary tenant if no active tenancy is found
+                    try {
+                        var defaultTenant = tenantService.getDefaultTenant(); // Assuming a method like this exists
+                        if (defaultTenant != null && defaultTenant.getData() != null) {
+                            tenantId = defaultTenant.getData().getId();
+                            tenantName = defaultTenant.getData().getName();
+                        }
+                    } catch (Exception ignored) {
+                    }
                 }
 
-                // Fallback to the passed string if tenant name couldn't be resolved
+                // Fallback to the passed string or "admin" if tenant name still couldn't be resolved
                 if (tenantName == null || tenantName.trim().isEmpty()) {
                     tenantName = (defaultFallbackTenantName != null && !defaultFallbackTenantName.trim().isEmpty())
                             ? defaultFallbackTenantName
@@ -85,6 +95,8 @@ public class MeterReadingViewModel extends BaseViewModel {
                 // Success: Set UI State
                 this.uiState = new MeterReadingUiState(
                         true,
+                        meterId,
+                        roomId,
                         roomNumber,
                         tenantName,
                         tenantId,

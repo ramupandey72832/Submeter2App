@@ -10,7 +10,7 @@ public interface MeterReadingService {
     OperationResult<MeterReadingDTO> getById(int Id);
     OperationResult<MeterReadingDTO> getBySubmeterId(int meterId);
     public OperationResult<Void> update(MeterReadingDTO meterReadingDTO);
-    public OperationResult<Void> add(MeterReadingDTO meterReadingDTO);
+    public OperationResult<Integer> add(MeterReadingDTO meterReadingDTO);
     public OperationResult<Void> delete(int meterReadingId);
     public OperationResult<List<MeterReadingDTO>> getAll();
 

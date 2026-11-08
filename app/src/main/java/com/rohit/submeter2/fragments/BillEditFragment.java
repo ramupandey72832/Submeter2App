@@ -11,10 +11,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.rohit.submeter2.databinding.FragmentBillEditBinding;
 import com.submeter.commonlib.dto.BillDTO;
-import com.submeter.presentation.viewmodel.BaseViewModel;
 import com.submeter.presentation.viewmodel.BillViewModel;
 import com.submeter.service.ServiceManager;
 
@@ -27,12 +27,6 @@ public class BillEditFragment extends Fragment {
     private FragmentBillEditBinding binding;
     private BillViewModel viewModel;
     private BillDTO selectedBill;
-
-    private final BaseViewModel.StateListener stateListener = () -> {
-        if (getActivity() != null) {
-            getActivity().runOnUiThread(this::handleViewModelState);
-        }
-    };
 
     public static BillEditFragment newInstance(BillDTO bill) {
         BillEditFragment fragment = new BillEditFragment();
@@ -69,9 +63,6 @@ public class BillEditFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (viewModel != null) {
-            viewModel.removeStateListener(stateListener);
-        }
         binding = null;
     }
 
@@ -82,7 +73,26 @@ public class BillEditFragment extends Fragment {
                 ServiceManager.getBillService(),
                 ServiceManager.getMeterReadingService()
         );
-        viewModel.addStateListener(stateListener);
+
+        // Observe LiveData states directly instead of StateListener
+        viewModel.getOperationSuccessLiveData().observe(getViewLifecycleOwner(), success -> {
+            if (success != null && success) {
+                Toast.makeText(getContext(), "Bill specifications adjusted cleanly.", Toast.LENGTH_SHORT).show();
+                navigateBack();
+            }
+        });
+
+        viewModel.getToastMessageLiveData().observe(getViewLifecycleOwner(), message -> {
+            if (message != null && !message.isEmpty()) {
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        viewModel.getErrorMessageLiveData().observe(getViewLifecycleOwner(), error -> {
+            if (error != null && !error.isEmpty()) {
+                Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void setupListeners() {
@@ -177,18 +187,6 @@ public class BillEditFragment extends Fragment {
     //endregion
 
     //region UI Feedback & Navigation
-
-    private void handleViewModelState() {
-        if (viewModel.getErrorMessage() != null) {
-            Toast.makeText(getContext(), viewModel.getErrorMessage(), Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (viewModel.isOperationSuccess()) {
-            Toast.makeText(getContext(), "Bill specifications adjusted cleanly.", Toast.LENGTH_SHORT).show();
-            navigateBack();
-        }
-    }
 
     private void navigateBack() {
         if (getParentFragmentManager() != null) {

@@ -40,6 +40,28 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
+    public OperationResult<TenantDTO> getDefaultTenant() {
+        try {
+            // Option A: Fetch the first tenant from the database as a default fallback
+            List<Tenant> tenants = tenantDao.getAll();
+            if (tenants != null && !tenants.isEmpty()) {
+                TenantDTO defaultDto = mapEntityToDto(tenants.get(0));
+                return OperationResult.success(defaultDto, "Default tenant retrieved successfully.");
+            }
+
+            // Option B: Query by a specific default identifier or name if Option A isn't preferred
+            // Optional<Tenant> tenantOpt = tenantDao.getByName("admin");
+            // if (tenantOpt.isPresent()) {
+            //     return OperationResult.success(mapToDTO(tenantOpt.get()), "Default tenant retrieved.");
+            // }
+
+            return OperationResult.failure("No tenants found in the database to use as default.");
+        } catch (Exception e) {
+            return OperationResult.failure("Failed to retrieve default tenant: " + e.getMessage());
+        }
+    }
+
+    @Override
     public OperationResult<TenantDTO> getByTenantAadhaar(String aadhaar) {
 
         if (aadhaar== null || aadhaar.trim().isEmpty()) {

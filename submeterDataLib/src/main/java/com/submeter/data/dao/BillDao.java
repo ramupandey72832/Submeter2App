@@ -6,16 +6,13 @@ import java.util.Optional;
 import java.sql.SQLException;
 
 public interface BillDao {
-    long insert(Bill bill) throws SQLException;
+    boolean insert(Bill bill) throws SQLException;
     boolean update(Bill bill) throws SQLException;
-    boolean deleteById(long billId) throws SQLException;
-    Optional<Bill> getById(long billId) throws SQLException;
-    List<Bill> findAll() throws SQLException;
-    List<Bill> findByTenantId(long tenantId) throws SQLException;
-    List<Bill> findByMeterId(long meterId) throws SQLException;
-//    boolean markAsPaid(long billId, String paymentDate) throws SQLException;
-    List<Bill> getBillsByStatus(boolean isPaid) throws SQLException;
-    List<Bill> getAllBills() throws SQLException;
+    boolean deleteById(int billId) throws SQLException;
+    Optional<Bill> getById(int billId) throws SQLException;
+    List<Bill> getByTenantId(int tenantId) throws SQLException;
+    List<Bill> getByMeterId(int meterId) throws SQLException;
+    List<Bill> getAll() throws SQLException;
     Optional<Bill> getLatestBill(String roomNumber) throws SQLException;
     List<Bill> getLatestThreeMonthBills() throws SQLException;
     List<Bill> getBillsByRange(String start, String end) throws SQLException;

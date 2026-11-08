@@ -25,7 +25,7 @@ public class AllTablesDataFragment extends Fragment {
     private StateListener stateListener;
 
     private final String[] databaseTables = {
-            "ROOMS", "TENANTS", "TENANCIES", "SUBMETERS", "SUBMETERS_ALLOCATION", "BILLS", "METER_READINGS"
+            "ROOMS", "TENANTS", "TENANCIES", "SUBMETERS", "SUBMETERS_ALLOCATION", "BILLS", "METER_READINGS" ,"APP_METADATA"
     };
 
     @Nullable

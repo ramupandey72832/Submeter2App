@@ -88,7 +88,7 @@ public class MeterReadingServiceImpl implements MeterReadingService {
     }
 
     @Override
-    public OperationResult<Void> add(MeterReadingDTO meterReadingDTO) {
+    public OperationResult<Integer> add(MeterReadingDTO meterReadingDTO) {
         if (meterReadingDTO == null) {
             return OperationResult.failure("Reading details cannot be null.");
         }
@@ -107,7 +107,8 @@ public class MeterReadingServiceImpl implements MeterReadingService {
             int generatedId = meterReadingDao.insert(reading);
 
             if (generatedId > 0) {
-                return OperationResult.success(null, "Meter reading added successfully!");
+                // Return the generated ID inside success()
+                return OperationResult.success(generatedId, "Meter reading added successfully!");
             } else {
                 return OperationResult.failure("Failed to save meter reading.");
             }
