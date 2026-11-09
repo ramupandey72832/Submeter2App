@@ -2,6 +2,7 @@ package com.submeter.presentation.viewmodel;
 
 import com.submeter.commonlib.dto.BillDTO;
 import com.submeter.commonlib.dto.PaymentDTO;
+import com.submeter.commonlib.response.OperationResult;
 import com.submeter.service.BillService;
 import com.submeter.service.PaymentService;
 import com.submeter.service.ServiceManager;
@@ -9,6 +10,7 @@ import com.submeter.service.impl.core.BillServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 /**
  * IT WILL BE USED ON DASHBOARD FRAGMENT , IT WILL SHOW PENDING BILLS ,
@@ -90,9 +92,41 @@ public class DashboardViewModel extends BaseViewModel {
         }).start();
     }
 
-    public void payBill(int billId,double amount,String paymentDate,String note){
-        PaymentDTO paymentDTO =  PaymentDTO.builder().id(0).billId(billId).amountPaid(amount).
-                paymentDate(paymentDate).note(note).build();
-        paymentService.addPayment(paymentDTO);
+//    public void payBill(int billId,long amount,String paymentDate,String note){
+//        PaymentDTO paymentDTO =  PaymentDTO.builder().id(0).billId(billId).amountPaid(amount).
+//                paymentDate(paymentDate).note(note).build();
+//        paymentService.addPayment(paymentDTO);
+//    }
+
+    public void payBill(int billId, double amountPaid, String paymentDate, String note) {
+        setLoading(true);
+        Executors.newSingleThreadExecutor().execute(() -> {
+            try {
+                // 1. Create and insert the payment record
+                PaymentDTO payment = new PaymentDTO();
+                payment.setBillId(billId);
+                payment.setAmountPaid(amountPaid);
+                payment.setPaymentDate(paymentDate);
+                payment.setNote(note);
+
+                paymentService.addPayment(payment);
+
+                // 2. Fetch current bill, deduct balance, and update
+                OperationResult<BillDTO> billResult = billService.getById(billId);
+                if (billResult != null && billResult.isSuccess() && billResult.getData() != null) {
+                    BillDTO bill = billResult.getData();
+                    double newBalance = bill.getBalance() - amountPaid;
+                    bill.setBalance(Math.max(0, newBalance));
+
+                    billService.update(bill);
+                }
+
+                loadDashboardSummary(); // Refresh metrics and pending bills list
+            } catch (Exception e) {
+                setErrorMessage("Failed to process payment: " + e.getMessage());
+            } finally {
+                setLoading(false);
+            }
+        });
     }
 }

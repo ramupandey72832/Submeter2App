@@ -21,7 +21,9 @@ public class TableDataService {
             case "SUBMETERS_ALLOCATION": return Arrays.asList("Allocation ID", "Meter ID", "Room ID", "Start Date", "End Date");
             case "METER_READINGS": return Arrays.asList("Reading ID", "Meter ID", "Reading Value", "Reading Date");
             case "BILLS": return Arrays.asList("Bill ID", "Prev Reading ID", "Curr Reading ID", "Meter ID", "Serial Num",
-                    "Tenant ID", "Tenant Name", "Room Num", "Units", "Rate", "Fixed", "Extra", "Total", "Note", "Date");
+                    "Tenant ID", "Tenant Name", "Room Num", "Units", "Rate", "Fixed", "Extra", "Total", "Note", "Date",
+                    "Balance");
+            case "PAYMENTS" : return Arrays.asList("Id", "Bill Id","Amount Paid","Payment Date", "Note");
             default: throw new IllegalArgumentException("Unknown table name: " + tableName);
         }
     }
@@ -78,8 +80,15 @@ public class TableDataService {
                             String.valueOf(b.getId()), String.valueOf(b.getPreviousReadingId()), String.valueOf(b.getCurrentReadingId()),
                             String.valueOf(b.getMeterId()), b.getMeterSerialNumber(), String.valueOf(b.getTenantId()), b.getTenantName(),
                             b.getRoomNumber(), String.valueOf(b.getUnitsConsumed()), String.valueOf(b.getRatePerUnit()),
-                            String.valueOf(b.getFixedCharge()), String.valueOf(b.getExtraCharge()), "₹" + b.getTotalAmount(), b.getNote(), b.getBillingDate()
+                            String.valueOf(b.getFixedCharge()), String.valueOf(b.getExtraCharge()), "₹" + b.getTotalAmount(),
+                            b.getNote(), b.getBillingDate() , Double.toString(b.getBalance())
                     ));
+                }
+                break;
+
+            case "PAYMENTS":
+                for (Payment p : DaoManager.getPaymentDao().getAll()) {
+                    rows.add(Arrays.asList(String.valueOf(p.getId()), String.valueOf(p.getBillId()), Double.toString(p.getAmountPaid()) , p.getPaymentDate(), p.getNote()));
                 }
                 break;
 

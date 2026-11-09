@@ -55,6 +55,24 @@ public class SqlLitePaymentDao implements PaymentDao {
         String query = PropertiesLoader.getProperty("queries.properties", "payment.getAll");
         return JdbcHelper.executeQueryList(query, this::mapResultSetToPayment );
     }
+
+    @Override
+    public boolean update(Payment payment) throws SQLException {
+        if (payment == null || payment.getId() <= 0) {
+            return false;
+        }
+
+        String sql = PropertiesLoader.getProperty("queries.properties", "payment.update");
+        return JdbcHelper.executeUpdate(
+                sql,
+                payment.getBillId(),
+                payment.getAmountPaid(),
+                payment.getPaymentDate(),
+                payment.getNote(),
+                payment.getId()
+        );
+    }
+
     private Payment mapResultSetToPayment(ResultSet rs) throws SQLException {
         Payment payment = new Payment();
         payment.setId(rs.getInt("id"));

@@ -84,6 +84,7 @@ public class BillServiceImpl implements BillService {
             return OperationResult.failure("BillDTO cannot be null.");
         }
         try {
+            billDTO.setBalance(billDTO.getTotalAmount());
             Bill bill = mapToEntity(billDTO);
             boolean isAdded = billDao.insert(bill);
             if (isAdded) {

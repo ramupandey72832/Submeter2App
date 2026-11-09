@@ -74,6 +74,15 @@ public class DashboardFragment extends Fragment implements MpinVerificationDialo
                 dialog.show(getChildFragmentManager(), "MpinVerifyDialog");
             }
         });
+
+        billAdapter = new PendingBillsAdapter(pendingBills, new PendingBillsAdapter.OnPayClickListener() {
+            @Override
+            public void onPayClick(BillDTO bill) {
+                selectedBill = bill;
+
+                showPaymentInputDialog(bill);
+            }
+        });
         binding.rvPendingBills.setAdapter(billAdapter);
 
         // Instantiate isolated ViewModel with operational dependencies explicitly injected
@@ -180,10 +189,14 @@ public class DashboardFragment extends Fragment implements MpinVerificationDialo
     @Override
     public void onMpinVerified(boolean isSuccess) {
         if (isSuccess && selectedBill != null) {
-            viewModel.payBill(selectedBill.getId(),
-                    selectedBill.getTotalAmount(),
-                    "Today Payment Date ",
-                    "note take it from UI ");
+            String currentDate = new java.text.SimpleDateFormat("dd-MM-yyyy", java.util.Locale.getDefault()).format(new java.util.Date());
+
+            viewModel.payBill(
+                    selectedBill.getId(),
+                    pendingPaidAmount,
+                    currentDate,
+                    pendingPaymentNote
+            );
             selectedBill = null;
         } else {
             Toast.makeText(getContext(), "Verification failed", Toast.LENGTH_SHORT).show();
@@ -238,4 +251,48 @@ public class DashboardFragment extends Fragment implements MpinVerificationDialo
         binding = null;
         super.onDestroyView();
     }
+
+    private void showPaymentInputDialog(BillDTO bill) {
+        // You can inflate a custom layout containing EditText fields for amount and note,
+        // or prompt the user. Here is the structure using an AlertDialog wrapper:
+        android.view.View dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_payment_input, null);
+        android.widget.EditText etAmount = dialogView.findViewById(R.id.etPaymentAmount);
+        android.widget.EditText etNote = dialogView.findViewById(R.id.etPaymentNote);
+
+        // Pre-fill with remaining balance
+        etAmount.setText(String.valueOf(bill.getBalance() > 0 ? bill.getBalance() : bill.getTotalAmount()));
+
+        new androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                .setTitle("Make Payment - Room " + bill.getRoomNumber())
+                .setView(dialogView)
+                .setPositiveButton("Verify MPIN & Pay", (dialog, which) -> {
+                    String amountStr = etAmount.getText().toString().trim();
+                    String note = etNote.getText().toString().trim();
+
+                    if (amountStr.isEmpty()) {
+                        Toast.makeText(getContext(), "Please enter a valid amount", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    double paidAmount = Double.parseDouble(amountStr);
+                    if (paidAmount <= 0) {
+                        Toast.makeText(getContext(), "Amount must be greater than zero", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    // Store temporary payment details to use upon successful MPIN verification
+                    // (You can store these in class-level fields: pendingPaidAmount, pendingPaymentNote)
+                    this.pendingPaidAmount = (long) paidAmount; // or double depending on your payBill signature
+                    this.pendingPaymentNote = note.isEmpty() ? "Bill Payment" : note;
+
+                    String message = "Paying ₹" + paidAmount + " for Bill No: " + bill.getId();
+                    MpinVerificationDialogFragment dialogFragment = MpinVerificationDialogFragment.newInstance(message);
+                    dialogFragment.show(getChildFragmentManager(), "MpinVerifyDialog");
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    private long pendingPaidAmount;
+    private String pendingPaymentNote;
 }

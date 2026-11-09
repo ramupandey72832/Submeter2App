@@ -142,6 +142,7 @@ public class SqlLiteBillDao implements BillDao {
         bill.setTotalAmount(rs.getDouble("total_amount"));
         bill.setNote(rs.getString("note"));
         bill.setBillingDate(rs.getString("billing_date"));
+        bill.setBalance(rs.getDouble("balance"));
         return bill;
     }
 }

@@ -4,6 +4,7 @@ import com.submeter.data.dao.impl.SqlLiteAppMetaDataDao;
 import com.submeter.data.dao.impl.SqlLiteBillDao;
 import com.submeter.data.dao.impl.SqlLiteDbMigrationDao;
 import com.submeter.data.dao.impl.SqlLiteMeterReadingDao;
+import com.submeter.data.dao.impl.SqlLitePaymentDao;
 import com.submeter.data.dao.impl.SqlLiteRoomDao;
 import com.submeter.data.dao.impl.SqlLiteSubmeterAllocationDao;
 import com.submeter.data.dao.impl.SqlLiteSubmeterDao;
@@ -18,10 +19,10 @@ public class DaoManager {
     private static BillDao billDao;
     private static TenancyDao tenancyDao;
     private static SubmeterAllocationDao submeterAllocationDao;
+    private static PaymentDao paymentDao;
     private static DbMigrationDao dbMigrationDao;
     private static DatabaseBackupDao databaseBackupDao;
     private static AppMetaDataDao appMetaDataDao;
-
 
 
 
@@ -38,6 +39,7 @@ public class DaoManager {
         submeterAllocationDao = new SqlLiteSubmeterAllocationDao();
         databaseBackupDao = new DatabaseBackupDao();
         appMetaDataDao = new SqlLiteAppMetaDataDao();
+        paymentDao = new SqlLitePaymentDao();
     }
 
     public static TenantDao getTenantDao() { return tenantDao; }
@@ -55,4 +57,6 @@ public class DaoManager {
     public static AppMetaDataDao getAppMetaDataDao() {
         return appMetaDataDao;
     }
+    public static PaymentDao getPaymentDao() {return paymentDao;}
+
 }

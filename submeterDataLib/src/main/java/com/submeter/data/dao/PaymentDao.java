@@ -12,6 +12,7 @@ public interface PaymentDao {
     List<Payment> getByBillId(int billId) throws SQLException;
 
     Payment getById(int id) throws SQLException;
+    boolean update(Payment payment) throws SQLException;
 
     List<Payment> getAll() throws SQLException;
 }

@@ -3,6 +3,7 @@ package com.submeter.service;
 import com.submeter.data.dao.DaoManager;
 import com.submeter.data.dao.impl.SqlLiteBillDao;
 import com.submeter.data.dao.impl.SqlLiteMeterReadingDao;
+import com.submeter.data.dao.impl.SqlLitePaymentDao;
 import com.submeter.data.dao.impl.SqlLiteSubmeterAllocationDao;
 import com.submeter.data.dao.impl.SqlLiteTenancyDao;
 import com.submeter.data.dao.impl.SqlLiteTenantDao;
@@ -67,7 +68,8 @@ public final class ServiceManager {
         meterReadingService = new MeterReadingServiceImpl(DaoManager.getMeterReadingDao() != null
                 ? DaoManager.getMeterReadingDao() : new SqlLiteMeterReadingDao());
         billService = new BillServiceImpl(DaoManager.getBillDao() != null ? DaoManager.getBillDao() : new SqlLiteBillDao());
-        paymentService = new PaymentServiceImpl();
+        paymentService = new PaymentServiceImpl(DaoManager.getPaymentDao() != null ? DaoManager.getPaymentDao()
+                : new SqlLitePaymentDao());
         databaseSetup = new DatabaseSetup();
         exportImportService = new ExportImportServiceImpl();
         submeterAllocationService = new SubmeterAllocationServiceImpl(DaoManager.getSubmeterAllocationDao() != null
