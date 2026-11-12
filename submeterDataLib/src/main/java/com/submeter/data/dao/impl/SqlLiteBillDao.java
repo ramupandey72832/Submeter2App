@@ -76,6 +76,19 @@ public class SqlLiteBillDao implements BillDao {
     }
 
     @Override
+    public double getTotalBalanceByTenantId(int tenantId) throws SQLException  {
+        String sql = PropertiesLoader.getProperty("queries.properties","bill.get_total_balance_by_tenant_id");
+        Optional<Double> totalOpt = JdbcHelper.executeQuerySingle(
+                sql,
+                rs -> rs.getDouble(1),
+                tenantId
+        );
+
+        // Return the value if present, otherwise default to 0.0
+        return totalOpt.orElse(0.0);
+    }
+
+    @Override
     public boolean deleteById(int billId) throws SQLException {
         String sql = PropertiesLoader.getProperty("queries.properties", "bill.delete_by_id");
         return JdbcHelper.executeUpdate(sql, billId);
@@ -114,6 +127,12 @@ public class SqlLiteBillDao implements BillDao {
     @Override
     public List<Bill> getLatestThreeMonthBills() throws SQLException {
         String sql = PropertiesLoader.getProperty("queries.properties", "bill.get_latest_three_month_bills");
+        return JdbcHelper.executeQueryList(sql, this::mapResultSetToBill);
+    }
+
+    @Override
+    public List<Bill> getLatestBillsOfAllSubmeter() throws SQLException {
+        String sql = PropertiesLoader.getProperty("queries.properties", "bill.get_latest_bills_of_all_submeter");
         return JdbcHelper.executeQueryList(sql, this::mapResultSetToBill);
     }
 

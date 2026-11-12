@@ -1,7 +1,6 @@
 package com.rohit.submeter2.adapters;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -87,7 +86,8 @@ public class BillHistoryAdapter extends RecyclerView.Adapter<BillHistoryAdapter.
 
         // TODO: Pass actual payment history list from your ViewModel/Repository if available
         List<PaymentDTO> paymentsOfBillId = Collections.emptyList();
-        double balance = calculateBalance(currentBill, paymentsOfBillId);
+        double balance = currentBill.getCurrentBillDue();
+//                calculateBalance(currentBill, paymentsOfBillId);
 
         holder.binding.balance.setText("₹" + balance);
         if (balance <= 0) {

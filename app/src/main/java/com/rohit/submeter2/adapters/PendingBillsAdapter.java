@@ -76,7 +76,7 @@ public class PendingBillsAdapter extends RecyclerView.Adapter<PendingBillsAdapte
 
         holder.binding.tvRoomNumber.setText(selectedBill.getRoomNumber());
         holder.binding.tvTenantName.setText("Tenant: " + selectedBill.getTenantName());
-        holder.binding.tvBillAmount.setText("₹" + selectedBill.getTotalAmount());
+        holder.binding.tvBillAmount.setText("₹" + selectedBill.getCurrentBillDue());
         holder.binding.tvBillMeta.setText("Bill No.: " + selectedBill.getId() + "  •  " + selectedBill.getBillingDate());
 
         List<PaymentDTO> paymentsOfBillId = Collections.emptyList();

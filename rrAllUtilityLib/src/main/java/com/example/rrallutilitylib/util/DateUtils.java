@@ -1,85 +1,50 @@
 package com.example.rrallutilitylib.util;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.time.format.ResolverStyle;
-import java.util.Objects;
 
-public final class DateUtils {
 
-    private static final String DATE_PATTERN = "dd-MM-uuuu";
-    private static final String DATE_FORMAT_MESSAGE = "dd-MM-yyyy";
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
-    private static final DateTimeFormatter DATE_FORMATTER =
-            DateTimeFormatter.ofPattern(DATE_PATTERN)
-                    .withResolverStyle(ResolverStyle.STRICT);
+public class DateUtils {
+    // Format displayed to users in the UI
+    private static final SimpleDateFormat DISPLAY_FORMAT = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
 
-    private DateUtils() {
-        throw new UnsupportedOperationException(
-                "DateUtils is a utility class"
-        );
-    }
+    // Format required for SQLite sorting and range queries
+    private static final SimpleDateFormat DB_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
     /**
-     * Validates a date string in dd-MM-yyyy format.
+     * Converts a user-entered or picker-selected date string into the database storage format.
      */
-    public static String validateDate(String dateStr) {
-        parseDate(dateStr);
-        return dateStr;
-    }
-
-    /**
-     * Parses a date string into LocalDate.
-     */
-    public static LocalDate parseDate(String dateStr) {
-        if (dateStr == null || dateStr.isBlank()) {
-            throw new IllegalArgumentException(
-                    "Date cannot be null or blank."
-            );
-        }
-
+    public static String toDatabaseFormat(String displayDateStr) {
         try {
-            return LocalDate.parse(dateStr, DATE_FORMATTER);
-        } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException(
-                    "Invalid date: '" + dateStr
-                            + "'. Expected format: "
-                            + DATE_FORMAT_MESSAGE
-                            + " (for example, 16-10-2026).",
-                    e
-            );
+            Date date = DISPLAY_FORMAT.parse(displayDateStr);
+            return date != null ? DB_FORMAT.format(date) : displayDateStr;
+        } catch (ParseException e) {
+            // Fallback or return as-is if already formatted
+            return displayDateStr;
         }
     }
 
     /**
-     * Formats a LocalDate into dd-MM-yyyy.
+     * Converts a database date string into the user-friendly UI display format.
      */
-    public static String formatDate(LocalDate date) {
-        Objects.requireNonNull(date, "Date cannot be null.");
-        return DATE_FORMATTER.format(date);
-    }
-
-    /**
-     * Checks whether a date string is valid.
-     */
-    public static boolean isValidDate(String dateStr) {
-        if (dateStr == null || dateStr.isBlank()) {
-            return false;
-        }
-
+    public static String toDisplayFormat(String dbDateStr) {
         try {
-            parseDate(dateStr);
-            return true;
-        } catch (IllegalArgumentException e) {
-            return false;
+            Date date = DB_FORMAT.parse(dbDateStr);
+            return date != null ? DISPLAY_FORMAT.format(date) : dbDateStr;
+        } catch (ParseException e) {
+            return dbDateStr;
         }
     }
 
     /**
-     * Returns today's date.
+     * Formats a raw java.util.Date object into the database format.
      */
-    public static LocalDate today() {
-        return LocalDate.now();
+    public static String formatDateForDb(Date date) {
+        return DB_FORMAT.format(date);
     }
+
+
 }

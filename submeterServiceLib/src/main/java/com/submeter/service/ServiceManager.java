@@ -67,11 +67,13 @@ public final class ServiceManager {
                 ? DaoManager.getTenancyDao() : new SqlLiteTenancyDao());
         meterReadingService = new MeterReadingServiceImpl(DaoManager.getMeterReadingDao() != null
                 ? DaoManager.getMeterReadingDao() : new SqlLiteMeterReadingDao());
-        billService = new BillServiceImpl(DaoManager.getBillDao() != null ? DaoManager.getBillDao() : new SqlLiteBillDao());
+        billService = new BillServiceImpl(DaoManager.getBillDao() != null ? DaoManager.getBillDao() :
+                new SqlLiteBillDao());
         paymentService = new PaymentServiceImpl(DaoManager.getPaymentDao() != null ? DaoManager.getPaymentDao()
                 : new SqlLitePaymentDao());
         databaseSetup = new DatabaseSetup();
-        exportImportService = new ExportImportServiceImpl();
+        exportImportService = new ExportImportServiceImpl(DaoManager.getBillDao() != null ? DaoManager.getBillDao() :
+                new SqlLiteBillDao());
         submeterAllocationService = new SubmeterAllocationServiceImpl(DaoManager.getSubmeterAllocationDao() != null
                 ? DaoManager.getSubmeterAllocationDao() : new SqlLiteSubmeterAllocationDao());
     }

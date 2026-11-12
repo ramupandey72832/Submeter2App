@@ -56,7 +56,7 @@ public class ExcelGenerator {
                 sheet.addCell(new Number(7, row, item.getRatePerUnit()));
                 sheet.addCell(new Number(8, row, item.getFixedCharge()));
                 sheet.addCell(new Number(9, row, item.getTotalAmount()));
-                sheet.addCell(new Number(10, row, item.getBalance()));
+                sheet.addCell(new Number(10, row, item.getCurrentBillDue()));
                 row++;
             }
 

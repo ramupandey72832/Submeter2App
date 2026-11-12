@@ -14,10 +14,13 @@ import com.application.android_ui_templete1.templates.nav_activity.bottom_nav_ac
 import com.application.baselibrary.ui.utils.NavigationUtils;
 import com.rohit.submeter2.databinding.FragmentMeterRecordingBinding;
 import com.rohit.submeter2.utils.ConfigManager;
+import com.rohit.submeter2.utils.UiDateUtils;
 import com.submeter.commonlib.dto.BillDTO;
 import com.submeter.presentation.viewmodel.MeterReadingUiState;
 import com.submeter.presentation.viewmodel.MeterReadingViewModel;
 import com.submeter.service.ServiceManager;
+
+import java.util.Calendar;
 
 public class MeterRecordingFragment extends Fragment {
 
@@ -129,6 +132,7 @@ public class MeterRecordingFragment extends Fragment {
                 .ratePerUnit(Double.parseDouble(binding.etRatePerUnit.getText().toString()))
                 .fixedCharge(Double.parseDouble(binding.etFixCharge.getText().toString()))
                 .note(binding.etNote.getText().toString())
+                .billingDate(UiDateUtils.formatDateForDb(Calendar.getInstance()))
                 .build();
 
         Fragment targetFragment = BillCreateFragment.newInstance(billDTO);

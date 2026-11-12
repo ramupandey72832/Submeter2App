@@ -162,6 +162,7 @@ public class BillCreateFragment extends Fragment implements MpinVerificationDial
                     billDTO.getRatePerUnit(),
                     billDTO.getFixedCharge(),
                     billDTO.getExtraCharge(),
+                    billDTO.getBillingDate(),
                     billDTO.getNote()
             );
         } catch (Exception e) {

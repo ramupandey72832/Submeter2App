@@ -183,19 +183,19 @@ public class BillViewModel extends ViewModel {
     public void addMeterReadingAndGenerateBill(String roomNumber, String tenantName, int tenantId,
                                                int meterId, String meterSerialNumber,
                                                long readingValue, int previousReadingId, long previousReadingValue,
-                                               double rate, double fixed, double extra, String note) {
+                                               double rate, double fixed, double extra, String billingDate, String note) {
         isLoadingLiveData.postValue(true);
         errorMessageLiveData.postValue(null);
         operationSuccessLiveData.postValue(false);
 
         Executors.newSingleThreadExecutor().execute(() -> {
             try {
-                String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+//                String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
                 MeterReadingDTO readingDTO = new MeterReadingDTO();
                 readingDTO.setMeterId(meterId);
                 readingDTO.setReadingValue(readingValue);
-                readingDTO.setDate(currentDate);
+                readingDTO.setDate(billingDate);
 
                 OperationResult<Integer> readingResult = meterReadingService.add(readingDTO);
                 if (readingResult == null || !readingResult.isSuccess()) {
@@ -220,10 +220,10 @@ public class BillViewModel extends ViewModel {
                 newBill.setRatePerUnit(rate);
                 newBill.setFixedCharge(fixed);
                 newBill.setExtraCharge(extra);
-                newBill.setBillingDate(currentDate);
+                newBill.setBillingDate(billingDate);
                 newBill.setNote(note);
                 newBill.setTotalAmount(newBill.getTotalAmount());
-                newBill.setBalance(newBill.getTotalAmount());
+                newBill.setCurrentBillDue(newBill.getTotalAmount());
 
                 System.out.printf("BillDTO_Debug "+ newBill.toString());
 

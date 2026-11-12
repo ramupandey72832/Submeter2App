@@ -1,6 +1,5 @@
 package com.rohit.submeter2.utils.pdf;
 
-
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -31,22 +30,31 @@ public class ReceiptCanvasRenderer {
         paint.setTextAlign(Paint.Align.CENTER);
         canvas.drawText("Room Number: " + bill.getRoomNumber(), startX + (width / 2f), currentY, paint);
 
-        // Sub-details
+        // Sub-details Header Section
         paint.setTextAlign(Paint.Align.LEFT);
-        paint.setTypeface(Typeface.MONOSPACE);
         paint.setTextSize(textSize);
 
         currentY += leading + 4;
-        canvas.drawText("Bill Date  : " + bill.getBillingDate(), startX + sidePadding, currentY, paint);
+
+        // Line 1: Meter No. (Left) & Tenant Name (Right/Split or Half-way)
+        paint.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL));
+        canvas.drawText("Meter No. : " + bill.getMeterSerialNumber(), startX + sidePadding, currentY, paint);
+
+        paint.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.BOLD));
+        canvas.drawText("Tenant: " + bill.getTenantName(), startX + (width / 2f) + 5, currentY, paint);
+
+        // Line 2: Bill Date & Bill No. (Bold ID)
         currentY += leading + 2;
-        canvas.drawText("Bill No.   : " + bill.getId(), startX + sidePadding, currentY, paint);
-        currentY += leading + 2;
-        canvas.drawText("Meter No.  : " + bill.getMeterSerialNumber(), startX + sidePadding, currentY, paint);
-        currentY += leading + 2;
-        canvas.drawText("Tenant Name: " + bill.getTenantName(), startX + sidePadding, currentY, paint);
+        paint.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL));
+        canvas.drawText("Bill Date : " + bill.getBillingDate(), startX + sidePadding, currentY, paint);
+
+        paint.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.BOLD));
+        canvas.drawText("Bill No.  : " + bill.getId(), startX + (width / 2f) + 5, currentY, paint);
+
         currentY += 6;
 
         // Divider
+        paint.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL));
         paint.setStrokeWidth(1.0f);
         canvas.drawLine(startX + sidePadding, currentY, rightEdge, currentY, paint);
         currentY += 12;
@@ -72,30 +80,32 @@ public class ReceiptCanvasRenderer {
         drawRow(canvas, paint, "Extra Charges", String.format(Locale.getDefault(), amtFormat, bill.getExtraCharge()), startX + sidePadding, rightEdge, currentY);
         currentY += leading + 3;
 
+        // Previous Balance (Total Balance minus Current Bill Due)
+        double prevBalance = bill.getTotalBillDue() - bill.getCurrentBillDue();
+        drawRow(canvas, paint, "Previous Balance", String.format(Locale.getDefault(), amtFormat, prevBalance), startX + sidePadding, rightEdge, currentY);
+        currentY += leading + 3;
+
         // Total Amount (Bold)
         paint.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.BOLD));
-        drawRow(canvas, paint, "Total Amount", String.format(Locale.getDefault(), amtFormat, bill.getTotalAmount()), startX + sidePadding, rightEdge, currentY);
+        drawRow(canvas, paint, "Total Amount", String.format(Locale.getDefault(), amtFormat, bill.getTotalBillDue()), startX + sidePadding, rightEdge, currentY);
         paint.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL));
         currentY += 8;
 
         canvas.drawLine(startX + sidePadding, currentY, rightEdge, currentY, paint);
         currentY += 12;
 
-        // Notes (if any)
-        if (bill.getNote() != null && !bill.getNote().trim().isEmpty()) {
-            paint.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.ITALIC));
-            canvas.drawText("Notes: " + bill.getNote(), startX + sidePadding, currentY, paint);
-            paint.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL));
-            currentY += leading + 6;
-            canvas.drawLine(startX + sidePadding, currentY, rightEdge, currentY, paint);
-            currentY += 12;
-        }
+        // Notes Section (Guaranteed consistent vertical space whether text is present or empty)
+        paint.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.ITALIC));
+        paint.setTextAlign(Paint.Align.LEFT); // <-- Add this line to force left alignment
 
-        // Balance
-        paint.setTextAlign(Paint.Align.LEFT);
-        canvas.drawText("Balance:", startX + sidePadding, currentY, paint);
-        paint.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.BOLD));
-        canvas.drawText(Double.toString(bill.getBalance()), startX + sidePadding + 55, currentY, paint);
+        String noteText = (bill.getNote() != null && !bill.getNote().trim().isEmpty())
+                ? "Notes: " + bill.getNote()
+                : "Notes: -";
+        canvas.drawText(noteText, startX + sidePadding, currentY, paint);
+        paint.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL));
+
+        currentY += leading + 6;
+        canvas.drawLine(startX + sidePadding, currentY, rightEdge, currentY, paint);
 
         // Optional grid boundary lines for multi-item pages
         if (drawBounds) {

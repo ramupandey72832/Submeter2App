@@ -33,7 +33,8 @@ public class BillDTO implements Serializable {
         private double totalAmount;
         private String note;
         private String billingDate;
-        private double balance;
+        private double currentBillDue;
+        private double totalBillDue;
 
         public long getUnitsConsumed() {
                 return currentReading - previousReading;

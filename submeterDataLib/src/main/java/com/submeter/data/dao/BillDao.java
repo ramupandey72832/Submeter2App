@@ -15,6 +15,8 @@ public interface BillDao {
     List<Bill> getAll() throws SQLException;
     Optional<Bill> getLatestBill(String roomNumber) throws SQLException;
     List<Bill> getLatestThreeMonthBills() throws SQLException;
+    List<Bill> getLatestBillsOfAllSubmeter() throws SQLException;
     List<Bill> getBillsByRange(String start, String end) throws SQLException;
     public List<Bill> getPendingBills() throws SQLException;
+    public double getTotalBalanceByTenantId(int tenantId) throws SQLException;
 }

@@ -5,8 +5,6 @@ import com.submeter.commonlib.dto.PaymentDTO;
 import com.submeter.commonlib.response.OperationResult;
 import com.submeter.service.BillService;
 import com.submeter.service.PaymentService;
-import com.submeter.service.ServiceManager;
-import com.submeter.service.impl.core.BillServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,8 +113,8 @@ public class DashboardViewModel extends BaseViewModel {
                 OperationResult<BillDTO> billResult = billService.getById(billId);
                 if (billResult != null && billResult.isSuccess() && billResult.getData() != null) {
                     BillDTO bill = billResult.getData();
-                    double newBalance = bill.getBalance() - amountPaid;
-                    bill.setBalance(Math.max(0, newBalance));
+                    double newBalance = bill.getCurrentBillDue() - amountPaid;
+                    bill.setCurrentBillDue(Math.max(0, newBalance));
 
                     billService.update(bill);
                 }

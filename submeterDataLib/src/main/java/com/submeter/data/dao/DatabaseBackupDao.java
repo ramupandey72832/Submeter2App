@@ -13,14 +13,16 @@ import java.util.List;
 import java.util.Map;
 
 public class DatabaseBackupDao {
-
+//    tenancy , meter_readings , tenants , submeter_allocations , submeters , rooms , bills ,payments
     public final String[] MANAGED_BACKUP_TABLES = {
             "rooms",
             "tenants",
             "submeters",
-            "tenancies",
+            "tenancy",
             "meter_readings",
-            "bills"
+            "submeter_allocations",
+            "bills",
+            "payments"
     };
 
     /**

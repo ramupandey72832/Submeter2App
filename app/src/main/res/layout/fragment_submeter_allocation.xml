@@ -40,15 +40,15 @@
             android:id="@+id/etAddStartingDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Starting Date (YYYY-MM-DD)"
             android:inputType="date"
+            android:hint="Starting Date (DD-MM-YYYY)"
             android:layout_marginBottom="8dp" />
 
         <EditText
             android:id="@+id/etAddEndingDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ending Date (YYYY-MM-DD, Optional)"
+            android:hint="Ending Date (DD-MM-YYYY, Optional)"
             android:inputType="date"
             android:layout_marginBottom="16dp" />
 
@@ -131,7 +131,7 @@
             android:id="@+id/etEditStartingDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Starting Date (YYYY-MM-DD)"
+            android:hint="Starting Date (DD-MM-YYYY)"
             android:inputType="date"
             android:enabled="false"
             android:layout_marginBottom="8dp" />
@@ -140,7 +140,7 @@
             android:id="@+id/etEditEndingDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ending Date (YYYY-MM-DD)"
+            android:hint="Ending Date (DD-MM-YYYY)"
             android:inputType="date"
             android:enabled="false"
             android:layout_marginBottom="16dp" />

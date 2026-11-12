@@ -260,7 +260,7 @@ public class DashboardFragment extends Fragment implements MpinVerificationDialo
         android.widget.EditText etNote = dialogView.findViewById(R.id.etPaymentNote);
 
         // Pre-fill with remaining balance
-        etAmount.setText(String.valueOf(bill.getBalance() > 0 ? bill.getBalance() : bill.getTotalAmount()));
+        etAmount.setText(String.valueOf(bill.getCurrentBillDue() > 0 ? bill.getCurrentBillDue() : bill.getTotalAmount()));
 
         new androidx.appcompat.app.AlertDialog.Builder(requireContext())
                 .setTitle("Make Payment - Room " + bill.getRoomNumber())

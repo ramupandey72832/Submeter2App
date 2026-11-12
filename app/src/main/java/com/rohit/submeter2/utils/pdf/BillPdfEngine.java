@@ -115,7 +115,11 @@ public class BillPdfEngine {
         if (targetUri == null) return;
 
         Document doc = new Document(PageSize.A4.rotate());
-        try (OutputStream out = context.getContentResolver().openOutputStream(targetUri)) {
+        OutputStream out = null;
+        try {
+            out = context.getContentResolver().openOutputStream(targetUri);
+            if (out == null) return;
+
             PdfWriter.getInstance(doc, out);
             doc.open();
 
@@ -145,7 +149,7 @@ public class BillPdfEngine {
                 table.addCell(createCell(String.valueOf(b.getRatePerUnit()), bodyFont, Element.ALIGN_RIGHT));
                 table.addCell(createCell(String.valueOf(b.getFixedCharge()), bodyFont, Element.ALIGN_RIGHT));
                 table.addCell(createCell(String.valueOf(b.getTotalAmount()), bodyFont, Element.ALIGN_RIGHT));
-                table.addCell(createCell(Double.toString(b.getBalance()), bodyFont, Element.ALIGN_CENTER));
+                table.addCell(createCell(Double.toString(b.getCurrentBillDue()), bodyFont, Element.ALIGN_CENTER));
             }
 
             doc.add(table);
@@ -153,7 +157,18 @@ public class BillPdfEngine {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (doc.isOpen()) doc.close();
+            // Close document first so iText flushes all bytes into the output stream
+            if (doc.isOpen()) {
+                doc.close();
+            }
+            // Then safely close the output stream
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

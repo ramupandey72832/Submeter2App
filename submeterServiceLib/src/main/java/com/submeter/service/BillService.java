@@ -11,4 +11,5 @@ public interface BillService {
     public OperationResult<Void> update(BillDTO billDTO);
     public OperationResult<Void> add(BillDTO billDTO);
     public OperationResult<BillDTO> getById(int billId);
+    public OperationResult<Double> getTotalTenantBalance(int tenantId);
 }

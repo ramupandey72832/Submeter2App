@@ -1,7 +1,5 @@
 package com.rohit.submeter2;
 
-
-import android.app.DatePickerDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,37 +14,40 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.application.baselibrary.ui.utils.ToastMessage;
 import com.rohit.submeter2.adapters.PreviousBillDocumentAdapter;
 import com.rohit.submeter2.databinding.FragmentExportImportBillBinding;
-import com.submeter.presentation.viewmodel.BaseViewModel;
+import com.rohit.submeter2.utils.UiDateUtils;
 import com.submeter.presentation.viewmodel.ExportImportBillViewModel;
 import com.submeter.service.ServiceManager;
+import com.submeter.service.utils.ExcelGenerator;
 import com.rohit.submeter2.utils.pdf.BillPdfEngine;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class ExportImportBillFragment extends Fragment {
 
     private ToastMessage toastMessage;
     private FragmentExportImportBillBinding binding;
 
-    private final Calendar billingStartCalendar = Calendar.getInstance();
-    private final Calendar billingEndCalendar = Calendar.getInstance();
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+    private final Calendar billStartCalendar = Calendar.getInstance();
+    private final Calendar billEndCalendar = Calendar.getInstance();
 
     private ExportImportBillViewModel viewModel;
-    private BaseViewModel.StateListener viewModelStateListener;
+    private ExportImportBillViewModel.StateListener viewModelStateListener;
 
     private ActivityResultLauncher<String> exportBillingRangeLauncher;
     private ActivityResultLauncher<String> databaseBackupLauncher;
     private ActivityResultLauncher<String> databaseRestoreLauncher;
+
+    private String pendingStartDisplayStr;
+    private String pendingEndDisplayStr;
 
     public ExportImportBillFragment() {}
 
@@ -67,7 +68,15 @@ public class ExportImportBillFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         toastMessage = new ToastMessage(getContext());
 
-        viewModel = new ExportImportBillViewModel(ServiceManager.getExportImportService());
+        // Initialize ViewModel using ViewModelProvider and a Factory for parameterized constructor
+        ViewModelProvider.Factory factory = new ViewModelProvider.Factory() {
+            @NonNull
+            @Override
+            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+                return (T) new ExportImportBillViewModel(ServiceManager.getExportImportService());
+            }
+        };
+        viewModel = new ViewModelProvider(this, factory).get(ExportImportBillViewModel.class);
 
         observeViewModelState();
         initializeDatePickers();
@@ -124,40 +133,42 @@ public class ExportImportBillFragment extends Fragment {
     }
 
     private void initializeDatePickers() {
-        binding.tvStartDate.setText(dateFormat.format(billingStartCalendar.getTime()));
-        binding.tvEndDate.setText(dateFormat.format(billingEndCalendar.getTime()));
+//        UiDateUtils.clearTime(billStartCalendar);
+//        UiDateUtils.clearTime(billEndCalendar);
+        binding.tvStartDate.setText(UiDateUtils.formatDateForDisplay(billStartCalendar));
+        binding.tvEndDate.setText(UiDateUtils.formatDateForDisplay(billEndCalendar));
     }
 
     private void setupClickListeners() {
-        binding.btnStartDate.setOnClickListener(v -> showDatePickerDialog(billingStartCalendar, (view1, year, month, dayOfMonth) -> {
-            billingStartCalendar.set(year, month, dayOfMonth);
-            binding.tvStartDate.setText(dateFormat.format(billingStartCalendar.getTime()));
+        binding.btnStartDate.setOnClickListener(v -> UiDateUtils.showDatePicker(getContext(), billStartCalendar, (view1, year, month, dayOfMonth) -> {
+            billStartCalendar.set(year, month, dayOfMonth);
+//            UiDateUtils.clearTime(billStartCalendar);
+            binding.tvStartDate.setText(UiDateUtils.formatDateForDisplay(billStartCalendar));
         }));
 
-        binding.btnEndDate.setOnClickListener(v -> showDatePickerDialog(billingEndCalendar, (view1, year, month, dayOfMonth) -> {
-            billingEndCalendar.set(year, month, dayOfMonth);
-            binding.tvEndDate.setText(dateFormat.format(billingEndCalendar.getTime()));
+        binding.btnEndDate.setOnClickListener(v -> UiDateUtils.showDatePicker(getContext(), billEndCalendar, (view1, year, month, dayOfMonth) -> {
+            billEndCalendar.set(year, month, dayOfMonth);
+//            UiDateUtils.clearTime(billEndCalendar);
+            binding.tvEndDate.setText(UiDateUtils.formatDateForDisplay(billEndCalendar));
         }));
 
         binding.btnExportSelectedRangeBill.setOnClickListener(v -> {
-            Date startDate = billingStartCalendar.getTime();
-            Date endDate = billingEndCalendar.getTime();
+            Date startDate = billStartCalendar.getTime();
+            Date endDate = billEndCalendar.getTime();
 
             if (startDate.after(endDate)) {
                 Toast.makeText(requireContext(), "Start date cannot be after end date", Toast.LENGTH_LONG).show();
                 return;
             }
 
-            String startStr = dateFormat.format(startDate);
-            String endStr = dateFormat.format(endDate);
+            pendingStartDisplayStr = UiDateUtils.formatDateForDisplay(billStartCalendar);
+            pendingEndDisplayStr = UiDateUtils.formatDateForDisplay(billEndCalendar);
 
-            viewModel.exportBillsByRange(startStr, endStr);
+            String startDbStr = UiDateUtils.formatDateForDb(billStartCalendar);
+            String endDbStr = UiDateUtils.formatDateForDb(billEndCalendar);
 
-            // Also trigger PDF generation
-            if (!viewModel.getRangeFilteredBills().isEmpty()) {
-                exportBillingRangeLauncher.launch("Billing_Report_" + startStr + "_to_" + endStr + ".xls");
-                BillPdfEngine.generateBillingSummaryReport(requireContext(), viewModel.getRangeFilteredBills(), startStr, endStr);
-            }
+            // This runs asynchronously in the ViewModel
+            viewModel.exportBillsByRange(startDbStr, endDbStr);
         });
 
         binding.btnGetLatestReadableBillDocument.setOnClickListener(v -> {
@@ -185,27 +196,31 @@ public class ExportImportBillFragment extends Fragment {
 
         if (viewModel.getSuccessMessage() != null) {
             toastMessage.showSuccess(viewModel.getSuccessMessage());
+
+            // Check if we just successfully generated a range report file
+            if (pendingStartDisplayStr != null && !viewModel.getRangeFilteredBills().isEmpty()) {
+                String startStr = pendingStartDisplayStr;
+                String endStr = pendingEndDisplayStr;
+
+                // Clear pending so it only fires once per click
+                pendingStartDisplayStr = null;
+                pendingEndDisplayStr = null;
+
+                exportBillingRangeLauncher.launch("Billing_Report_" + startStr + "_to_" + endStr + ".xls");
+                BillPdfEngine.generateBillingSummaryReport(requireContext(), viewModel.getRangeFilteredBills(), startStr, endStr);
+            }
         }
 
         if (viewModel.getErrorMessage() != null) {
             toastMessage.showError("Reporting Failure", new Exception(viewModel.getErrorMessage()));
+            pendingStartDisplayStr = null;
+            pendingEndDisplayStr = null;
         }
 
         if (viewModel.getGroupedPreviousReports() != null && !viewModel.getGroupedPreviousReports().isEmpty()) {
             PreviousBillDocumentAdapter reportAdapter = new PreviousBillDocumentAdapter(getContext(), viewModel.getGroupedPreviousReports());
             binding.rvPreviousReports.setAdapter(reportAdapter);
         }
-    }
-
-    private void showDatePickerDialog(Calendar calendar, DatePickerDialog.OnDateSetListener dateSetListener) {
-        if (getContext() == null) return;
-        new DatePickerDialog(
-                getContext(),
-                dateSetListener,
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)
-        ).show();
     }
 
     private void writeBytesToDestination(Uri uri, byte[] dataBytes, String errorMessage) {

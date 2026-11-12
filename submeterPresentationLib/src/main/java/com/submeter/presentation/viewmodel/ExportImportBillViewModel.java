@@ -1,19 +1,26 @@
 package com.submeter.presentation.viewmodel;
 
+import androidx.lifecycle.ViewModel;
+
 import com.submeter.commonlib.dto.BillDTO;
 import com.submeter.commonlib.response.OperationResult;
 import com.submeter.service.ExportImportService;
 import com.submeter.service.utils.ExcelGenerator;
 
-import java.io.ByteArrayInputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ExportImportBillViewModel extends BaseViewModel {
+public class ExportImportBillViewModel extends ViewModel {
 
     private final ExportImportService exportImportService;
 
-    // Core Presentation States
+    // State Listeners for UI notification
+    public interface StateListener {
+        void onStateChanged();
+    }
+    private final List<StateListener> stateListeners = new ArrayList<>();
+
+    // Presentation States
     private boolean isLoading = false;
     private String errorMessage = null;
     private String successMessage = null;
@@ -27,6 +34,25 @@ public class ExportImportBillViewModel extends BaseViewModel {
 
     public ExportImportBillViewModel(ExportImportService exportImportService) {
         this.exportImportService = exportImportService;
+    }
+
+    // --- State Listeners Management ---
+    public void addStateListener(StateListener listener) {
+        if (listener != null && !stateListeners.contains(listener)) {
+            stateListeners.add(listener);
+        }
+    }
+
+    public void removeStateListener(StateListener listener) {
+        stateListeners.remove(listener);
+    }
+
+    private void notifyStateChanged() {
+        for (StateListener listener : stateListeners) {
+            if (listener != null) {
+                listener.onStateChanged();
+            }
+        }
     }
 
     // --- State Getters ---
@@ -47,7 +73,6 @@ public class ExportImportBillViewModel extends BaseViewModel {
             try {
                 OperationResult<List<BillDTO>> result = exportImportService.getLastThreeMonthBills();
 
-                // Guard check for null result or unsuccessful operation
                 if (result != null && result.isSuccess() && result.getData() != null) {
                     List<BillDTO> bills = result.getData();
                     this.groupedPreviousReports = bills.stream()
@@ -101,11 +126,12 @@ public class ExportImportBillViewModel extends BaseViewModel {
         new Thread(() -> {
             try {
                 OperationResult<List<BillDTO>> result = exportImportService.getLatestBills();
-                if (!result.isSuccess()) {
-                    this.errorMessage = result.getMessage();
-                    return;
+
+                if (result != null && result.isSuccess() && result.getData() != null) {
+                    this.latestMonthlyBills = result.getData();
+                } else {
+                    this.errorMessage = (result != null) ? result.getMessage() : "Service returned a null response";
                 }
-                this.latestMonthlyBills = result.getData();
             } catch (Exception e) {
                 this.errorMessage = "Error gathering active targets: " + e.getMessage();
             } finally {
@@ -128,7 +154,6 @@ public class ExportImportBillViewModel extends BaseViewModel {
         }).start();
     }
 
-    // Accepts byte array payload instead of raw InputStream parameter
     public void executeFullExcelImport(byte[] excelFileBytes) {
         if (excelFileBytes == null || excelFileBytes.length == 0) {
             this.errorMessage = "Import file payload is empty.";
@@ -139,7 +164,6 @@ public class ExportImportBillViewModel extends BaseViewModel {
         updateLoadingState(true);
         new Thread(() -> {
             try {
-                // Pass byte[] directly instead of wrapping it in a ByteArrayInputStream
                 OperationResult<Void> result = ExcelGenerator.importWorksheetToDatabase(excelFileBytes);
 
                 if (result.isSuccess()) {

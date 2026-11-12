@@ -48,7 +48,7 @@ public class BillServiceImpl implements BillService {
             for (Bill bill : pendingBills) {
                 BillDTO dto = mapToDTO(bill); // Use your existing entity-to-DTO mapper
                 // Ensure your BillDTO also carries the balance value to display in the UI
-                dto.setBalance(bill.getBalance());
+                dto.setCurrentBillDue(bill.getBalance());
                 billDTOs.add(dto);
             }
 
@@ -84,7 +84,7 @@ public class BillServiceImpl implements BillService {
             return OperationResult.failure("BillDTO cannot be null.");
         }
         try {
-            billDTO.setBalance(billDTO.getTotalAmount());
+            billDTO.setCurrentBillDue(billDTO.getTotalAmount());
             Bill bill = mapToEntity(billDTO);
             boolean isAdded = billDao.insert(bill);
             if (isAdded) {
@@ -111,6 +111,16 @@ public class BillServiceImpl implements BillService {
         }
     }
 
+    @Override
+    public OperationResult<Double> getTotalTenantBalance(int tenantId) {
+        try {
+            double totalBalance = billDao.getTotalBalanceByTenantId(tenantId);
+            return OperationResult.success(totalBalance, "Balance fetched successfully");
+        } catch (Exception e) {
+            return OperationResult.failure("Failed to calculate tenant balance: " + e.getMessage());
+        }
+    }
+
     // --- Mappers between Entity and DTO ---
 
     private BillDTO mapToDTO(Bill bill) {
@@ -133,7 +143,7 @@ public class BillServiceImpl implements BillService {
         dto.setTotalAmount(bill.getTotalAmount());
         dto.setNote(bill.getNote());
         dto.setBillingDate(bill.getBillingDate());
-        dto.setBalance(bill.getBalance());
+        dto.setCurrentBillDue(bill.getBalance());
         return dto;
     }
 
@@ -157,7 +167,7 @@ public class BillServiceImpl implements BillService {
         bill.setTotalAmount(dto.getTotalAmount());
         bill.setNote(dto.getNote());
         bill.setBillingDate(dto.getBillingDate());
-        bill.setBalance(dto.getBalance());
+        bill.setBalance(dto.getCurrentBillDue());
         return bill;
     }
 }
