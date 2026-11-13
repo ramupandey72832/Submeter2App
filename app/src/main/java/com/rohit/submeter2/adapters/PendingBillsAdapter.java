@@ -9,8 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.rrallutilitylib.util.DateUtils;
 import com.rohit.submeter2.R;
 import com.rohit.submeter2.databinding.PendingBillItemBinding;
+import com.rohit.submeter2.utils.UiDateUtils;
 import com.submeter.commonlib.dto.BillDTO;
 import com.submeter.commonlib.dto.PaymentDTO;
 
@@ -77,12 +79,14 @@ public class PendingBillsAdapter extends RecyclerView.Adapter<PendingBillsAdapte
         holder.binding.tvRoomNumber.setText(selectedBill.getRoomNumber());
         holder.binding.tvTenantName.setText("Tenant: " + selectedBill.getTenantName());
         holder.binding.tvBillAmount.setText("₹" + selectedBill.getCurrentBillDue());
-        holder.binding.tvBillMeta.setText("Bill No.: " + selectedBill.getId() + "  •  " + selectedBill.getBillingDate());
+        holder.binding.tvBillMeta.setText("Bill No.: " + selectedBill.getId() + "  •  " +
+                DateUtils.toDisplayFormat( selectedBill.getBillingDate() ));
 
         List<PaymentDTO> paymentsOfBillId = Collections.emptyList();
-        double balance = calculateBalance(selectedBill, paymentsOfBillId);
+//        double balance = calculateBalance(selectedBill, paymentsOfBillId);
 
-        if (balance == 0) {
+
+        if (selectedBill.getCurrentBillDue() < 0.9) {
             holder.binding.btnStatusBadge.setText("Paid");
             holder.binding.btnStatusBadge.setTextColor(ContextCompat.getColor(context, R.color.green_text));
             holder.binding.btnStatusBadge.setBackgroundTintList(

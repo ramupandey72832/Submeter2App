@@ -52,9 +52,16 @@ public class TableDataService {
 
             case "TENANCIES":
                 for (Tenancy ty : DaoManager.getTenancyDao().getAll()) {
+                    String endDate = ty.getEndDate();
+                    boolean isEndDateEmpty = (endDate == null || endDate.trim().isEmpty());
+
                     rows.add(Arrays.asList(
-                            String.valueOf(ty.getId()), String.valueOf(ty.getRoomId()), String.valueOf(ty.getTenantId()), ty.getStartDate(),
-                            ty.getEndDate() != null ? ty.getEndDate() : "--", ty.getEndDate() == null ? "YES" : "NO"
+                            String.valueOf(ty.getId()),
+                            String.valueOf(ty.getRoomId()),
+                            String.valueOf(ty.getTenantId()),
+                            ty.getStartDate(),
+                            isEndDateEmpty ? "--" : endDate,
+                            isEndDateEmpty ? "YES" : "NO" // YES = Active (no end date), NO = Ended
                     ));
                 }
                 break;

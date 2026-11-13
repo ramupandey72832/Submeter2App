@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.rrallutilitylib.util.DateUtils;
 import com.submeter.commonlib.dto.BillDTO;
 import com.submeter.commonlib.dto.MeterReadingDTO;
 import com.submeter.commonlib.response.OperationResult;
@@ -159,9 +160,7 @@ public class BillViewModel extends ViewModel {
                     meterReadingDTO.setId(billDTO.getCurrentReadingId());
                     meterReadingDTO.setMeterId(billDTO.getMeterId());
                     meterReadingDTO.setReadingValue(currentReading);
-
-                    String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-                    meterReadingDTO.setDate(currentDate);
+                    meterReadingDTO.setDate(DateUtils.toDatabaseFormat(billDTO.getBillingDate()));
 
                     meterReadingService.update(meterReadingDTO);
                 }

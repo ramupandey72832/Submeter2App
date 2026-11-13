@@ -12,8 +12,10 @@ import android.widget.Toast;
 import com.application.android_ui_templete1.templates.nav_activity.bottom_nav_activity.BottomNavActivityConstant;
 import com.application.baselibrary.ui.utils.NavigationUtils;
 import com.application.baselibrary.ui.utils.ToastMessage;
+import com.example.rrallutilitylib.util.DateUtils;
 import com.rohit.submeter2.databinding.FragmentBillCreateBinding;
 import com.rohit.submeter2.fragments.mpin.MpinVerificationDialogFragment;
+import com.rohit.submeter2.utils.UiDateUtils;
 import com.submeter.commonlib.dto.BillDTO;
 import com.submeter.presentation.viewmodel.BillViewModel;
 import com.submeter.service.ServiceManager;
@@ -162,7 +164,7 @@ public class BillCreateFragment extends Fragment implements MpinVerificationDial
                     billDTO.getRatePerUnit(),
                     billDTO.getFixedCharge(),
                     billDTO.getExtraCharge(),
-                    billDTO.getBillingDate(),
+                    DateUtils.toDatabaseFormat(billDTO.getBillingDate()),
                     billDTO.getNote()
             );
         } catch (Exception e) {

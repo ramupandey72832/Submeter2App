@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.rrallutilitylib.util.DateUtils;
 import com.rohit.submeter2.R;
 import com.rohit.submeter2.databinding.BillItemBinding;
 import com.submeter.commonlib.dto.BillDTO;
@@ -81,7 +82,7 @@ public class BillHistoryAdapter extends RecyclerView.Adapter<BillHistoryAdapter.
         // Safe Text Bindings
         holder.binding.tvBillNumber.setText("Bill #" + currentBill.getId());
         holder.binding.tvRoomAndName.setText("(Room " + currentBill.getRoomNumber() + ", " + currentBill.getTenantName() + ")");
-        holder.binding.tvDate.setText(currentBill.getBillingDate() != null ? currentBill.getBillingDate() : "");
+        holder.binding.tvDate.setText(currentBill.getBillingDate() != null ? DateUtils.toDisplayFormat(currentBill.getBillingDate()) : "");
         holder.binding.tvAmount.setText("₹" + currentBill.getTotalAmount());
 
         // TODO: Pass actual payment history list from your ViewModel/Repository if available
