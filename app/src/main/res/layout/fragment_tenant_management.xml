@@ -20,35 +20,75 @@
             android:textColor="@android:color/black"
             android:layout_marginBottom="12dp" />
 
+        <!-- Full Name Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Full Name"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
+
         <EditText
             android:id="@+id/etAddName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Full Name"
+            android:hint="Enter full name"
             android:inputType="textPersonName"
             android:layout_marginBottom="8dp" />
+
+        <!-- Phone Number Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phone Number"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
 
         <EditText
             android:id="@+id/etAddPhoneNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Phone Number"
+            android:hint="Enter phone number"
             android:inputType="phone"
             android:layout_marginBottom="8dp" />
+
+        <!-- Tenant ID Number Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Identification (AADHAAR) Number"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
 
         <EditText
             android:id="@+id/etAddAadhaarNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Aadhaar Number"
+            android:hint="Enter identification (AADHAAR) number"
             android:inputType="number"
             android:layout_marginBottom="8dp" />
+
+        <!-- Address Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Address"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
 
         <EditText
             android:id="@+id/etAddAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Address"
+            android:hint="Enter address"
             android:inputType="textPostalAddress"
             android:layout_marginBottom="16dp" />
 
@@ -76,6 +116,16 @@
             android:textColor="@android:color/black"
             android:layout_marginBottom="12dp" />
 
+        <!-- Search by ID Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search By Tenant ID"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
+
         <!-- Search by ID -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,7 +138,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Search by Tenant ID (e.g., 1)"
+                android:hint="Enter Tenant ID (e.g., 1)"
                 android:inputType="number" />
 
             <Button
@@ -99,7 +149,17 @@
                 android:layout_marginStart="8dp" />
         </LinearLayout>
 
-        <!-- Search by Phone Number -->
+        <!-- Search by ID Number Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search By Identification (AADHAAR) Number"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
+
+        <!-- Search by Identification Number -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -111,18 +171,29 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Search by Aadhar Number"
+                android:hint="Enter identification number"
                 android:inputType="phone" />
 
             <Button
                 android:id="@+id/btnSearchByAadhaar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Search Aadhaar"
+                android:text="Search ID"
                 android:layout_marginStart="8dp" />
         </LinearLayout>
 
         <!-- Edit Form Fields -->
+
+        <!-- Tenant ID Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tenant ID"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
+
         <EditText
             android:id="@+id/etEditId"
             android:layout_width="match_parent"
@@ -131,6 +202,16 @@
             android:inputType="number"
             android:enabled="false"
             android:layout_marginBottom="8dp" />
+
+        <!-- Updated Name Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Full Name"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
 
         <EditText
             android:id="@+id/etEditName"
@@ -141,6 +222,16 @@
             android:enabled="false"
             android:layout_marginBottom="8dp" />
 
+        <!-- Updated Phone Number Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phone Number"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
+
         <EditText
             android:id="@+id/etEditPhoneNumber"
             android:layout_width="match_parent"
@@ -150,14 +241,34 @@
             android:enabled="false"
             android:layout_marginBottom="8dp" />
 
+        <!-- Updated ID Number Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Identification Number"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
+
         <EditText
             android:id="@+id/etEditAadhaarNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Updated Aadhaar Number"
+            android:hint="Updated Identification Number"
             android:inputType="number"
             android:enabled="false"
             android:layout_marginBottom="8dp" />
+
+        <!-- Updated Address Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Address"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
 
         <EditText
             android:id="@+id/etEditAddress"

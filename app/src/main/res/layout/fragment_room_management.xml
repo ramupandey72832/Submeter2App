@@ -20,19 +20,39 @@
             android:textColor="@android:color/black"
             android:layout_marginBottom="12dp" />
 
+        <!-- Add Room Number Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Room Number"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
+
         <EditText
             android:id="@+id/etAddRoomNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Room Number (e.g., 101)"
+            android:hint="Enter room number (e.g., 101)"
             android:inputType="text"
             android:layout_marginBottom="8dp" />
+
+        <!-- Add Room Type Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Room Type"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
 
         <EditText
             android:id="@+id/etAddRoomType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Room Type (e.g., Deluxe, Suite)"
+            android:hint="Enter room type (e.g., Deluxe, Suite)"
             android:inputType="text"
             android:layout_marginBottom="16dp" />
 
@@ -60,6 +80,16 @@
             android:textColor="@android:color/black"
             android:layout_marginBottom="12dp" />
 
+        <!-- Search by ID Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search By Room ID"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
+
         <!-- Search by ID -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,7 +102,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Search by Room ID (e.g., 1)"
+                android:hint="Enter Room ID (e.g., 1)"
                 android:inputType="number" />
 
             <Button
@@ -82,6 +112,16 @@
                 android:text="Search ID"
                 android:layout_marginStart="8dp" />
         </LinearLayout>
+
+        <!-- Search by Room Number Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search By Room Number"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
 
         <!-- Search by Room Number -->
         <LinearLayout
@@ -95,7 +135,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Search by Room Number (e.g., 101)"
+                android:hint="Enter Room Number (e.g., 101)"
                 android:inputType="text" />
 
             <Button
@@ -107,6 +147,17 @@
         </LinearLayout>
 
         <!-- Edit Form Fields (ID, Room Number, and Room Type) -->
+
+        <!-- Room ID Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Room ID"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
+
         <EditText
             android:id="@+id/etEditRoomId"
             android:layout_width="match_parent"
@@ -116,6 +167,16 @@
             android:enabled="false"
             android:layout_marginBottom="8dp" />
 
+        <!-- Updated Room Number Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Room Number"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
+
         <EditText
             android:id="@+id/etEditRoomNumber"
             android:layout_width="match_parent"
@@ -124,6 +185,16 @@
             android:inputType="text"
             android:enabled="false"
             android:layout_marginBottom="8dp" />
+
+        <!-- Updated Room Type Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Room Type"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
 
         <EditText
             android:id="@+id/etEditRoomType"

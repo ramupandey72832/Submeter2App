@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
@@ -20,37 +22,82 @@
             android:textColor="@android:color/black"
             android:layout_marginBottom="12dp" />
 
+        <!-- Meter Serial Number Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meter Serial Number"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
+
         <EditText
             android:id="@+id/etAddMeterSerialNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Meter Serial Number"
+            android:hint="Enter meter serial number"
             android:inputType="number"
             android:layout_marginBottom="8dp" />
+
+        <!-- Room Number Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Room Number"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
 
         <EditText
             android:id="@+id/etAddRoomNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Room Number"
+            android:hint="Enter room number"
             android:inputType="number"
             android:layout_marginBottom="8dp" />
 
-        <EditText
-            android:id="@+id/etAddStartingDate"
-            android:layout_width="match_parent"
+        <!-- Starting Date Label -->
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="date"
-            android:hint="Starting Date (DD-MM-YYYY)"
-            android:layout_marginBottom="8dp" />
+            android:text="Starting Date"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
 
-        <EditText
-            android:id="@+id/etAddEndingDate"
+
+        <LinearLayout
+            android:id="@+id/btnAddStartingDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ending Date (DD-MM-YYYY, Optional)"
-            android:inputType="date"
-            android:layout_marginBottom="16dp" />
+            android:background="@drawable/bg_date_picker"
+            android:backgroundTint="?attr/colorSurface"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="8dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_calendar"
+                app:tint="?attr/colorOnSurfaceVariant" />
+
+            <TextView
+                android:id="@+id/tvAddStartingDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textAppearance="@style/TextAppearance.App.LabelBody"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="14sp"
+                tools:text="01-01-2026" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnSaveAllocation"
@@ -76,6 +123,16 @@
             android:textColor="@android:color/black"
             android:layout_marginBottom="12dp" />
 
+        <!-- Search Input Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search Allocation"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
+
         <!-- Search Input -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -100,6 +157,17 @@
         </LinearLayout>
 
         <!-- Edit Form Fields -->
+
+        <!-- Allocation ID Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Allocation ID"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
+
         <EditText
             android:id="@+id/etEditId"
             android:layout_width="match_parent"
@@ -108,6 +176,16 @@
             android:inputType="number"
             android:enabled="false"
             android:layout_marginBottom="8dp" />
+
+        <!-- Meter Number Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meter Number"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
 
         <EditText
             android:id="@+id/etEditMeterSerialNumber"
@@ -118,6 +196,16 @@
             android:enabled="false"
             android:layout_marginBottom="8dp" />
 
+        <!-- Room Number Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Room Number"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
+
         <EditText
             android:id="@+id/etEditRoomNumber"
             android:layout_width="match_parent"
@@ -127,23 +215,85 @@
             android:enabled="false"
             android:layout_marginBottom="8dp" />
 
-        <EditText
-            android:id="@+id/etEditStartingDate"
-            android:layout_width="match_parent"
+        <!-- Starting Date Label -->
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Starting Date (DD-MM-YYYY)"
-            android:inputType="date"
-            android:enabled="false"
-            android:layout_marginBottom="8dp" />
+            android:text="Starting Date"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
 
-        <EditText
-            android:id="@+id/etEditEndingDate"
+        <LinearLayout
+            android:id="@+id/btnUpdateStartingDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ending Date (DD-MM-YYYY)"
-            android:inputType="date"
-            android:enabled="false"
-            android:layout_marginBottom="16dp" />
+            android:background="@drawable/bg_date_picker"
+            android:backgroundTint="?attr/colorSurface"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="8dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_calendar"
+                app:tint="?attr/colorOnSurfaceVariant" />
+
+            <TextView
+                android:id="@+id/tvUpdateStartingDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textAppearance="@style/TextAppearance.App.LabelBody"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="14sp"
+                tools:text="01-01-2026" />
+        </LinearLayout>
+
+        <!-- Ending Date Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ending Date"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
+
+        <LinearLayout
+            android:id="@+id/btnUpdateEndingDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_date_picker"
+            android:backgroundTint="?attr/colorSurface"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="8dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_calendar"
+                app:tint="?attr/colorOnSurfaceVariant" />
+
+            <TextView
+                android:id="@+id/tvUpdateEndingDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textAppearance="@style/TextAppearance.App.LabelBody"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="14sp"
+                tools:text="01-01-2026" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnUpdateAllocation"

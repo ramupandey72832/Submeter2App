@@ -20,27 +20,57 @@
             android:textColor="@android:color/black"
             android:layout_marginBottom="12dp" />
 
+        <!-- Add Meter Serial Number Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meter Serial Number"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
+
         <EditText
             android:id="@+id/etAddMeterSerialNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Meter Serial Number (e.g., SN-1001)"
+            android:hint="Enter meter serial number (e.g., SN-1001)"
             android:inputType="text"
             android:layout_marginBottom="8dp" />
+
+        <!-- Add Initial Reading Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Initial Reading"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
 
         <EditText
             android:id="@+id/etAddInitialReading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Initial Reading (e.g., 0)"
+            android:hint="Enter initial reading (e.g., 0)"
             android:inputType="number"
             android:layout_marginBottom="8dp" />
+
+        <!-- Add Note Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note (Optional)"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
 
         <EditText
             android:id="@+id/etAddNote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Note (Optional)"
+            android:hint="Enter optional notes"
             android:inputType="text"
             android:layout_marginBottom="16dp" />
 
@@ -68,6 +98,16 @@
             android:textColor="@android:color/black"
             android:layout_marginBottom="12dp" />
 
+        <!-- Search by ID Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search By Submeter ID"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
+
         <!-- Search by ID -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,7 +120,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Search by Submeter ID (e.g., 1)"
+                android:hint="Enter Submeter ID (e.g., 1)"
                 android:inputType="number" />
 
             <Button
@@ -90,6 +130,16 @@
                 android:text="Search ID"
                 android:layout_marginStart="8dp" />
         </LinearLayout>
+
+        <!-- Search by Meter Serial Number Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search By Serial Number"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
 
         <!-- Search by Meter Serial Number -->
         <LinearLayout
@@ -103,7 +153,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Search by Serial No. (e.g., SN-1001)"
+                android:hint="Enter Serial No. (e.g., SN-1001)"
                 android:inputType="text" />
 
             <Button
@@ -115,6 +165,17 @@
         </LinearLayout>
 
         <!-- Edit Form Fields -->
+
+        <!-- Submeter ID Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submeter ID"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
+
         <EditText
             android:id="@+id/etEditId"
             android:layout_width="match_parent"
@@ -123,6 +184,16 @@
             android:inputType="number"
             android:enabled="false"
             android:layout_marginBottom="8dp" />
+
+        <!-- Updated Serial Number Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meter Serial Number"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
 
         <EditText
             android:id="@+id/etEditMeterSerialNumber"
@@ -133,6 +204,16 @@
             android:enabled="false"
             android:layout_marginBottom="8dp" />
 
+        <!-- Updated Initial Reading Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Initial Reading"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
+
         <EditText
             android:id="@+id/etEditInitialReading"
             android:layout_width="match_parent"
@@ -141,6 +222,16 @@
             android:inputType="number"
             android:enabled="false"
             android:layout_marginBottom="8dp" />
+
+        <!-- Updated Note Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
 
         <EditText
             android:id="@+id/etEditNote"

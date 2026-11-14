@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.application.baselibrary.ui.utils.NavigationUtils;
+import com.example.rrallutilitylib.util.DateUtils;
 import com.rohit.submeter2.adapters.PendingBillsAdapter;
 import com.rohit.submeter2.databinding.FragmentDashboardBinding;
 import com.rohit.submeter2.fragments.AllTablesDataFragment;
@@ -28,6 +29,7 @@ import com.rohit.submeter2.fragments.TenantManagementFragment;
 import com.rohit.submeter2.fragments.mpin.MpinVerificationDialogFragment;
 import com.rohit.submeter2.fragments.mpin.SetupMpinFragment;
 import com.rohit.submeter2.utils.ConfigManager;
+import com.rohit.submeter2.utils.UiDateUtils;
 import com.submeter.commonlib.dto.BillDTO;
 import com.submeter.presentation.viewmodel.BaseViewModel;
 import com.submeter.presentation.viewmodel.DashboardViewModel;
@@ -189,12 +191,11 @@ public class DashboardFragment extends Fragment implements MpinVerificationDialo
     @Override
     public void onMpinVerified(boolean isSuccess) {
         if (isSuccess && selectedBill != null) {
-            String currentDate = new java.text.SimpleDateFormat("dd-MM-yyyy", java.util.Locale.getDefault()).format(new java.util.Date());
 
             viewModel.payBill(
                     selectedBill.getId(),
                     pendingPaidAmount,
-                    currentDate,
+                    DateUtils.toDatabaseFormat(UiDateUtils.currentDate()),
                     pendingPaymentNote
             );
             selectedBill = null;

@@ -35,7 +35,7 @@ public class BillPdfEngine {
         PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(SLIP_WIDTH, SLIP_HEIGHT, 1).create();
         PdfDocument.Page page = pdfDoc.startPage(pageInfo);
 
-        ReceiptCanvasRenderer.draw(page.getCanvas(), targetBill, 0, 0, SLIP_WIDTH, SLIP_HEIGHT, 13.0f, 10.0f, 13, false);
+        ReceiptCanvasRenderer.drawSingleSlip(page.getCanvas(), targetBill, 0, 0, SLIP_WIDTH, SLIP_HEIGHT, 13.0f, 10.0f, 13, false);
         pdfDoc.finishPage(page);
 
         Uri targetUri = MediaStoreUtil.createTargetUri(context, outputFileName);

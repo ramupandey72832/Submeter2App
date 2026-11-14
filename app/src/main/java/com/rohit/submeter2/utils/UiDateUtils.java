@@ -43,11 +43,11 @@ public class UiDateUtils {
             return null;
         }
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         Calendar calendar = Calendar.getInstance();
 
         try {
-            Date date = sdf.parse(dateStr.trim());
+            Date date = DISPLAY_FORMAT.parse(dateStr.trim());
             if (date != null) {
                 calendar.setTime(date);
                 return calendar;
@@ -58,5 +58,10 @@ public class UiDateUtils {
         }
 
         return null;
+    }
+
+    public static String currentDate(){
+        String currentDate = new java.text.SimpleDateFormat("dd-MM-yyyy", java.util.Locale.getDefault()).format(new java.util.Date());
+        return currentDate;
     }
 }
